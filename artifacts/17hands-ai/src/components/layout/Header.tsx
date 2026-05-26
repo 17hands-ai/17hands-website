@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { Menu, X } from "lucide-react";
-import logoPath from "@assets/initial-logo_1779829174687.png";
+import logoPath from "@assets/logo_1779836404616.png";
 
 export function Header() {
   const [location] = useLocation();
@@ -37,7 +37,8 @@ export function Header() {
           <img
             src={logoPath}
             alt="17hands AI"
-            className="h-11 w-auto object-contain transition-opacity group-hover:opacity-90"
+            className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
+            style={{ mixBlendMode: "screen" }}
           />
         </Link>
 

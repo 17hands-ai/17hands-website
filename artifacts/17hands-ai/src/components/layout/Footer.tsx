@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logoPath from "@assets/initial-logo_1779829174687.png";
+import logoPath from "@assets/logo_1779836404616.png";
 
 export function Footer() {
   return (
@@ -11,7 +11,8 @@ export function Footer() {
               <img
                 src={logoPath}
                 alt="17hands AI"
-                className="h-14 w-auto object-contain"
+                className="h-24 w-auto object-contain"
+                style={{ mixBlendMode: "screen" }}
               />
             </Link>
             <p className="text-muted-foreground text-lg max-w-sm font-serif italic mb-6">
