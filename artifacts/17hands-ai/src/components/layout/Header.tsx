@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { Menu, X } from "lucide-react";
+import logoPath from "@assets/initial-logo_1779829174687.png";
 
 export function Header() {
   const [location] = useLocation();
@@ -32,10 +33,12 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl font-serif font-semibold tracking-wide text-foreground group-hover:text-primary transition-colors">
-            17hands <span className="text-primary font-sans text-sm tracking-widest uppercase ml-1">AI</span>
-          </span>
+        <Link href="/" className="flex items-center group">
+          <img
+            src={logoPath}
+            alt="17hands AI"
+            className="h-11 w-auto object-contain transition-opacity group-hover:opacity-90"
+          />
         </Link>
 
         {/* Desktop Nav */}

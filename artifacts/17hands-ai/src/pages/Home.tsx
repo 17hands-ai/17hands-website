@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { PhoneCall, MessageSquare, Clock, CalendarCheck, ShieldCheck, Settings, Users, Workflow } from "lucide-react";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { ServiceCard } from "@/components/ui/ServiceCard";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const scrollToNext = () => {

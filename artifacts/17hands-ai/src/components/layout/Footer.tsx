@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import logoPath from "@assets/initial-logo_1779829174687.png";
 
 export function Footer() {
   return (
@@ -7,9 +8,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="inline-block mb-4">
-              <span className="text-2xl font-serif font-semibold tracking-wide text-foreground">
-                17hands <span className="text-primary font-sans text-sm tracking-widest uppercase ml-1">AI</span>
-              </span>
+              <img
+                src={logoPath}
+                alt="17hands AI"
+                className="h-14 w-auto object-contain"
+              />
             </Link>
             <p className="text-muted-foreground text-lg max-w-sm font-serif italic mb-6">
               AI systems with a human touch.
