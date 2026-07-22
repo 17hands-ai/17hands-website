@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ChatbaseWidget } from "@/components/ChatbaseWidget";
 
 // Pages
 import Home from "@/pages/Home";
@@ -51,6 +52,7 @@ function App() {
           </Layout>
         </WouterRouter>
         <Toaster />
+        <ChatbaseWidget />
         <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
