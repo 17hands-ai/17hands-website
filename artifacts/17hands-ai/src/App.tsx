@@ -6,20 +6,24 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatbaseWidget } from "@/components/ChatbaseWidget";
+import { pages, notFoundTitle } from "@/lib/pages";
 
 // Pages
 import Home from "@/pages/Home";
 import ForYou from "@/pages/ForYou";
 import FAQ from "@/pages/FAQ";
 import Contact from "@/pages/Contact";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
 
-/** Scroll to the top on route change, or to the hash target when one is present. */
+/** Scroll to the top on route change, or to the hash target when one is present. Keeps <title> in sync. */
 function ScrollManager() {
   const [location] = useLocation();
   useEffect(() => {
+    document.title = pages.find((p) => p.path === location)?.title ?? notFoundTitle;
     const id = window.location.hash.slice(1);
     const target = id ? document.getElementById(id) : null;
     if (target) target.scrollIntoView();
@@ -53,6 +57,8 @@ function Router() {
       <Route path="/for-you" component={ForYou} />
       <Route path="/faq" component={FAQ} />
       <Route path="/contact" component={Contact} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
       {/* Old receptionist-site URLs, kept working. */}
       <Route path="/services"><Redirect to="/#services" replace /></Route>
       <Route path="/case-studies"><Redirect to="/" replace /></Route>

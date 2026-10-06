@@ -13,6 +13,11 @@ const navLinks = [
   { name: "FAQ", href: "/faq" },
 ];
 
+/** Route links navigate client-side; "/#section" links stay plain anchors so the browser handles the hash. */
+function NavLink({ href, ...props }: React.ComponentProps<"a"> & { href: string }) {
+  return href.includes("#") ? <a href={href} {...props} /> : <Link href={href} {...props} />;
+}
+
 export function Header() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,7 +58,7 @@ export function Header() {
 
         <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.name}
               href={link.href}
               aria-current={location === link.href ? "page" : undefined}
@@ -63,7 +68,7 @@ export function Header() {
               )}
             >
               {link.name}
-            </a>
+            </NavLink>
           ))}
           <BrandButton href={BOOKING_URL} className="ml-2">
             Book a call
@@ -89,14 +94,14 @@ export function Header() {
           className="lg:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2 flex flex-col"
         >
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
               className="text-base font-medium py-3 text-[var(--brand-text)] border-b border-border/60"
             >
               {link.name}
-            </a>
+            </NavLink>
           ))}
           <BrandButton href={BOOKING_URL} size="lg" className="mt-6 w-full">
             Book a call

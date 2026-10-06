@@ -5,8 +5,8 @@ export function Footer() {
   return (
     <footer className="bg-[var(--brand-primary)] border-t border-border py-16">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-12">
+          <div className="sm:col-span-2">
             <Link href="/" className="inline-flex items-center gap-3 mb-5">
               <img src="/logo-rosegold.png" alt="" width={501} height={339} loading="lazy" className="h-14 w-auto" />
               <span className="display text-2xl text-[var(--brand-text)]">
@@ -39,6 +39,14 @@ export function Footer() {
               <li><Link href="/contact" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Contact</Link></li>
             </ul>
           </div>
+
+          <nav aria-label="Legal">
+            <h2 className="eyebrow mb-5">Legal</h2>
+            <ul className="space-y-3">
+              <li><Link href="/privacy" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Terms of Use</Link></li>
+            </ul>
+          </nav>
         </div>
 
         <div className="mt-16 pt-8 border-t border-border">
