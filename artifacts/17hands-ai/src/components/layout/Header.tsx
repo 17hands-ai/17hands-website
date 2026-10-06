@@ -1,9 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { cn } from "@/lib/utils";
-import { GoldButton } from "@/components/ui/GoldButton";
 import { Menu, X } from "lucide-react";
-import logoPath from "@assets/logo_1779836404616.png";
+import { cn } from "@/lib/utils";
+import { BrandButton } from "@/components/brand/BrandButton";
+import { BOOKING_URL } from "@/lib/site";
+
+const navLinks = [
+  { name: "Services", href: "/#services" },
+  { name: "How it works", href: "/#how-it-works" },
+  { name: "About", href: "/#about" },
+  { name: "For individuals", href: "/for-you" },
+  { name: "FAQ", href: "/faq" },
+];
 
 export function Header() {
   const [location] = useLocation();
@@ -11,87 +19,89 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Services", href: "/services" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "FAQ", href: "/faq" },
-  ];
+  useEffect(() => setMobileMenuOpen(false), [location]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMobileMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileMenuOpen]);
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-        isScrolled ? "bg-background/80 backdrop-blur-md border-border py-4" : "bg-transparent py-6"
+        "fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,border-color] duration-300 border-b",
+        isScrolled || mobileMenuOpen
+          ? "bg-[var(--brand-canvas)]/90 backdrop-blur-md border-border py-3"
+          : "bg-transparent border-transparent py-5",
       )}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center group">
-          <img
-            src={logoPath}
-            alt="17hands AI"
-            className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
-            style={{ mixBlendMode: "screen" }}
-          />
+      <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-6">
+        <Link href="/" className="flex items-center gap-3 shrink-0 rounded-md">
+          <img src="/logo-rosegold.png" alt="" width={501} height={339} className="h-11 w-auto" />
+          <span className="display text-xl text-[var(--brand-text)]">
+            17hands<span className="rose-text">.ai</span>
+          </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.name}
               href={link.href}
+              aria-current={location === link.href ? "page" : undefined}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                location === link.href ? "text-primary" : "text-muted-foreground"
+                "text-sm font-medium transition-colors hover:text-[var(--brand-rose)] py-2",
+                location === link.href ? "text-[var(--brand-rose)]" : "text-[var(--brand-text-2)]",
               )}
             >
               {link.name}
-            </Link>
+            </a>
           ))}
-          <GoldButton href="/contact" size="sm" className="ml-4">
-            Book a Call
-          </GoldButton>
+          <BrandButton href={BOOKING_URL} className="ml-2">
+            Book a call
+          </BrandButton>
         </nav>
 
-        {/* Mobile Nav Toggle */}
         <button
-          className="md:hidden text-foreground"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          type="button"
+          className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-text)]"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMobileMenuOpen((open) => !open)}
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       {mobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-card border-b border-border shadow-lg py-4 px-6 flex flex-col gap-4 md:hidden">
+        <nav
+          id="mobile-nav"
+          aria-label="Main"
+          className="lg:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2 flex flex-col"
+        >
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className={cn(
-                "text-sm font-medium py-2 transition-colors",
-                location === link.href ? "text-primary" : "text-foreground"
-              )}
+              className="text-base font-medium py-3 text-[var(--brand-text)] border-b border-border/60"
             >
               {link.name}
-            </Link>
+            </a>
           ))}
-          <div className="pt-4 border-t border-border mt-2">
-            <GoldButton href="/contact" className="w-full justify-center" onClick={() => setMobileMenuOpen(false)}>
-              Book a Call
-            </GoldButton>
-          </div>
-        </div>
+          <BrandButton href={BOOKING_URL} size="lg" className="mt-6 w-full">
+            Book a call
+          </BrandButton>
+        </nav>
       )}
     </header>
   );
