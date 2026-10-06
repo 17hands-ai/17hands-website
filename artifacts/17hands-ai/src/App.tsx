@@ -1,6 +1,6 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { useEffect } from "react";
+import { Switch, Route, Redirect, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/Header";
@@ -9,19 +9,36 @@ import { ChatbaseWidget } from "@/components/ChatbaseWidget";
 
 // Pages
 import Home from "@/pages/Home";
-import Services from "@/pages/Services";
-import CaseStudies from "@/pages/CaseStudies";
+import ForYou from "@/pages/ForYou";
 import FAQ from "@/pages/FAQ";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
 
+/** Scroll to the top on route change, or to the hash target when one is present. */
+function ScrollManager() {
+  const [location] = useLocation();
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    const target = id ? document.getElementById(id) : null;
+    if (target) target.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [location]);
+  return null;
+}
+
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-[var(--brand-amethyst)] focus:px-4 focus:py-3 focus:text-white"
+      >
+        Skip to content
+      </a>
       <Header />
-      <main className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
         {children}
       </main>
       <Footer />
@@ -33,10 +50,12 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/services" component={Services} />
-      <Route path="/case-studies" component={CaseStudies} />
+      <Route path="/for-you" component={ForYou} />
       <Route path="/faq" component={FAQ} />
       <Route path="/contact" component={Contact} />
+      {/* Old receptionist-site URLs, kept working. */}
+      <Route path="/services"><Redirect to="/#services" replace /></Route>
+      <Route path="/case-studies"><Redirect to="/" replace /></Route>
       <Route component={NotFound} />
     </Switch>
   );
@@ -47,13 +66,13 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <ScrollManager />
           <Layout>
             <Router />
           </Layout>
         </WouterRouter>
         <Toaster />
         <ChatbaseWidget />
-        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   );
