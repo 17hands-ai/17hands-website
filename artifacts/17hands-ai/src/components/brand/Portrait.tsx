@@ -1,4 +1,4 @@
-/** Founder portrait, toned into the brand palette with a glow, plum fade and offset frame. */
+/** Founder portrait with a brand glow, soft plum fade and offset rose-gold frame. */
 export function Portrait({ className = "" }: { className?: string }) {
   return (
     <div className={`relative isolate ${className}`}>
@@ -19,11 +19,10 @@ export function Portrait({ className = "" }: { className?: string }) {
           width={900}
           height={1200}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover object-top saturate-[0.9]"
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
-        {/* Brand tint: amethyst wash up top, plum fade into the section below */}
-        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(160deg,rgba(121,40,202,0.38)_0%,transparent_50%)] mix-blend-soft-light" />
-        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(19,9,30,0.75)_100%)]" />
+        {/* The photo is already shot on a brand-purple backdrop; just fade the base into the section. */}
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,transparent_65%,rgba(19,9,30,0.55)_100%)]" />
       </div>
     </div>
   );
