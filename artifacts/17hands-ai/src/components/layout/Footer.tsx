@@ -1,5 +1,6 @@
 import { Link } from "wouter";
-import { BOOKING_URL, CONTACT_EMAIL } from "@/lib/site";
+import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_COMPANY_URL } from "@/lib/site";
+import { LinkedInLink } from "@/components/brand/LinkedInLink";
 
 export function Footer() {
   return (
@@ -20,6 +21,9 @@ export function Footer() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-[var(--brand-text)] underline underline-offset-4 decoration-[var(--brand-rose)] hover:text-[var(--brand-rose)]">
               {CONTACT_EMAIL}
             </a>
+            <div className="mt-6">
+              <LinkedInLink href={LINKEDIN_COMPANY_URL} label="Follow 17hands.ai" />
+            </div>
           </div>
 
           <nav aria-label="Footer">
