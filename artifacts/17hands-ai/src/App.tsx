@@ -67,11 +67,12 @@ function Router() {
   );
 }
 
-function App() {
+/** `ssrPath` is set only when pre-rendering a route at build time (see entry-server.tsx). */
+function App({ ssrPath }: { ssrPath?: string }) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
           <ScrollManager />
           <Layout>
             <Router />
