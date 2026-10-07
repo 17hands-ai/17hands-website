@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import fs from "fs";
 import type { Plugin } from "vite";
-import { pages, notFoundTitle, SITE_ORIGIN, type PageMeta } from "./src/lib/pages";
+import { pages, notFoundTitle, SITE_ORIGIN, SITE_SUMMARY, type PageMeta } from "./src/lib/pages";
 
 const port = Number(process.env.PORT) || 3000;
 
@@ -60,6 +60,14 @@ function staticRoutes(): Plugin {
         path.join(outDir, "sitemap.xml"),
         `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
       );
+
+      // llms.txt (llmstxt.org): plain-text summary plus an index of indexed pages, so AI assistants
+      // get the gist without running JavaScript. Built from the same list as the sitemap.
+      const indexed = pages.filter((p) => !p.noindex);
+      const missing = indexed.filter((p) => !p.answers).map((p) => p.path);
+      if (missing.length) throw new Error(`static-routes: pages.ts entries need \`answers\` for llms.txt: ${missing.join(", ")}`);
+      const pageLines = indexed.map((p) => `- [${p.title.replace(/ \| 17hands\.ai$/, "")}](${SITE_ORIGIN}${p.path}): ${p.answers}`).join("\n");
+      fs.writeFileSync(path.join(outDir, "llms.txt"), `# 17hands.ai\n\n> ${SITE_SUMMARY}\n\n## Pages\n\n${pageLines}\n`);
     },
   };
 }
