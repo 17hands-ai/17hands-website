@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { createServer, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
@@ -26,11 +26,29 @@ function headFor(html: string, page: Pick<PageMeta, "title" | "description" | "n
   return out;
 }
 
+const EMPTY_ROOT = '<div id="root"></div>';
+
+/** Load src/entry-server.tsx through a throwaway Vite server so it gets the same aliases and JSX transform. */
+async function loadRenderer() {
+  const server = await createServer({
+    configFile: path.resolve(import.meta.dirname, "vite.config.ts"),
+    server: { middlewareMode: true, hmr: false },
+    appType: "custom",
+    logLevel: "error",
+  });
+  const mod = (await server.ssrLoadModule("/src/entry-server.tsx")) as { render: (path: string) => string };
+  return Object.assign((route: string) => mod.render(route), { close: () => server.close() });
+}
+
 /**
  * The site is a client-routed SPA on static hosting with no rewrite rules, so
  * any path without a file behind it 404s on direct visit or refresh. Emit a
  * real entry file per route (plus 404.html and the sitemap) so every route
  * resolves, each with its own title and canonical.
+ *
+ * Each indexable route is also pre-rendered into #root (main.tsx hydrates it),
+ * because AI crawlers like GPTBot and ClaudeBot don't run JavaScript and would
+ * otherwise see an empty page. Redirect stubs keep an empty root.
  */
 function staticRoutes(): Plugin {
   let outDir = "";
@@ -40,18 +58,32 @@ function staticRoutes(): Plugin {
     configResolved(config) {
       outDir = config.build.outDir;
     },
-    closeBundle() {
+    async closeBundle() {
       const indexHtml = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
-      for (const page of pages) {
-        const html = headFor(indexHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
-        const file = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
-        fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
-        fs.writeFileSync(path.join(outDir, file), html);
+      const render = await loadRenderer();
+      const withBody = (html: string, route: string) => {
+        const body = render(route);
+        if (!html.includes(EMPTY_ROOT)) throw new Error("static-routes: empty #root not found in index.html");
+        return html.replace(EMPTY_ROOT, `<div id="root">${body}</div>`);
+      };
+      try {
+        for (const page of pages) {
+          let html = headFor(indexHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
+          if (!page.noindex) html = withBody(html, page.path);
+          const file = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
+          fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
+          fs.writeFileSync(path.join(outDir, file), html);
+        }
+        fs.writeFileSync(
+          path.join(outDir, "404.html"),
+          withBody(
+            headFor(indexHtml, { title: notFoundTitle, description: "This page doesn't exist.", noindex: true }),
+            "/__not-found",
+          ),
+        );
+      } finally {
+        await render.close();
       }
-      fs.writeFileSync(
-        path.join(outDir, "404.html"),
-        headFor(indexHtml, { title: notFoundTitle, description: "This page doesn't exist.", noindex: true }),
-      );
       const urls = pages
         .filter((p) => !p.noindex)
         .map((p) => `  <url><loc>${SITE_ORIGIN}${p.path}</loc></url>`)
