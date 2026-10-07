@@ -3,7 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
 import { BrandNumeral, CircuitTrace } from "@/components/brand/Decor";
 import { Portrait } from "@/components/brand/Portrait";
-import { BOOKING_URL } from "@/lib/site";
+import { BOOKING_URL, LINKEDIN_PROFILE_URL } from "@/lib/site";
+import { LinkedInLink } from "@/components/brand/LinkedInLink";
 import { faqs } from "@/lib/faq";
 
 const painPoints = {
@@ -255,25 +256,52 @@ export default function Home() {
           <Portrait className="reveal aspect-[3/4] w-full max-w-[360px]" />
           <div className="reveal">
             <p className="eyebrow mb-4">About</p>
-            <h2 id="about-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-8">
+            <h2 id="about-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-3">
               Hi, I'm Anastasia.
             </h2>
+            <p className="rose-text font-medium mb-8">Anastasia Blodgett, founder of 17hands.ai</p>
             <div className="space-y-5 text-lg text-[var(--brand-text-2)] leading-relaxed max-w-2xl">
               <p>
-                I'm the founder of 17hands.ai. I help small businesses keep their information safe and find where better
-                tools and AI can make everyday work easier, then turn that into practical improvements.
+                I've spent more than 12 years building software. I studied Computer Science at UC Berkeley, built tools
+                for real estate agents at Trulia and Zillow, shipped apps for clients like MLB and MasterClass as part of
+                a small consulting team, and spent six years at UnitedHealth Group on the UnitedHealthcare mobile app,
+                used by millions of members. Along the way I've also consulted for early-stage founders, helping them
+                scope ideas and turn them into shipped products.
               </p>
               <p>
-                My background spans software engineering, mobile products and engineering leadership. Throughout my
-                career I've advocated for security in the teams I've worked with and managed. That shapes how I approach
-                every project: understand the workflow, consider the information involved and help people use their
-                tools responsibly.
+                In healthcare, protecting people's information isn't optional. I was the security advocate on my team,
+                building sign-in, encryption and secure storage, and later led engineering teams that worked hand in hand
+                with security and privacy partners. What I learned: good security is mostly clear habits that people
+                actually follow.
               </p>
               <p>
-                I'll take the time to understand how your business works and explain things without jargon. The goal is
-                something your team can use and maintain, not a pile of tools you didn't need.
+                Small businesses deserve that same care, without the hype, the enterprise price tag or the jargon. The
+                focus is always on what makes sense for your business, not technology for technology's sake. I'm
+                hands-on with AI every day, prototyping tools and testing what's genuinely useful, and I believe AI should
+                come with guardrails and a human in the loop. That's what "AI systems with a human touch" means to me.
+              </p>
+              <p>
+                I also love teaching. I co-founded two women-in-engineering groups, mentored more than 15 engineers, and
+                now run security workshops that help people spot scams and use technology with confidence.
               </p>
             </div>
+
+            <dl className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-y-6 border-y border-white/10 py-6 max-w-2xl">
+              {[
+                ["12+ years", "building software"],
+                ["Millions", "of members on apps I built and led"],
+                ["UC Berkeley", "Computer Science"],
+                ["Up to 14", "engineers led"],
+              ].map(([value, label]) => (
+                <div key={value} className="pr-4">
+                  <dt className="sr-only">{label}</dt>
+                  <dd className="display text-2xl rose-text">{value}</dd>
+                  <dd className="text-sm text-[var(--brand-text-2)] mt-1">{label}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <LinkedInLink href={LINKEDIN_PROFILE_URL} label="Connect with me" className="mt-8" />
           </div>
         </div>
       </section>
