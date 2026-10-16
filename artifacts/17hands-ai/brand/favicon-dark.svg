@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <!-- Luminous Rose Gold Gradient for Dark Mode (Brilliant on Obsidian / Charcoal / Dark Tabs) -->
+    <linearGradient id="favRoseGoldDark" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2EA"/>
+      <stop offset="30%" stop-color="#F2BCAE"/>
+      <stop offset="70%" stop-color="#E0A786"/>
+      <stop offset="100%" stop-color="#C5805B"/>
+    </linearGradient>
+
+    <!-- Rich High-Contrast Rose Bronze Gradient for Light Mode (Crisp 4.8:1 on White / Light Gray Tabs) -->
+    <linearGradient id="favRoseGoldLight" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#B86644"/>
+      <stop offset="40%" stop-color="#9E4E2C"/>
+      <stop offset="85%" stop-color="#7C3516"/>
+      <stop offset="100%" stop-color="#551E08"/>
+    </linearGradient>
+
+    <!-- Fail-safe architectural drop shadow ensuring separation on any colored or patterned tab -->
+    <filter id="favContrastHalo" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="1" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <style>
+    .fav-mark {
+      fill: url(#favRoseGoldDark);
+      stroke: #0D0C13;
+      stroke-width: 2.2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      paint-order: stroke fill;
+    }
+    .fav-accent {
+      fill: #FFFFFF;
+      opacity: 0.85;
+    }
+      </style>
+
+  <!-- Plain transparent background (zero container box/rect) -->
+  <g filter="url(#favContrastHalo)">
+    <!-- UPPER CUPPING HAND (Flowing across top) -->
+    <path class="fav-mark" d="
+      M 11 20.5
+      C 18 10.5, 30 5.5, 45 7.5
+      C 52.5 8.5, 58 12.5, 58.5 17
+      C 55 15, 48 11.5, 39.5 12.5
+      C 29 13.5, 21.5 19, 15.5 23
+      C 13.5 24.2, 10 22.5, 11 20.5 Z
+    "/>
+    <!-- Upper hand reflex highlight -->
+    <path class="fav-accent" d="
+      M 24 16
+      C 32 12.5, 40 13, 49 17.5
+      C 44 16, 36 15.5, 28 17.8
+      C 25 18.8, 23 18, 24 16 Z
+    "/>
+
+    <!-- LOWER CUPPING HAND (Flowing across bottom) -->
+    <path class="fav-mark" d="
+      M 53 43.5
+      C 46 53.5, 34 58.5, 19 56.5
+      C 11.5 55.5, 6 51.5, 5.5 47
+      C 9 49, 16 52.5, 24.5 51.5
+      C 35 50.5, 42.5 45, 48.5 41
+      C 50.5 39.8, 54 41.5, 53 43.5 Z
+    "/>
+    <!-- Lower hand reflex highlight -->
+    <path class="fav-accent" d="
+      M 40 48
+      C 32 51.5, 24 51, 15 46.5
+      C 20 48, 28 48.5, 36 46.2
+      C 39 45.2, 41 46, 40 48 Z
+    "/>
+
+    <!-- OPTICALLY TUNED SERIF '1' -->
+    <path class="fav-mark" d="
+      M 18 28
+      L 24 23.5
+      L 29.5 23.5
+      L 29.5 41.5
+      L 33.5 41.5
+      L 33.5 45
+      L 19.5 45
+      L 19.5 41.5
+      L 23.5 41.5
+      L 23.5 28.5
+      L 18 30.8
+      Z
+    "/>
+
+    <!-- OPTICALLY TUNED SERIF '7' -->
+    <path class="fav-mark" d="
+      M 34.5 23.5
+      L 49.5 23.5
+      L 49.5 27.5
+      L 41.5 45
+      L 35 45
+      L 44 28
+      L 34.5 28
+      Z
+    "/>
+  </g>
+</svg>
