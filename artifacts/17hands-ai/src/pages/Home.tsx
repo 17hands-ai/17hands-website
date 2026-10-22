@@ -158,6 +158,16 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="products" className="py-20 md:py-24 bg-[var(--brand-primary)] scroll-mt-24" aria-labelledby="products-title">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 id="products-title" className="display text-4xl md:text-5xl mb-12">Explore the 17hands.ai family.</h2>
+          <div className="grid md:grid-cols-[1.3fr_1fr] gap-12 lg:gap-20">
+            <div><h3 className="display text-3xl rose-text mb-4">Digital Defenders</h3><p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">Safer online, together. Cybersecurity workshops, scam awareness and practical digital habits for families, communities and small teams.</p><BrandButton href="/digital-defenders" size="lg">Explore Digital Defenders <ArrowRight size={18} aria-hidden="true" /></BrandButton></div>
+            <div><h3 className="display text-3xl rose-text mb-4">Natural</h3><p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">An upcoming space for community and related services. We are shaping what comes next.</p><BrandButton href="/natural" variant="secondary" size="lg">Meet Natural</BrandButton></div>
+          </div>
+        </div>
+      </section>
+
       {/* Recognizable problems */}
       <section aria-labelledby="familiar-title" className="py-24 md:py-28 border-t border-border">
         <div className="container mx-auto px-4 sm:px-6">

@@ -10,6 +10,8 @@ import { pages, notFoundTitle } from "@/lib/pages";
 
 // Pages
 import Home from "@/pages/Home";
+import DigitalDefenders from "@/pages/DigitalDefenders";
+import Natural from "@/pages/Natural";
 import ForYou from "@/pages/ForYou";
 import FAQ from "@/pages/FAQ";
 import Contact from "@/pages/Contact";
@@ -54,6 +56,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/digital-defenders" component={DigitalDefenders} />
+      <Route path="/natural" component={Natural} />
       <Route path="/for-you" component={ForYou} />
       <Route path="/faq" component={FAQ} />
       <Route path="/contact" component={Contact} />
