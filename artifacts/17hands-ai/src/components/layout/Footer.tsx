@@ -29,6 +29,8 @@ export function Footer() {
           <nav aria-label="Footer">
             <h2 className="eyebrow mb-5">Explore</h2>
             <ul className="space-y-3">
+              <li><Link href="/digital-defenders" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Digital Defenders</Link></li>
+              <li><Link href="/natural" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Natural</Link></li>
               <li><a href="/#services" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Services</a></li>
               <li><a href="/#how-it-works" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">How it works</a></li>
               <li><Link href="/for-you" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">For individuals</Link></li>

@@ -7,7 +7,7 @@ export const SITE_ORIGIN = "https://www.17hands.ai";
 
 /** Opening paragraph of /llms.txt. Keep in step with the homepage hero and About copy. */
 export const SITE_SUMMARY =
-  "17hands.ai offers security and practical AI for small businesses, run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. The work has two equal parts. Protect: customer data check-ups, security workshops for staff, account access routines and safe AI use guidelines. Simplify and grow: workflow automation and custom tools, websites, visibility on Google and in AI assistants, and training on new tools. Individuals and families can book 1-on-1 tech safety sessions. Every project starts by understanding how the business runs, picks one useful improvement, and measures whether it helped. It is practical review and improvement work, not formal audits, certification or legal advice. No prices are published; the first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.";
+  "17hands.ai offers security and practical AI for small businesses, run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. Digital Defenders is the dedicated program for cybersecurity workshops, scam awareness, social media privacy and family digital hygiene at /digital-defenders. Natural is an upcoming community product area at /natural. The consulting work has two equal parts. Protect: customer data check-ups, security workshops for staff, account access routines and safe AI use guidelines. Simplify and grow: workflow automation and custom tools, websites, visibility on Google and in AI assistants, and training on new tools. Individuals and families can book 1-on-1 tech safety sessions. Every project starts by understanding how the business runs, picks one useful improvement, and measures whether it helped. It is practical review and improvement work, not formal audits, certification or legal advice. No prices are published; the first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.";
 
 export interface PageMeta {
   path: string;
@@ -25,6 +25,18 @@ const DEFAULT_DESCRIPTION =
   "Security and practical AI for small businesses. Protect customer information, train your team, and save time with automation, websites and AI tools. Plain English, one useful step at a time.";
 
 export const pages: PageMeta[] = [
+  {
+    path: "/digital-defenders",
+    title: "Digital Defenders | Cybersecurity Workshops | 17hands.ai",
+    description: "Practical cybersecurity workshops for families, communities and small teams. Learn scam awareness, account security, social media privacy and family digital hygiene.",
+    answers: "What Digital Defenders workshops cover, who they help, everyday digital safety habits, and how to inquire about a session.",
+  },
+  {
+    path: "/natural",
+    title: "Natural | Community, Coming Soon | 17hands.ai",
+    description: "Natural is an upcoming 17hands.ai product area for community and related services. Explore what is taking shape and get in touch.",
+    answers: "The upcoming Natural product area for community and related services, and how to get in touch.",
+  },
   {
     path: "/",
     title: "Small Business Security & AI Consulting | 17hands.ai",

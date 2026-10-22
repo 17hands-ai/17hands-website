@@ -6,10 +6,10 @@ import { BrandButton } from "@/components/brand/BrandButton";
 import { BOOKING_URL } from "@/lib/site";
 
 const navLinks = [
+  { name: "Digital Defenders", href: "/digital-defenders" },
+  { name: "Natural", href: "/natural" },
   { name: "Services", href: "/#services" },
-  { name: "How it works", href: "/#how-it-works" },
   { name: "About", href: "/#about" },
-  { name: "For individuals", href: "/for-you" },
   { name: "FAQ", href: "/faq" },
 ];
 
