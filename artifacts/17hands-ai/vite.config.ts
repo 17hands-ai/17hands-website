@@ -68,9 +68,12 @@ function staticRoutes(): Plugin {
       };
       try {
         for (const page of pages) {
-          let html = headFor(indexHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
-          if (!page.noindex) html = withBody(html, page.path);
           const file = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
+          const sourceHtml = page.standalone
+            ? fs.readFileSync(path.join(outDir, file), "utf8")
+            : indexHtml;
+          let html = headFor(sourceHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
+          if (!page.noindex && !page.standalone) html = withBody(html, page.path);
           fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
           fs.writeFileSync(path.join(outDir, file), html);
         }
