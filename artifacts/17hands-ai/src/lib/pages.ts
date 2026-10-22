@@ -1,7 +1,8 @@
 /**
  * Per-route metadata. Single source for the client-side <title>, and for the
  * build step in vite.config.ts that writes a static HTML entry per route, the
- * sitemap, llms.txt and the 404 page. Add a route here when you add one to App.tsx.
+ * sitemap, llms.txt and the 404 page. React routes also belong in App.tsx;
+ * standalone documents live under public/ and use native navigation links.
  */
 export const SITE_ORIGIN = "https://www.17hands.ai";
 
@@ -15,6 +16,8 @@ export interface PageMeta {
   description: string;
   /** Excluded from the sitemap and marked noindex (redirect stubs). */
   noindex?: boolean;
+  /** A complete document copied from public/, with its own layout and scripts. */
+  standalone?: boolean;
   /** Canonical path when it differs from `path`. */
   canonical?: string;
   /** One line for /llms.txt: what this page answers. Required for indexed pages. */
@@ -25,6 +28,13 @@ const DEFAULT_DESCRIPTION =
   "Security and practical AI for small businesses. Protect customer information, train your team, and save time with automation, websites and AI tools. Plain English, one useful step at a time.";
 
 export const pages: PageMeta[] = [
+  {
+    path: "/link-in-bio",
+    title: "Anastasia Blodgett | Links & Booking | 17hands.ai",
+    description: "Connect with Anastasia Blodgett and 17hands.ai. Book a call, explore Digital Defenders, and find security and practical AI services. Brand Instagram and YouTube Shorts coming soon.",
+    answers: "Official 17hands.ai links, booking, contact, Digital Defenders workshops, community projects, and upcoming Instagram and YouTube Shorts accounts.",
+    standalone: true,
+  },
   {
     path: "/digital-defenders",
     title: "Digital Defenders | Cybersecurity Workshops | 17hands.ai",

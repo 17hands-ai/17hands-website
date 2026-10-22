@@ -1,0 +1,874 @@
+/* ==========================================================================
+       17 HANDS AI · ANASTASIA BLODGETT
+       Canonical Brand Expression from 17hands.ai Design System (57ed15dc)
+       - Palette: Obsidian (#0D0C13), Deep Plum (#13091E), Rose Gold (#E0A786),
+         Amethyst Action (#7928CA), Circuit Silver (#CFD3DE), Paper (#FAF8FD)
+       - Typography: Space Grotesk 700 Italic + Inter 400 Upright / 600 Italic
+         + JetBrains Mono Technical Eyebrows
+       - Signature Asymmetric Geometry (Zero Pills):
+         Portrait: 24px 6px 24px 6px with offset Rose-Gold hairline frame
+         Buttons: 14px 4px 14px 4px | Badges: 8px 2.5px 8px 2.5px | Cards: 12px
+       ========================================================================== */
+
+:root,
+html[data-theme="dark"] {
+  --bg-obsidian: #0d0c13;
+  --bg-plum: #13091e;
+  --bg-atmosphere: #261438;
+  --bg-surface: rgba(27, 20, 38, 0.88);
+  --bg-surface-solid: #1b1426;
+  --bg-elevated: rgba(36, 20, 56, 0.92);
+  --bg-card-hover: rgba(45, 25, 70, 0.95);
+  --bg-glass: rgba(19, 9, 30, 0.84);
+
+  --text-primary: #faf8fd;
+  --text-secondary: #d4cae0;
+  --text-muted: #a396b4;
+  --text-silver: #cfd3de;
+
+  --accent-rosegold: #e0a786;
+  --accent-rosegold-soft: rgba(224, 167, 134, 0.14);
+  --accent-rosegold-border: rgba(224, 167, 134, 0.36);
+  --accent-rosegold-strong: #ecc0a6;
+
+  --action-amethyst: #7928ca;
+  --action-amethyst-hover: #8a3ae0;
+  --action-amethyst-soft: rgba(121, 40, 202, 0.2);
+  --action-amethyst-glow: rgba(121, 40, 202, 0.42);
+  --on-action: #ffffff;
+
+  --border-subtle: rgba(207, 211, 222, 0.14);
+  --border-card: rgba(224, 167, 134, 0.22);
+  --border-strong: rgba(224, 167, 134, 0.55);
+
+  --shadow-card:
+    0 18px 42px -12px rgba(5, 2, 10, 0.65),
+    0 1px 0 0 rgba(224, 167, 134, 0.12) inset;
+  --shadow-cta: 0 10px 28px -6px rgba(121, 40, 202, 0.55);
+  --circuit-grid: rgba(224, 167, 134, 0.045);
+}
+
+html[data-theme="light"] {
+  --bg-obsidian: #faf8fd;
+  --bg-plum: #faf8fd;
+  --bg-atmosphere: #f1ecf8;
+  --bg-surface: rgba(255, 255, 255, 0.94);
+  --bg-surface-solid: #ffffff;
+  --bg-elevated: #f5f0fc;
+  --bg-card-hover: #efe7fa;
+  --bg-glass: rgba(250, 248, 253, 0.88);
+
+  --text-primary: #13091e;
+  --text-secondary: #3a2b4c;
+  --text-muted: #655578;
+  --text-silver: #4a3d5c;
+
+  --accent-rosegold: #9e5b38;
+  --accent-rosegold-soft: rgba(158, 91, 56, 0.1);
+  --accent-rosegold-border: rgba(158, 91, 56, 0.34);
+  --accent-rosegold-strong: #7d4324;
+
+  --action-amethyst: #7928ca;
+  --action-amethyst-hover: #6419b2;
+  --action-amethyst-soft: rgba(121, 40, 202, 0.1);
+  --action-amethyst-glow: rgba(121, 40, 202, 0.24);
+  --on-action: #ffffff;
+
+  --border-subtle: rgba(19, 9, 30, 0.12);
+  --border-card: rgba(19, 9, 30, 0.16);
+  --border-strong: #13091e;
+
+  --shadow-card:
+    0 14px 32px -12px rgba(19, 9, 30, 0.1),
+    0 1px 0 0 rgba(255, 255, 255, 0.8) inset;
+  --shadow-cta: 0 10px 24px -6px rgba(121, 40, 202, 0.32);
+  --circuit-grid: rgba(121, 40, 202, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background-color: var(--bg-plum);
+  background-image:
+    radial-gradient(
+      ellipse 80% 55% at 75% 0%,
+      var(--action-amethyst-soft),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 15% 18%,
+      var(--accent-rosegold-soft),
+      transparent 65%
+    ),
+    linear-gradient(135deg, var(--bg-plum) 0%, var(--bg-atmosphere) 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* Subtle architectural circuit grid overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--circuit-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--circuit-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 25%, black 20%, transparent 85%);
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 25%,
+    black 20%,
+    transparent 85%
+  );
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+.font-mono {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+       STICKY TOP BAR (Brand Mark + Compact Sun/Moon & EN/RU Controls)
+       ========================================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-glass);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.topbar-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-lockup img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(224, 167, 134, 0.25));
+}
+
+.brand-wordmark {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.18rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.brand-wordmark .dot-ai {
+  color: var(--accent-rosegold);
+}
+
+.topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrl-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-card);
+  border-radius: 8px 2.5px 8px 2.5px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.ctrl-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-radius: 6px 2px 6px 2px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+  line-height: 1;
+}
+
+.ctrl-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ctrl-btn:hover {
+  color: var(--text-primary);
+}
+
+.ctrl-btn.active {
+  background: var(--action-amethyst);
+  color: var(--on-action);
+  box-shadow: 0 2px 8px rgba(121, 40, 202, 0.35);
+}
+
+/* ==========================================================================
+       MAIN CONTAINER
+       ========================================================================== */
+.page-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 18px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ==========================================================================
+       HERO CARD - Signature Asymmetric Portrait Frame + Masthead
+       ========================================================================== */
+.hero-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 26px 24px 24px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Subtle Rose-Gold top-left circuit corner accent */
+.hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-rosegold), transparent);
+}
+
+.hero-top-grid {
+  display: grid;
+  grid-template-columns: 152px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Signature 17hands.ai Asymmetric Portrait Frame with Offset Rose-Gold Border */
+.portrait-stage {
+  position: relative;
+  width: 144px;
+  height: 176px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.portrait-offset-frame {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid var(--accent-rosegold);
+  border-radius: 24px 6px 24px 6px;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.25s ease;
+}
+
+.portrait-stage:hover .portrait-offset-frame {
+  transform: translate(3px, 3px);
+}
+
+.portrait-photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px 6px 24px 6px;
+  overflow: hidden;
+  z-index: 2;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.42);
+}
+
+.portrait-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
+
+.hero-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-rosegold);
+  background: var(--accent-rosegold-soft);
+  border: 1px solid var(--accent-rosegold-border);
+  border-radius: 8px 2.5px 8px 2.5px;
+  padding: 4px 10px;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--accent-rosegold);
+  box-shadow: 0 0 8px var(--accent-rosegold);
+}
+
+.founder-name {
+  font-size: clamp(1.85rem, 5.5vw, 2.35rem);
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+}
+
+.founder-role {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.founder-role strong {
+  color: var(--accent-rosegold);
+  font-weight: 600;
+}
+
+.hero-statement {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero-tagline {
+  font-size: clamp(1.38rem, 4.3vw, 1.72rem);
+  color: var(--text-primary);
+  line-height: 1.14;
+}
+
+.hero-tagline .highlight-rosegold {
+  color: var(--accent-rosegold);
+}
+
+.hero-subcopy {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 58ch;
+  line-height: 1.58;
+}
+
+/* ==========================================================================
+       SECTION CARDS & HEADERS
+       ========================================================================== */
+.section-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 22px 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.section-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-rosegold);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: 1.32rem;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  max-width: 58ch;
+}
+
+/* ==========================================================================
+       DIRECT DESTINATIONS (Curated Link Cards)
+       ========================================================================== */
+.links-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dest-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px 4px 12px 4px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
+}
+
+.dest-card:hover {
+  border-color: var(--accent-rosegold);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.dest-card.dest-featured {
+  background: linear-gradient(
+    135deg,
+    rgba(121, 40, 202, 0.24) 0%,
+    rgba(224, 167, 134, 0.12) 100%
+  );
+  border-color: var(--accent-rosegold);
+}
+
+.dest-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.dest-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px 3px 10px 3px;
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--accent-rosegold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent-rosegold);
+}
+
+.dest-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dest-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dest-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--accent-rosegold);
+  letter-spacing: 0.06em;
+}
+
+.dest-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--text-primary);
+}
+
+.dest-desc {
+  font-size: 0.81rem;
+  color: var(--text-secondary);
+  line-height: 1.42;
+}
+
+.dest-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px 2.5px 8px 2.5px;
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-rosegold);
+  flex-shrink: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.dest-card:hover .dest-arrow {
+  transform: translateX(3px);
+  background: var(--action-amethyst);
+  color: var(--on-action);
+  border-color: var(--action-amethyst);
+}
+
+/* ==========================================================================
+       ENDORSED COMMUNITY & BRAND FAMILY (Original Rose-Gold Logos)
+       ========================================================================== */
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.family-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px 4px 12px 4px;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.family-card:hover {
+  border-color: var(--accent-rosegold);
+}
+
+.family-logo-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px 4px 12px 4px;
+  background: #13091e;
+  border: 1px solid rgba(224, 167, 134, 0.32);
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.family-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.family-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--accent-rosegold);
+  letter-spacing: 0.06em;
+}
+
+.family-name {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.94rem;
+  color: var(--text-primary);
+}
+
+.family-desc {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.44;
+}
+
+/* ==========================================================================
+       FOOTER
+       ========================================================================== */
+.footer {
+  text-align: center;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.footer-brand img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.modular-socials-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.social-mod-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 10px 3px 10px 3px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.social-mod-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--accent-rosegold);
+  stroke-width: 1.9;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.social-mod-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-rosegold);
+  background: var(--bg-card-hover);
+}
+
+.footer-credit {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-wrap: balance;
+}
+
+.footer-credit a {
+  color: var(--accent-rosegold);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.18s ease;
+}
+
+.footer-credit a:hover {
+  opacity: 0.88;
+}
+
+/* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+@media (max-width: 540px) {
+  .hero-top-grid {
+    grid-template-columns: 116px 1fr;
+    gap: 16px;
+  }
+  .portrait-stage {
+    width: 110px;
+    height: 138px;
+  }
+  .modular-socials-row {
+    grid-template-columns: 1fr;
+  }
+  .family-grid {
+    grid-template-columns: 1fr;
+  }
+  .family-card {
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent-rosegold-strong);
+  outline-offset: 4px;
+}
+.social-pending {
+  flex-direction: column;
+  gap: 2px;
+  cursor: default;
+  white-space: normal;
+  text-align: center;
+}
+.social-pending:hover {
+  transform: none;
+  border-color: var(--border-card);
+  background: var(--bg-surface);
+}
+.social-pending-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.pending-note {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.footer-legal {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+.footer-legal a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 8px;
+  padding: 12px;
+  background: var(--bg-surface-solid);
+}
+.family-card:not(a):hover {
+  border-color: var(--border-subtle);
+}
+@media (max-width: 380px) {
+  .topbar-inner {
+    padding-inline: 12px;
+    gap: 8px;
+  }
+  .brand-lockup {
+    gap: 6px;
+  }
+  .brand-wordmark {
+    font-size: 0.95rem;
+  }
+  .hero-top-grid {
+    grid-template-columns: 1fr;
+  }
+  .portrait-stage {
+    margin-inline: auto;
+  }
+  .hero-identity {
+    text-align: center;
+    align-items: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
