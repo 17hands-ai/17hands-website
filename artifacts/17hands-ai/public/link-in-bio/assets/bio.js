@@ -62,7 +62,7 @@ const I18N = {
     fam3_badge: "CREATIVE NIGHTS · COMING SOON",
     fam3_name: "Karaoke & Music",
     footer_credit:
-      'Website by <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · a <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a> project',
+      'Branding by <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · a <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a> project',
   },
   ru: {
     coming_soon: "Скоро",
@@ -93,7 +93,7 @@ const I18N = {
     fam3_badge: "ТВОРЧЕСТВО · СКОРО",
     fam3_name: "Караоке и Музыка",
     footer_credit:
-      'Разработка сайта: <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · проект <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a>',
+      'Брендинг: <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · проект <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a>',
   },
 };
 
