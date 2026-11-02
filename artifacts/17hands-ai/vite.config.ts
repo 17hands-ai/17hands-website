@@ -26,6 +26,9 @@ function headFor(html: string, page: Pick<PageMeta, "title" | "description" | "n
   return out;
 }
 
+/** HTML sources write the canonical host as %SITE_ORIGIN% so it is set in one place (pages.ts). */
+const withOrigin = (html: string) => html.replaceAll("%SITE_ORIGIN%", SITE_ORIGIN);
+
 const EMPTY_ROOT = '<div id="root"></div>';
 
 /** Load src/entry-server.tsx through a throwaway Vite server so it gets the same aliases and JSX transform. */
@@ -58,6 +61,7 @@ function staticRoutes(): Plugin {
     configResolved(config) {
       outDir = config.build.outDir;
     },
+    transformIndexHtml: { order: "pre", handler: withOrigin },
     async closeBundle() {
       const indexHtml = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
       const render = await loadRenderer();
@@ -70,10 +74,11 @@ function staticRoutes(): Plugin {
         for (const page of pages) {
           const file = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
           const sourceHtml = page.standalone
-            ? fs.readFileSync(path.join(outDir, file), "utf8")
+            ? withOrigin(fs.readFileSync(path.join(outDir, file), "utf8"))
             : indexHtml;
           let html = headFor(sourceHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
           if (!page.noindex && !page.standalone) html = withBody(html, page.path);
+          if (html.includes("%SITE_ORIGIN%")) throw new Error(`static-routes: unreplaced %SITE_ORIGIN% in ${file}`);
           fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
           fs.writeFileSync(path.join(outDir, file), html);
         }
@@ -95,6 +100,7 @@ function staticRoutes(): Plugin {
         path.join(outDir, "sitemap.xml"),
         `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
       );
+      fs.writeFileSync(path.join(outDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`);
 
       // llms.txt (llmstxt.org): plain-text summary plus an index of indexed pages, so AI assistants
       // get the gist without running JavaScript. Built from the same list as the sitemap.

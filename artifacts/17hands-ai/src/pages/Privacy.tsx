@@ -8,7 +8,7 @@ export default function Privacy() {
     <LegalPage title="Privacy Policy" effective="October 6, 2026">
       <p>
         This policy explains what personal information 17hands.ai ("17hands", "I", "we") collects through this website
-        (www.17hands.ai), how it is used and shared, and the choices you have. 17hands is run by Anastasia, its founder.
+        (17hands.ai), how it is used and shared, and the choices you have. 17hands is run by Anastasia, its founder.
         If you have questions, email {mail}.
       </p>
 

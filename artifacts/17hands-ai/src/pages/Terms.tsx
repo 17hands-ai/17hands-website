@@ -6,7 +6,7 @@ export default function Terms() {
   return (
     <LegalPage title="Terms of Use" effective="October 6, 2026">
       <p>
-        These terms apply to your use of the 17hands.ai website (www.17hands.ai), run by Anastasia, founder of
+        These terms apply to your use of the 17hands.ai website (17hands.ai), run by Anastasia, founder of
         17hands.ai. By using the site you agree to them. If you don't agree, please don't use the site.
       </p>
 
