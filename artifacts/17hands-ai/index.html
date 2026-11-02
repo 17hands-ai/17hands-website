@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Small Business Security &amp; AI Consulting | 17hands.ai</title>
+    <title>17hands.ai | Small Business Security &amp; AI Consulting</title>
     <meta name="description" content="Security and practical AI for small businesses. Protect customer information, train your team, and save time with automation, websites and AI tools. Plain English, one useful step at a time." />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0D0C13" />
-    <link rel="canonical" href="https://www.17hands.ai/" />
+    <link rel="canonical" href="%SITE_ORIGIN%/" />
     <meta property="og:site_name" content="17hands.ai" />
     <meta property="og:title" content="Keep your business safe. Make everyday work easier. | 17hands.ai" />
     <meta property="og:description" content="Security and practical AI for small businesses, from customer data check-ups and staff workshops to automation and websites." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.17hands.ai/" />
-    <meta property="og:image" content="https://www.17hands.ai/og-image.png" />
+    <meta property="og:url" content="%SITE_ORIGIN%/" />
+    <meta property="og:image" content="%SITE_ORIGIN%/og-image.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -21,10 +21,12 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Keep your business safe. Make everyday work easier. | 17hands.ai" />
     <meta name="twitter:description" content="Security and practical AI for small businesses, from customer data check-ups and staff workshops to automation and websites." />
-    <meta name="twitter:image" content="https://www.17hands.ai/og-image.png" />
+    <meta name="twitter:image" content="%SITE_ORIGIN%/og-image.png" />
     <meta name="twitter:image:alt" content="17hands.ai logo: Security and practical AI for small businesses" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,19 +34,35 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "17hands.ai",
-      "url": "https://www.17hands.ai/",
-      "email": "info@17hands.ai",
-      "description": "Security and practical AI consulting for small businesses: customer data check-ups, staff security workshops, automation, custom tools and websites, plus 1-on-1 tech safety sessions for individuals.",
-      "founder": {
-        "@type": "Person",
-        "name": "Anastasia Blodgett",
-        "jobTitle": "Founder",
-        "alumniOf": "University of California, Berkeley",
-        "sameAs": ["https://www.linkedin.com/in/anastasia-blodgett"]
-      },
-      "sameAs": ["https://www.linkedin.com/company/143977946/"]
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "%SITE_ORIGIN%/#website",
+          "name": "17hands",
+          "alternateName": ["17hands.ai", "17 Hands"],
+          "url": "%SITE_ORIGIN%/",
+          "publisher": { "@id": "%SITE_ORIGIN%/#org" }
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "%SITE_ORIGIN%/#org",
+          "name": "17hands",
+          "alternateName": ["17hands.ai", "17 Hands"],
+          "url": "%SITE_ORIGIN%/",
+          "logo": "%SITE_ORIGIN%/icon-512.png",
+          "image": "%SITE_ORIGIN%/og-image.png",
+          "email": "info@17hands.ai",
+          "description": "Security and practical AI consulting for small businesses: customer data check-ups, staff security workshops, automation, custom tools and websites, plus 1-on-1 tech safety sessions for individuals.",
+          "founder": {
+            "@type": "Person",
+            "name": "Anastasia Blodgett",
+            "jobTitle": "Founder",
+            "alumniOf": "University of California, Berkeley",
+            "sameAs": ["https://www.linkedin.com/in/anastasia-blodgett"]
+          },
+          "sameAs": ["https://www.linkedin.com/company/143977946/", "https://cal.com/17hands"]
+        }
+      ]
     }
     </script>
   </head>

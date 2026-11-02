@@ -4,7 +4,11 @@
  * sitemap, llms.txt and the 404 page. React routes also belong in App.tsx;
  * standalone documents live under public/ and use native navigation links.
  */
-export const SITE_ORIGIN = "https://www.17hands.ai";
+/**
+ * The one canonical host. Must match the primary domain in Vercel (the other host
+ * should redirect here), or Google gets canonicals that point at a redirect.
+ */
+export const SITE_ORIGIN = "https://17hands.ai";
 
 /** Opening paragraph of /llms.txt. Keep in step with the homepage hero and About copy. */
 export const SITE_SUMMARY =
@@ -49,7 +53,7 @@ export const pages: PageMeta[] = [
   },
   {
     path: "/",
-    title: "Small Business Security & AI Consulting | 17hands.ai",
+    title: "17hands.ai | Small Business Security & AI Consulting",
     description: DEFAULT_DESCRIPTION,
     answers: "What 17hands.ai does, the Protect and Simplify & grow services, how projects work, and who Anastasia is.",
   },
