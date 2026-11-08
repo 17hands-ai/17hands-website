@@ -1,5 +1,5 @@
 import { LegalPage } from "@/components/brand/LegalPage";
-import { BOOKING_URL, CONTACT_EMAIL } from "@/lib/site";
+import { BOOKING_URL, CONTACT_EMAIL, UMAMI_WEBSITE_ID } from "@/lib/site";
 
 const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
 
@@ -44,12 +44,21 @@ export default function Privacy() {
           <strong>Fonts.</strong> Fonts are loaded from Google Fonts, so your browser sends your IP address and browser
           information to Google when a page loads.
         </li>
+        {UMAMI_WEBSITE_ID && (
+          <li>
+            <strong>Visit statistics.</strong> We use Umami, a privacy-focused analytics service, to count page views,
+            where visits come from (such as a referring site or your country) and which links and buttons are clicked.
+            Umami does not use cookies, does not store your IP address and does not follow you across other websites.
+          </li>
+        )}
         <li>
           <strong>Chat widget storage.</strong> The Chatbase widget may store identifiers in your browser (cookies or
           local storage) so a conversation can continue across pages.
         </li>
       </ul>
-      <p>We do not use advertising cookies, analytics tracking or sell any data.</p>
+      <p>
+        We do not use advertising cookies{UMAMI_WEBSITE_ID ? "" : " or analytics tracking"}, and we do not sell any data.
+      </p>
 
       <h2>How we use information</h2>
       <ul>
@@ -67,6 +76,7 @@ export default function Privacy() {
         <li>Scheduling (Cal.com) and connected calendar and video-meeting services.</li>
         <li>Email provider, for messages you send us.</li>
         <li>Font delivery (Google Fonts).</li>
+        {UMAMI_WEBSITE_ID && <li>Visit statistics (Umami).</li>}
         <li>Professional advisers or authorities, when required by law or to protect our rights.</li>
       </ul>
       <p>
@@ -79,7 +89,7 @@ export default function Privacy() {
         Some browsers send a "Do Not Track" signal. There is no common standard for responding to it, so this website
         does not change its behavior when it receives one. We do not track visitors across other websites over time,
         and we do not allow advertising networks to do so through this site. The third-party services described above
-        (Chatbase, Cal.com, Google Fonts and Vercel) receive technical information when you use them and handle it
+        ({UMAMI_WEBSITE_ID ? "Chatbase, Cal.com, Google Fonts, Vercel and Umami" : "Chatbase, Cal.com, Google Fonts and Vercel"}) receive technical information when you use them and handle it
         under their own policies.
       </p>
 
