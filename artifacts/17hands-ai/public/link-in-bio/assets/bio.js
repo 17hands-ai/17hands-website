@@ -45,6 +45,7 @@ const I18N = {
     hero_tagline:
       '“AI systems with a <span class="highlight-rosegold">human touch</span>.”',
     msoc_contact: "Email 17hands",
+    msoc_save: "Save contact to phone",
     links_eyebrow: "LINKS & BOOKING",
     links_title: "Work & Connect",
     link1_eyebrow: "CAL.COM/17HANDS · FREE INTRO CALL",
@@ -76,6 +77,7 @@ const I18N = {
     hero_tagline:
       '«AI-системы с <span class="highlight-rosegold">человеческим теплом</span>».',
     msoc_contact: "Написать в 17hands",
+    msoc_save: "Сохранить контакт",
     links_eyebrow: "ССЫЛКИ И ЗАПИСЬ",
     links_title: "Связаться и начать работу",
     link1_eyebrow: "CAL.COM/17HANDS · БЕСПЛАТНЫЙ ЗВОНОК",
@@ -126,3 +128,27 @@ const preferredLanguage =
   params.get("lang") || readPreference("17hands_bio_lang");
 setTheme(preferredTheme === "light" ? "light" : "dark");
 setLanguage(preferredLanguage === "ru" ? "ru" : "en");
+
+/**
+ * Lead events. Each tap is classified by its destination, so new links are
+ * counted without extra markup. Events go to whichever analytics script the
+ * page loads (Umami or Plausible); with none loaded this is a no-op.
+ */
+function leadEvent(href) {
+  if (href.startsWith("mailto:")) return "email";
+  if (href.startsWith("tel:")) return "call";
+  if (href.startsWith("sms:")) return "text";
+  if (href.endsWith(".vcf")) return "save-contact";
+  if (/cal\.com|calendly\.com/.test(href)) return "booking";
+  return "link";
+}
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (!link) return;
+  const href = link.getAttribute("href");
+  const name = leadEvent(href);
+  const data = { href };
+  if (window.umami) window.umami.track(name, data);
+  else if (window.plausible) window.plausible(name, { props: data });
+});
