@@ -67,14 +67,15 @@
     </script>
     <script>
       /* Opener: decide before first paint so the page never flashes ahead of the intro.
-         Home page only, once per browser session, never with reduced motion. ?intro=1 replays it, ?intro=0 skips it. */
+         Home page only, once per browser session, never with reduced motion. ?intro=1 replays it, ?intro=0 skips it;
+         neither overrides the home-only or reduced-motion rules. */
       (function () {
         try {
-          var d = document.documentElement, q = location.search;
+          var d = document.documentElement, p = new URLSearchParams(location.search).get("intro");
           var home = location.pathname.replace(/\/+$/, "") === "" && !location.hash;
           var seen = sessionStorage.getItem("intro-seen") === "1";
           var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-          var on = q.indexOf("intro=1") > -1 || (home && !seen && !still && q.indexOf("intro=0") < 0);
+          var on = home && !still && (p === "1" || (!seen && p !== "0"));
           if (!on) return;
           d.classList.add("intro-on");
           /* Safety net: never leave the page hidden if the opener script fails. */
