@@ -67,6 +67,15 @@
     }
     </script>
     <script>
+      /* Theme: apply a saved light choice before first paint. Dark is the brand default. */
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.dataset.theme = "light";
+          document.querySelector('meta[name="theme-color"]').content = "#FBF9FE";
+        }
+      } catch (e) {}
+    </script>
+    <script>
       /* Opener: decide before first paint so the page never flashes ahead of the intro.
          Home page only, once per browser session, never with reduced motion. ?intro=1 replays it, ?intro=0 skips it;
          neither overrides the home-only or reduced-motion rules. */

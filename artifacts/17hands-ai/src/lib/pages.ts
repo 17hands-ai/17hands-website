@@ -81,7 +81,7 @@ export const pages: PageMeta[] = [
   {
     path: "/faq",
     title: "FAQ | 17hands.ai",
-    description: "Answers to common questions about security reviews, staff workshops, automation, websites and how projects work.",
+    description: "Answers to common questions about security reviews, staff workshops, automation, websites, prices and how projects work.",
     answers: "Common questions: where to start, whether it is only about AI, customer data, staff workshops, existing tools, websites, measuring results and cost.",
   },
   {

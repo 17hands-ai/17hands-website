@@ -43,9 +43,11 @@ Measured with `pnpm run build` on this branch and on main, same machine.
 
 | Asset | main | fable-updates | Change |
 |---|---|---|---|
-| JS, gzipped | 119.3 KB | 128.4 KB | +9.1 KB |
-| CSS, gzipped | 18.4 KB | 19.1 KB | +0.7 KB |
-| Requests | | | none added |
+| JS, gzipped, every visitor | 119.3 KB | 133.0 KB | +13.7 KB |
+| CSS, gzipped | 18.4 KB | 19.5 KB | +1.1 KB |
+| Russian copy, `/ru` only | | 11.6 KB | separate chunk |
+| Spanish copy, `/es` only | | 9.3 KB | separate chunk |
+| Requests for English visitors | | | none added |
 
 - Motion uses `transform`, `opacity` and `stroke-dashoffset` only. No layout work per frame.
 - Scroll reveals use CSS view timelines, so they cost no JavaScript. Browsers without them show the content at rest.
@@ -119,6 +121,38 @@ What weakens it:
 - **It was all text.** This branch adds the two-phone sketch. The next step is a real screenshot
   of a client's page with its 30-day numbers once a founding client agrees.
 
+## 6b. Second pass (2026-11-11): logo hub, themes, languages, urgency, SEO and AEO
+
+| Change | Where | Notes |
+|---|---|---|
+| Hero hub shows the 17hands logo with "Human check" under it | `HeroFlow.tsx` | Logo breathes and the ring glows on a 4.8s loop. The hub keeps a dark plate in both themes so the rose gold reads |
+| Light and dark mode | `index.css` (light theme block), `Header.tsx`, `index.html` | Sun and moon button in the header. Choice is saved and applied before first paint. Dark stays the default |
+| English, Russian, Spanish | `src/i18n/` | `/`, `/packages`, `/faq`, `/contact` plus header and footer are translated. Russian at `/ru`, Spanish at `/es`, each a real pre-rendered page |
+| "Waiting is the expensive option" CTA under the statistics | `StatBand.tsx` | Urgency tied to the sourced numbers, not invented scarcity |
+| "Delivery, not hype" section with its own CTA | `Home.tsx` | Four commitments: a working result, written scope and price, measured outcome, no tool for its own sake |
+| Estimator shows the monthly cost of waiting | `RoiEstimator.tsx` | |
+| Structured data per route and language | `src/lib/schema.ts`, `vite.config.ts` | `FAQPage` on `/` and `/faq`, `OfferCatalog` with every price on `/packages` |
+| hreflang, `<html lang>`, `og:locale`, language-aware sitemap | `vite.config.ts` | Translated routes cross-link all three languages plus `x-default` |
+| Per-route share titles | `vite.config.ts` | Every route used to share the home page's `og:title`. Fixed |
+| llms.txt now lists prices and the full FAQ | `vite.config.ts` | AI assistants can answer price and "why now" questions without rendering a page |
+| Three new FAQ entries | `src/i18n/*.ts` | Why act now, how you differ from other AI consultants, ongoing support |
+
+How the languages work: copy lives in `src/i18n/en.ts`, `ru.ts`, `es.ts`. The Russian and Spanish
+files must match the English shape or typecheck fails. Prices are never typed into prose: copy
+uses `{package-id}` tokens that are filled from `packages.ts`.
+
+Decisions this pass adds:
+
+6. **Translations are mine.** Russian is written in your voice (first person, feminine). Read it
+   once. Spanish should be read by a native speaker before it goes live.
+7. **Only four routes are translated.** Bio pages, Digital Defenders, For you, Natural, Privacy and
+   Terms show English copy inside translated navigation under `/ru` and `/es`, and their canonical
+   points at the English URL. Legal pages should be translated by a person, not by me.
+8. **Light mode and the logo.** The rose gold PNG is softer on a light background. A darker
+   bronze variant of the logo for light mode would be sharper if you have the source.
+9. **Chat widget language.** The Chatbase assistant still greets in English on `/ru` and `/es`.
+   That is configured in Chatbase.
+
 ## 7. Roadmap
 
 **Phase 1, this branch.** Review, settle section 5, merge.
@@ -129,7 +163,12 @@ What weakens it:
 - `Offer` and `Service` structured data generated from `packages.ts` (the unmerged `geo-fixes` branch has the schema groundwork).
 - Update the Chatbase assistant's knowledge with the prices. That lives in Chatbase, not this repo.
 
-**Phase 3, proof.**
+**Phase 3, round two: showcase of projects and products you built.**
+- A `/work` page and a home strip: each project as problem, what was built, result, with a screenshot or short loop.
+- Needs from you: the list of projects, which can be named publicly, one number per project, and screenshots.
+- Candidates I know of: the Teaspoon onboarding tool, Digital Defenders, the bio page product, and this site itself.
+
+**Phase 3b, proof.**
 - Teaspoon onboarding case study: the problem, what was built, one measured result.
 - LinkedIn recommendations as testimonials, once you have permission.
 - Replace the estimator's default numbers with a real client's.
@@ -156,7 +195,7 @@ plus MP4, no autoplay with reduced motion. The intro opener already follows this
 pnpm --dir artifacts/17hands-ai run dev
 ```
 
-Then open `/?intro=0`, `/packages` and `/bio-pages`. Check a phone width too.
+Then open `/?intro=0`, `/packages`, `/bio-pages`, `/ru` and `/es/packages`. Try the theme button and a phone width.
 
 Verified on this branch: typecheck passes, production build passes, `/packages` is pre-rendered
 and in the sitemap and llms.txt, no console errors, no horizontal scroll at 375px, layouts checked

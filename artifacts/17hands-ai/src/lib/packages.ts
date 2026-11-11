@@ -1,213 +1,101 @@
 import { BIO_PAGE_PRICE } from "./site";
 
 /**
- * Single source for every published package and starting price. The /packages page, the
- * home page service rows, the ROI estimator, the FAQ and llms.txt all read from here, so a
- * price changes in one place.
+ * Single source for package structure and starting prices. Names and descriptions live in
+ * the locale files (src/i18n/<locale>.ts) under `packages.items`, keyed by the ids below.
  *
  * PROPOSED PRICES: drafted on the fable-updates branch for review. Confirm or change each
- * `from` before this reaches production. See docs/fable-updates-plan.md, section 5.
+ * `price` before this reaches production. See docs/fable-updates-plan.md, section 5.
  */
-export interface Package {
-  id: string;
-  name: string;
-  /** Display price, already formatted. */
-  from: string;
-  /** "from", "flat" or "/mo": how the price reads next to the number. */
-  unit: "from" | "flat" | "per month";
-  /** Who it is for, in one line. */
-  fit: string;
-  includes: string[];
+export type Unit = "from" | "flat" | "per month";
+
+export type PackageId =
+  | "bio-page" | "starter-site" | "business-site" | "growth-site"
+  | "data-checkup" | "team-workshop" | "protect-bundle"
+  | "quick-win" | "assistant" | "custom-tool"
+  | "watch" | "care" | "partner";
+
+export interface PackageDef {
+  id: PackageId;
+  /** US dollars. */
+  price: number;
+  unit: Unit;
   /** One step per ladder is the suggested starting point. */
   featured?: boolean;
   href?: string;
 }
 
-export interface Ladder {
-  id: string;
-  eyebrow: string;
-  title: string;
-  intro: string;
-  steps: Package[];
-}
+export type LadderId = "websites" | "protect" | "automate";
 
-export const QUICK_WIN_PRICE = 750;
-
-export const ladders: Ladder[] = [
+export const ladders: { id: LadderId; steps: PackageDef[] }[] = [
   {
     id: "websites",
-    eyebrow: "Websites",
-    title: "A site that customers and AI assistants can both read",
-    intro: "Start with one page. Add pages, booking and an assistant when the business is ready for them.",
     steps: [
-      {
-        id: "bio-page",
-        name: "Bio page",
-        from: BIO_PAGE_PRICE,
-        unit: "flat",
-        fit: "The link behind your Instagram, card and QR code.",
-        includes: ["One branded page on your domain", "Save to contacts, call, text, book", "Lead form and analytics"],
-        href: "/bio-pages",
-      },
-      {
-        id: "starter-site",
-        name: "Starter site",
-        from: "$900",
-        unit: "from",
-        fit: "A new business that needs to look real this month.",
-        includes: ["One long page, written with you", "Booking and contact form", "Search and AI-answer basics", "Live in about a week"],
-      },
-      {
-        id: "business-site",
-        name: "Business site",
-        from: "$2,400",
-        unit: "from",
-        fit: "An established business whose site isn't bringing inquiries.",
-        includes: ["Up to 6 pages, one per service", "Google Business Profile tune-up", "Structured data and llms.txt for AI assistants", "Analytics and a 30-day results review"],
-        featured: true,
-      },
-      {
-        id: "growth-site",
-        name: "Growth site",
-        from: "$4,800",
-        unit: "from",
-        fit: "A busy team that loses leads after hours.",
-        includes: ["Everything in Business", "Assistant that answers from your own content", "Automatic lead follow-up, with a person in the loop", "Quarterly review and tuning"],
-      },
+      { id: "bio-page", price: Number(BIO_PAGE_PRICE.replace(/\D/g, "")), unit: "flat", href: "/bio-pages" },
+      { id: "starter-site", price: 900, unit: "from" },
+      { id: "business-site", price: 2400, unit: "from", featured: true },
+      { id: "growth-site", price: 4800, unit: "from" },
     ],
   },
   {
     id: "protect",
-    eyebrow: "Protect",
-    title: "Customer data, looked after properly",
-    intro: "Find out where information lives, close the gaps that matter and give your team habits that hold.",
     steps: [
-      {
-        id: "data-checkup",
-        name: "Data check-up",
-        from: "$600",
-        unit: "from",
-        fit: "You hold customer details and aren't sure who can see them.",
-        includes: ["Map of where customer data lives", "Who has access, and who shouldn't", "Prioritized fix list in plain English", "One hour of help making the fixes"],
-      },
-      {
-        id: "team-workshop",
-        name: "Team security workshop",
-        from: "$450",
-        unit: "from",
-        fit: "Up to 15 people, 90 minutes, on the tools you use.",
-        includes: ["Spotting scam emails, texts and calls", "Password manager and sign-in codes", "What is safe to paste into AI tools", "One-page guide to keep"],
-      },
-      {
-        id: "protect-bundle",
-        name: "Protect bundle",
-        from: "$1,500",
-        unit: "from",
-        fit: "The full baseline for a small team.",
-        includes: ["Data check-up and fixes", "Team workshop", "Joiner and leaver access routine", "Written AI-use rules for your business"],
-        featured: true,
-      },
+      { id: "data-checkup", price: 600, unit: "from" },
+      { id: "team-workshop", price: 450, unit: "from" },
+      { id: "protect-bundle", price: 1500, unit: "from", featured: true },
     ],
   },
   {
     id: "automate",
-    eyebrow: "Automate and build",
-    title: "Hand the repetitive work to software",
-    intro: "One workflow first. Measure it. Then decide whether the next one is worth doing.",
     steps: [
-      {
-        id: "quick-win",
-        name: "Quick-win automation",
-        from: `$${QUICK_WIN_PRICE}`,
-        unit: "from",
-        fit: "One task your team repeats every week.",
-        includes: ["One workflow, start to finish", "Connects the tools you already pay for", "Before and after time measured", "Short guide for your team"],
-        featured: true,
-      },
-      {
-        id: "assistant",
-        name: "AI assistant setup",
-        from: "$1,500",
-        unit: "from",
-        fit: "The same questions arrive by chat, email or phone all day.",
-        includes: ["Answers only from content you approve", "Hands over to a person when unsure", "No customer data used for training", "Monthly review of what it was asked"],
-      },
-      {
-        id: "custom-tool",
-        name: "Custom tool",
-        from: "$3,500",
-        unit: "from",
-        fit: "Off-the-shelf software doesn't fit how you work.",
-        includes: ["Built around your process", "Example: a staff onboarding tool", "Sign-in and access by role", "Training and written handover"],
-      },
+      { id: "quick-win", price: 750, unit: "from", featured: true },
+      { id: "assistant", price: 1500, unit: "from" },
+      { id: "custom-tool", price: 3500, unit: "from" },
     ],
   },
 ];
 
 /** Monthly plans where automated checks run on a schedule and a person reviews the result. */
-export const carePlans: Package[] = [
-  {
-    id: "watch",
-    name: "Watch",
-    from: "$49",
-    unit: "per month",
-    fit: "Know your site is up, fast and findable.",
-    includes: ["Weekly uptime, speed and broken-link checks", "Domain and certificate expiry alerts", "Monthly check of how Google and AI assistants describe you", "One-page monthly update"],
-  },
-  {
-    id: "care",
-    name: "Care",
-    from: "$129",
-    unit: "per month",
-    fit: "Someone keeping the site and the accounts in order.",
-    includes: ["Everything in Watch", "Up to one hour of edits a month", "Alert if a business email appears in a known breach", "Quarterly access review and call"],
-    featured: true,
-  },
-  {
-    id: "partner",
-    name: "Partner",
-    from: "$349",
-    unit: "per month",
-    fit: "Ongoing improvements, not just upkeep.",
-    includes: ["Everything in Care", "Up to three hours of build time a month", "Automations and assistant kept tuned", "Monthly numbers review and next step"],
-  },
+export const carePlans: PackageDef[] = [
+  { id: "watch", price: 49, unit: "per month" },
+  { id: "care", price: 129, unit: "per month", featured: true },
+  { id: "partner", price: 349, unit: "per month" },
 ];
 
-/** Workshops and programs: where 17hands.ai is expanding. */
-export const programs: { name: string; price: string; body: string; href?: string }[] = [
-  {
-    name: "Digital Defenders",
-    price: "Priced by group",
-    body: "Scam awareness and everyday digital safety for families, schools and community groups.",
-    href: "/digital-defenders",
-  },
-  {
-    name: "AI kickstart for teams",
-    price: "from $600",
-    body: "Two hours, hands on: what AI is good for in your business, what to keep out of it, and one workflow set up before we finish.",
-  },
-  {
-    name: "1-on-1 tech safety session",
-    price: "from $120",
-    body: "Phone, passwords and accounts made safer for you or someone in your family.",
-    href: "/for-you",
-  },
-  {
-    name: "Staff onboarding program",
-    price: "Scoped per business",
-    body: "Your first-week training turned into a guided tool new hires can follow, so the owner stops repeating it.",
-  },
+export type ProgramId = "digital-defenders" | "ai-kickstart" | "one-on-one" | "onboarding";
+
+/** Workshops and programs. A missing `price` means the locale file supplies a note such as "Priced by group". */
+export const programs: { id: ProgramId; price?: number; href?: string }[] = [
+  { id: "digital-defenders", href: "/digital-defenders" },
+  { id: "ai-kickstart", price: 600 },
+  { id: "one-on-one", price: 120, href: "/for-you" },
+  { id: "onboarding" },
 ];
 
-const byId = new Map(
-  [...ladders.flatMap((l) => l.steps), ...carePlans].map((p) => [p.id, p] as const),
-);
+const all = new Map([...ladders.flatMap((l) => l.steps), ...carePlans].map((p) => [p.id, p] as const));
 
-/** "from $600", "$200 flat" or "from $49/mo" for a package id. Throws on a typo so the build fails. */
-export function priceLabel(id: string): string {
-  const p = byId.get(id);
-  if (!p) throw new Error(`packages: unknown package id "${id}"`);
-  if (p.unit === "flat") return `${p.from} flat`;
-  if (p.unit === "per month") return `from ${p.from}/mo`;
-  return `from ${p.from}`;
+/** Throws on an unknown id so a typo fails the build instead of printing a blank price. */
+export function packageDef(id: PackageId): PackageDef {
+  const def = all.get(id);
+  if (!def) throw new Error(`packages: unknown package id "${id}"`);
+  return def;
+}
+
+export const QUICK_WIN_PRICE = packageDef("quick-win").price;
+
+export const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
+
+/** Words that go around a price, per locale. */
+export interface PriceWords {
+  from: string;
+  flat: string;
+  perMonth: string;
+  perMonthShort: string;
+}
+
+/** "from $600", "$200 flat" or "from $49/mo", in the locale's words. */
+export function priceLabel(def: Pick<PackageDef, "price" | "unit">, w: PriceWords): string {
+  if (def.unit === "flat") return `${usd(def.price)} ${w.flat}`;
+  if (def.unit === "per month") return `${w.from} ${usd(def.price)}${w.perMonthShort}`;
+  return `${w.from} ${usd(def.price)}`;
 }

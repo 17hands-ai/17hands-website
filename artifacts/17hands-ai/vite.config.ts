@@ -12,7 +12,18 @@ const port = Number(process.env.PORT) || 3000;
 const escapeAttr = (v: string) => v.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 /** Rewrite the head of the built index.html for one route. */
-function headFor(html: string, page: Pick<PageMeta, "title" | "description" | "noindex"> & { url?: string }) {
+function headFor(
+  html: string,
+  page: Pick<PageMeta, "title" | "description" | "noindex"> & {
+    url?: string;
+    /** BCP 47 tag for <html lang>, and the og:locale that goes with it. */
+    lang?: string;
+    ogLocale?: string;
+    /** hreflang -> absolute URL, for routes that exist in several languages. */
+    alternates?: Record<string, string>;
+    jsonLd?: object[];
+  },
+) {
   let out = html
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeAttr(page.title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*/, `$1${escapeAttr(page.description)}`);
@@ -24,6 +35,20 @@ function headFor(html: string, page: Pick<PageMeta, "title" | "description" | "n
     out = out.replace(/\s*<link rel="canonical"[^>]*>/, "");
   }
   if (page.noindex) out = out.replace(/(<meta name="robots" content=")[^"]*/, "$1noindex, follow");
+  // Share cards carried the home page's title on every route; give each route its own.
+  if (page.url) {
+    out = out
+      .replace(/(<meta (?:property="og|name="twitter):title" content=")[^"]*/g, `$1${escapeAttr(page.title)}`)
+      .replace(/(<meta (?:property="og|name="twitter):description" content=")[^"]*/g, `$1${escapeAttr(page.description)}`);
+  }
+  if (page.lang) out = out.replace(/<html lang="[^"]*"/, `<html lang="${page.lang}"`);
+  const extra = [
+    page.ogLocale ? `<meta property="og:locale" content="${page.ogLocale}" />` : "",
+    ...Object.entries(page.alternates ?? {}).map(([lang, href]) => `<link rel="alternate" hreflang="${lang}" href="${href}" />`),
+    // "<" is escaped so copy can never close the script element.
+    ...(page.jsonLd ?? []).map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`),
+  ].filter(Boolean);
+  if (extra.length) out = out.replace("</head>", `  ${extra.join("\n    ")}\n  </head>`);
   return out;
 }
 
@@ -48,8 +73,8 @@ async function loadRenderer() {
     appType: "custom",
     logLevel: "error",
   });
-  const mod = (await server.ssrLoadModule("/src/entry-server.tsx")) as { render: (path: string) => string };
-  return Object.assign((route: string) => mod.render(route), { close: () => server.close() });
+  const mod = (await server.ssrLoadModule("/src/entry-server.tsx")) as typeof import("./src/entry-server");
+  return Object.assign((route: string) => mod.render(route), { close: () => server.close(), mod });
 }
 
 /**
@@ -74,40 +99,71 @@ function staticRoutes(): Plugin {
     async closeBundle() {
       const indexHtml = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
       const render = await loadRenderer();
-      const withBody = (html: string, route: string) => {
+      const { LOCALES, TRANSLATED_PATHS, localizedPath, contents, structuredData, llmsSections } = render.mod;
+      const withBody = (html: string, route: string, locale: string) => {
         const body = render(route);
         if (!html.includes(EMPTY_ROOT)) throw new Error("static-routes: empty #root not found in index.html");
-        return html.replace(EMPTY_ROOT, `<div id="root">${body}</div>`);
+        // data-locale tells main.tsx which language this HTML was rendered in.
+        return html.replace(EMPTY_ROOT, `<div id="root" data-locale="${locale}">${body}</div>`);
       };
+      /** Every language version of a translated route, for hreflang and the sitemap. */
+      const alternatesFor = (routePath: string) => ({
+        ...Object.fromEntries(LOCALES.map((l) => [l, SITE_ORIGIN + localizedPath(l, routePath)])),
+        "x-default": SITE_ORIGIN + routePath,
+      });
+      const sitemapUrls: string[] = [];
       try {
-        for (const page of pages) {
-          const file = page.path === "/" ? "index.html" : path.join(page.path.slice(1), "index.html");
-          const sourceHtml = page.standalone
-            ? fillPlaceholders(fs.readFileSync(path.join(outDir, file), "utf8"))
-            : indexHtml;
-          let html = headFor(sourceHtml, { ...page, url: SITE_ORIGIN + (page.canonical ?? page.path) });
-          if (!page.noindex && !page.standalone) html = withBody(html, page.path);
-          if (/%(SITE_ORIGIN|ANALYTICS)%/.test(html)) throw new Error(`static-routes: unreplaced placeholder in ${file}`);
-          fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
-          fs.writeFileSync(path.join(outDir, file), html);
+        for (const locale of LOCALES) {
+          const content = contents[locale];
+          for (const page of pages) {
+            // Standalone documents and redirect stubs exist once, in English.
+            if (locale !== "en" && (page.standalone || page.noindex)) continue;
+            const translated = TRANSLATED_PATHS.includes(page.path);
+            const route = localizedPath(locale, page.path);
+            const file = path.join(route.slice(1), "index.html");
+            const sourceHtml = page.standalone
+              ? fillPlaceholders(fs.readFileSync(path.join(outDir, file), "utf8"))
+              : indexHtml;
+            // Untranslated routes under /ru and /es show English copy, so they point at the English URL.
+            const url = SITE_ORIGIN + (translated ? route : page.canonical ?? page.path);
+            const meta = translated ? content.meta[page.path] : page;
+            let html = headFor(sourceHtml, {
+              ...page,
+              ...meta,
+              url,
+              lang: page.standalone ? undefined : content.htmlLang,
+              ogLocale: page.standalone ? undefined : content.ogLocale,
+              alternates: translated ? alternatesFor(page.path) : undefined,
+              jsonLd: translated ? structuredData(page.path, locale, content, SITE_ORIGIN) : undefined,
+            });
+            if (!page.noindex && !page.standalone) html = withBody(html, route, locale);
+            if (/%(SITE_ORIGIN|ANALYTICS)%/.test(html)) throw new Error(`static-routes: unreplaced placeholder in ${file}`);
+            fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
+            fs.writeFileSync(path.join(outDir, file), html);
+
+            if (page.noindex || (locale !== "en" && !translated)) continue;
+            const links = translated
+              ? Object.entries(alternatesFor(page.path))
+                  .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+                  .join("")
+              : "";
+            sitemapUrls.push(`  <url><loc>${url}</loc>${links}</url>`);
+          }
         }
         fs.writeFileSync(
           path.join(outDir, "404.html"),
           withBody(
             headFor(indexHtml, { title: notFoundTitle, description: "This page doesn't exist.", noindex: true }),
             "/__not-found",
+            "en",
           ),
         );
       } finally {
         await render.close();
       }
-      const urls = pages
-        .filter((p) => !p.noindex)
-        .map((p) => `  <url><loc>${SITE_ORIGIN}${p.path}</loc></url>`)
-        .join("\n");
       fs.writeFileSync(
         path.join(outDir, "sitemap.xml"),
-        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${sitemapUrls.join("\n")}\n</urlset>\n`,
       );
       fs.writeFileSync(path.join(outDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`);
 
@@ -117,7 +173,11 @@ function staticRoutes(): Plugin {
       const missing = indexed.filter((p) => !p.answers).map((p) => p.path);
       if (missing.length) throw new Error(`static-routes: pages.ts entries need \`answers\` for llms.txt: ${missing.join(", ")}`);
       const pageLines = indexed.map((p) => `- [${p.title.replace(/ \| 17hands\.ai$/, "")}](${SITE_ORIGIN}${p.path}): ${p.answers}`).join("\n");
-      fs.writeFileSync(path.join(outDir, "llms.txt"), `# 17hands.ai\n\n> ${SITE_SUMMARY}\n\n## Pages\n\n${pageLines}\n`);
+      const languages = `The home, packages, FAQ and contact pages are also published in Russian (${SITE_ORIGIN}/ru) and Spanish (${SITE_ORIGIN}/es).`;
+      fs.writeFileSync(
+        path.join(outDir, "llms.txt"),
+        `# 17hands.ai\n\n> ${SITE_SUMMARY}\n\n${languages}\n\n## Pages\n\n${pageLines}\n\n${llmsSections(contents.en)}`,
+      );
     },
   };
 }

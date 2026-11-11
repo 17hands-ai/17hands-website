@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { pages } from "@/lib/pages";
 import { BOOKING_URL } from "@/lib/site";
+import { prefixOf, useI18n } from "@/i18n";
 
 type Variant = "primary" | "secondary";
 type Size = "md" | "lg";
@@ -21,7 +22,7 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-[var(--brand-amethyst)] text-white shadow-[0_6px_24px_-8px_rgba(121,40,202,0.7)] hover:bg-[#8a3ae0] hover:shadow-[0_8px_30px_-6px_rgba(121,40,202,0.85)]",
+    "on-accent bg-[var(--brand-amethyst)] text-white shadow-[0_6px_24px_-8px_rgba(121,40,202,0.7)] hover:bg-[#8a3ae0] hover:shadow-[0_8px_30px_-6px_rgba(121,40,202,0.85)]",
   secondary:
     "border border-[var(--brand-slate)] text-[var(--brand-text)] hover:border-[var(--brand-rose)] hover:bg-white/5",
 };
@@ -33,6 +34,7 @@ const sizes: Record<Size, string> = {
 
 /** Links styled as the design system's kinetic CTAs. External hrefs open in a new tab. */
 export function BrandButton({ href, children, variant = "primary", size = "md", className, onClick }: BrandButtonProps) {
+  const { locale, content } = useI18n();
   const classes = cn(base, variants[variant], sizes[size], className);
   if (/^(https?:|mailto:)/.test(href)) {
     const external = href.startsWith("http");
@@ -45,14 +47,14 @@ export function BrandButton({ href, children, variant = "primary", size = "md", 
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {children}
-        {external && <span className="sr-only"> (opens in a new tab)</span>}
+        {external && <span className="sr-only">{content.common.newTab}</span>}
       </a>
     );
   }
   // Hash targets and standalone documents (served from public/, not a React route) need a full page load.
   if (href.startsWith("#") || href.startsWith("/#") || pages.some((p) => p.standalone && p.path === href)) {
     return (
-      <a href={href} className={classes} onClick={onClick}>
+      <a href={href.startsWith("/#") ? prefixOf(locale) + href : href} className={classes} onClick={onClick}>
         {children}
       </a>
     );

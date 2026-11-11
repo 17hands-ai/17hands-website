@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { stats, type Stat } from "@/lib/stats";
+import { BrandButton } from "@/components/brand/BrandButton";
+import { BOOKING_URL } from "@/lib/site";
+import { useContent } from "@/i18n";
 
 /**
  * Counts up to `value` the first time it scrolls into view. The server render and the first
@@ -75,24 +79,26 @@ function Meter({ stat }: { stat: Stat }) {
 }
 
 export function StatBand() {
+  const content = useContent();
+  const t = content.home.stats;
   return (
     <section aria-labelledby="why-now-title" className="py-20 md:py-24 bg-[var(--brand-primary)]">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="reveal max-w-3xl mb-14">
-          <p className="eyebrow mb-4">Why now</p>
+          <p className="eyebrow mb-4">{t.eyebrow}</p>
           <h2 id="why-now-title" className="display text-4xl md:text-5xl text-[var(--brand-text)]">
-            Small businesses are adopting AI faster than they are <span className="rose-text">protecting it.</span>
+            {t.title}<span className="rose-text">{t.accent}</span>
           </h2>
         </div>
         <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-14">
-          {stats.map((stat) => (
-            <li key={stat.claim} className="flex flex-col">
+          {stats.map((stat, i) => (
+            <li key={stat.source} className="flex flex-col">
               <Meter stat={stat} />
               <p className="display text-6xl rose-text mt-5 mb-3">
                 <CountUp value={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="text-[var(--brand-text)] leading-snug mb-3">{stat.claim}</p>
-              <p className="text-[var(--brand-text-2)] leading-relaxed mb-4">{stat.meaning}</p>
+              <p className="text-[var(--brand-text)] leading-snug mb-3">{t.items[i].claim}</p>
+              <p className="text-[var(--brand-text-2)] leading-relaxed mb-4">{t.items[i].meaning}</p>
               <a
                 href={stat.sourceUrl}
                 target="_blank"
@@ -100,11 +106,21 @@ export function StatBand() {
                 className="mt-auto font-mono text-xs text-[var(--brand-text-2)] underline underline-offset-4 decoration-white/25 hover:text-[var(--brand-rose)]"
               >
                 {stat.source}
-                <span className="sr-only"> (opens in a new tab)</span>
+                <span className="sr-only">{content.common.newTab}</span>
               </a>
             </li>
           ))}
         </ul>
+
+        <div className="reveal mt-16 flex flex-col lg:flex-row lg:items-center justify-between gap-8 rounded-[var(--radius-card)] bg-atmosphere p-8 md:p-10">
+          <div className="max-w-2xl">
+            <h3 className="display text-3xl text-[var(--brand-text)] mb-3">{t.urgencyTitle}</h3>
+            <p className="text-lg text-[var(--brand-text-2)] leading-relaxed">{t.urgencyBody}</p>
+          </div>
+          <BrandButton href={BOOKING_URL} size="lg" className="shrink-0">
+            {t.urgencyCta} <ArrowRight size={18} aria-hidden="true" />
+          </BrandButton>
+        </div>
       </div>
     </section>
   );
