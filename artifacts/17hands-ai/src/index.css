@@ -235,3 +235,48 @@ html.intro-on.intro-reveal header { opacity: 1; transition: opacity 0.7s ease 0.
   font-family: inherit; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: opacity 0.3s ease, background-color 0.2s ease;
 }
 #intro-skip:hover { background: rgb(224 167 134 / 0.12); }
+
+/* ---- Visuals: diagram and meter motion. Transform, opacity and stroke offset only. ---- */
+.flow-pulse { stroke-dasharray: 14 86; stroke-dashoffset: 14; opacity: 0; }
+.flow-check { opacity: 1; }
+.meter-fill, .meter-rise { transform-origin: left bottom; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .flow-pulse { animation: flow-travel 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+  .flow-check { animation: flow-check 4.8s ease-out infinite; }
+  .flow-ring { transform-box: fill-box; transform-origin: center; animation: flow-spin 40s linear infinite; }
+
+  @supports (animation-timeline: view()) {
+    .meter-fill { animation: meter-fill linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+    .meter-rise { animation: meter-rise linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+    .stair { animation: reveal-up linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+  }
+}
+
+@keyframes flow-travel {
+  0% { stroke-dashoffset: 14; opacity: 0; }
+  6% { opacity: 1; }
+  30% { stroke-dashoffset: -86; opacity: 1; }
+  36%, 100% { stroke-dashoffset: -86; opacity: 0; }
+}
+@keyframes flow-check {
+  0%, 8% { opacity: 0.25; }
+  18%, 80% { opacity: 1; }
+  100% { opacity: 0.25; }
+}
+@keyframes flow-spin { to { transform: rotate(360deg); } }
+@keyframes meter-fill { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes meter-rise { from { transform: scaleY(0); } to { transform: none; } }
+
+/* ROI estimator sliders */
+.roi-range { appearance: none; -webkit-appearance: none; height: 28px; background: transparent; cursor: pointer; }
+.roi-range::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: rgb(255 255 255 / 0.14); }
+.roi-range::-moz-range-track { height: 4px; border-radius: 999px; background: rgb(255 255 255 / 0.14); }
+.roi-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9px; border-radius: 50%;
+  background: var(--brand-rose); border: 3px solid var(--brand-canvas); box-shadow: 0 0 0 1px var(--brand-rose);
+}
+.roi-range::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--brand-rose); border: 3px solid var(--brand-canvas); box-shadow: 0 0 0 1px var(--brand-rose);
+}

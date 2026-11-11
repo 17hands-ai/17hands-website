@@ -9,6 +9,7 @@ const navLinks = [
   { name: "Digital Defenders", href: "/digital-defenders" },
   { name: "Natural", href: "/natural" },
   { name: "Services", href: "/#services" },
+  { name: "Packages", href: "/packages" },
   { name: "Bio pages", href: "/bio-pages" },
   { name: "About", href: "/#about" },
   { name: "FAQ", href: "/faq" },

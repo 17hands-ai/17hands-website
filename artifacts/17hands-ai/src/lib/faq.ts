@@ -1,4 +1,5 @@
 import { BIO_PAGE_PRICE } from "./site";
+import { priceLabel } from "./packages";
 
 export interface FaqItem {
   q: string;
@@ -45,6 +46,6 @@ export const faqs: FaqItem[] = [
   },
   {
     q: "How much does it cost?",
-    a: "It depends on what you need. We start with a call to understand your business, and you get a clear scope and price before any work begins.",
+    a: `Starting prices are on the Packages page: a data check-up is ${priceLabel("data-checkup")}, a team security workshop ${priceLabel("team-workshop")}, a quick-win automation ${priceLabel("quick-win")} and a starter website ${priceLabel("starter-site")}. We start with a call, and you get a written scope and price before any work begins.`,
   },
 ];

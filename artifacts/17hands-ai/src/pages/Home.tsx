@@ -1,11 +1,23 @@
 import { Link } from "wouter";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, GraduationCap, KeyRound, MonitorSmartphone, Presentation, ScanSearch, ScrollText, Search, Workflow, type LucideIcon } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
 import { BrandNumeral, CircuitTrace } from "@/components/brand/Decor";
 import { Portrait } from "@/components/brand/Portrait";
 import { BOOKING_URL, LINKEDIN_PROFILE_URL } from "@/lib/site";
 import { LinkedInLink } from "@/components/brand/LinkedInLink";
 import { faqs } from "@/lib/faq";
+import { priceLabel } from "@/lib/packages";
+import { HeroFlow } from "@/components/visuals/HeroFlow";
+import { StatBand } from "@/components/visuals/StatBand";
+import { RoiEstimator } from "@/components/visuals/RoiEstimator";
+
+interface Service {
+  name: string;
+  body: string;
+  icon: LucideIcon;
+  /** Starting price, read from lib/packages.ts. */
+  price?: string;
+}
 
 const painPoints = {
   protect: [
@@ -22,7 +34,17 @@ const painPoints = {
   ],
 };
 
-const pillars = [
+interface Pillar {
+  id: string;
+  number: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  services: Service[];
+  note: string | null;
+}
+
+const pillars: Pillar[] = [
   {
     id: "protect",
     number: "01",
@@ -33,18 +55,24 @@ const pillars = [
     services: [
       {
         name: "Customer data check-up",
+        icon: ScanSearch,
+        price: priceLabel("data-checkup"),
         body: "We walk through where customer and business information is kept, who can reach it and which settings matter. You get a short, prioritized list of fixes in plain English, and help making them.",
       },
       {
         name: "Security workshops for your team",
+        icon: GraduationCap,
+        price: priceLabel("team-workshop"),
         body: "A hands-on session for staff: spotting scam emails, texts and calls, using a password manager and sign-in codes, and what's safe to share with AI tools.",
       },
       {
         name: "Accounts and access",
+        icon: KeyRound,
         body: "A simple routine for giving new people the access they need, and removing it when someone leaves.",
       },
       {
         name: "Safe AI use guidelines",
+        icon: ScrollText,
         body: "Clear, short rules your team can follow when using ChatGPT and similar tools with business information.",
       },
     ],
@@ -60,18 +88,24 @@ const pillars = [
     services: [
       {
         name: "Automation and custom tools",
+        icon: Workflow,
+        price: priceLabel("quick-win"),
         body: "Automate repetitive admin, connect tools that don't talk to each other, or build a simple custom tool, such as an onboarding guide for new staff, when off-the-shelf software doesn't fit.",
       },
       {
         name: "Websites that help customers act",
+        icon: MonitorSmartphone,
+        price: priceLabel("starter-site"),
         body: "Build a new site or improve the one you have: a clearer message, a site that works well on phones and an easy next step for visitors.",
       },
       {
         name: "Being found on Google and in AI answers",
+        icon: Search,
         body: "Make sure search engines and AI assistants like ChatGPT have clear, accurate information about what you do and who you help.",
       },
       {
         name: "Training on new tools",
+        icon: Presentation,
         body: "Short, practical sessions so your team actually uses what we set up, plus simple written guides to come back to.",
       },
     ],
@@ -122,8 +156,8 @@ export default function Home() {
               <BrandButton href={BOOKING_URL} size="lg">
                 Book a call <ArrowRight size={18} aria-hidden="true" />
               </BrandButton>
-              <BrandButton href="#services" variant="secondary" size="lg">
-                See how I can help
+              <BrandButton href="/packages" variant="secondary" size="lg">
+                See packages and prices
               </BrandButton>
             </div>
             <p className="text-sm text-[var(--brand-text-2)]">
@@ -134,31 +168,15 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="hero-in relative hidden lg:block" style={{ animationDelay: "0.15s" }} aria-hidden="true">
-            <div className="relative ml-auto max-w-sm rounded-[var(--radius-card)] bg-atmosphere ring-1 ring-white/10 p-7 shadow-2xl">
-              <p className="font-mono text-xs rose-text mb-3">01 / PROTECT</p>
-              <p className="display text-2xl text-white mb-4">Customer information, handled with care.</p>
-              <div className="flex flex-wrap gap-2">
-                {["Data check-up", "Staff workshops", "Access"].map((t) => (
-                  <span key={t} className="text-xs font-medium px-2.5 py-1 rounded-[var(--radius-badge)] bg-white/10 text-[var(--brand-text-2)]">{t}</span>
-                ))}
-              </div>
-            </div>
-            <div className="relative -mt-6 mr-16 max-w-sm rounded-[var(--radius-card)] bg-[var(--brand-amethyst)] p-7 shadow-[0_20px_60px_-20px_rgba(121,40,202,0.8)]">
-              <p className="font-mono text-xs text-white/80 mb-3">02 / SIMPLIFY</p>
-              <p className="display text-2xl text-white mb-4">Less repetitive work, more time for customers.</p>
-              <div className="flex flex-wrap gap-2">
-                {["Automation", "Websites", "AI tools"].map((t) => (
-                  <span key={t} className="text-xs font-medium px-2.5 py-1 rounded-[var(--radius-badge)] bg-black/20 text-white">{t}</span>
-                ))}
-              </div>
-            </div>
-            <CircuitTrace className="absolute -left-20 -bottom-10 w-56 opacity-70" />
+          <div className="hero-in" style={{ animationDelay: "0.15s" }}>
+            <HeroFlow className="w-full max-w-[460px] mx-auto lg:ml-auto lg:mr-0" />
           </div>
         </div>
       </section>
 
-      <section id="products" className="py-20 md:py-24 bg-[var(--brand-primary)] scroll-mt-24" aria-labelledby="products-title">
+      <StatBand />
+
+      <section id="products" className="py-20 md:py-24 border-t border-border scroll-mt-24" aria-labelledby="products-title">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 id="products-title" className="display text-4xl md:text-5xl mb-12">Explore the 17hands.ai family.</h2>
           <div className="grid md:grid-cols-[1.3fr_1fr] gap-12 lg:gap-20">
@@ -221,18 +239,29 @@ export default function Home() {
               <div>
                 <ul className="divide-y divide-white/10 border-y border-white/10">
                   {pillar.services.map((s) => (
-                    <li key={s.name} className="reveal py-7">
-                      <h4 className="font-sans text-xl font-semibold text-[var(--brand-text)] mb-2">{s.name}</h4>
-                      <p className="text-[var(--brand-text-2)] leading-relaxed">{s.body}</p>
+                    <li key={s.name} className="reveal py-7 flex gap-5">
+                      <s.icon size={26} strokeWidth={1.5} className="mt-0.5 shrink-0 text-[var(--brand-rose)]" aria-hidden="true" />
+                      <div>
+                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-2">
+                          <h4 className="font-sans text-xl font-semibold text-[var(--brand-text)]">{s.name}</h4>
+                          {s.price && <span className="font-mono text-sm rose-text">{s.price}</span>}
+                        </div>
+                        <p className="text-[var(--brand-text-2)] leading-relaxed">{s.body}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
                 {pillar.note && <p className="mt-6 text-sm text-[var(--brand-text-2)]/90">{pillar.note}</p>}
+                <Link href={`/packages#${pillar.id === "protect" ? "protect" : "automate"}`} className="mt-6 inline-flex items-center gap-2 rose-text underline underline-offset-4 hover:text-white">
+                  See {pillar.eyebrow.toLowerCase()} packages and prices <ArrowRight size={16} aria-hidden="true" />
+                </Link>
               </div>
             </div>
           </div>
         ))}
       </section>
+
+      <RoiEstimator />
 
       {/* How it works */}
       <section id="how-it-works" aria-labelledby="how-title" className="py-24 md:py-28 border-t border-border scroll-mt-24">

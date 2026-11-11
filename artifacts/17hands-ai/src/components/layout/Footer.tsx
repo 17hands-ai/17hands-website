@@ -34,6 +34,7 @@ export function Footer() {
               <li><Link href="/natural" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Natural</Link></li>
               <li><a href="/#services" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Services</a></li>
               <li><a href="/#how-it-works" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">How it works</a></li>
+              <li><Link href="/packages" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Packages and prices</Link></li>
               <li><Link href="/bio-pages" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">Bio pages</Link></li>
               <li><Link href="/for-you" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">For individuals</Link></li>
               <li><Link href="/faq" className="text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]">FAQ</Link></li>
