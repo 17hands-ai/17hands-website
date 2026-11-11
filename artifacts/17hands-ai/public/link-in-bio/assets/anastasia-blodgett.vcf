@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Blodgett;Anastasia;;;
+FN:Anastasia Blodgett
+ORG:17hands.ai
+TITLE:Founder
+EMAIL;TYPE=WORK:info@17hands.ai
+URL:https://17hands.ai/
+URL;TYPE=booking:https://cal.com/17hands
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/anastasia-blodgett
+NOTE:Security and practical AI for small businesses.
+END:VCARD

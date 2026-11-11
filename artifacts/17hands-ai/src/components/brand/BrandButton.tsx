@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { pages } from "@/lib/pages";
+import { BOOKING_URL } from "@/lib/site";
 
 type Variant = "primary" | "secondary";
 type Size = "md" | "lg";
@@ -39,6 +41,7 @@ export function BrandButton({ href, children, variant = "primary", size = "md", 
         href={href}
         className={classes}
         onClick={onClick}
+        data-umami-event={href.startsWith(BOOKING_URL) ? "booking" : undefined}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {children}
@@ -46,7 +49,8 @@ export function BrandButton({ href, children, variant = "primary", size = "md", 
       </a>
     );
   }
-  if (href.startsWith("#") || href.startsWith("/#")) {
+  // Hash targets and standalone documents (served from public/, not a React route) need a full page load.
+  if (href.startsWith("#") || href.startsWith("/#") || pages.some((p) => p.standalone && p.path === href)) {
     return (
       <a href={href} className={classes} onClick={onClick}>
         {children}

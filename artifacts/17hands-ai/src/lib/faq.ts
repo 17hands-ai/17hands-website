@@ -1,3 +1,5 @@
+import { BIO_PAGE_PRICE } from "./site";
+
 export interface FaqItem {
   q: string;
   a: string;
@@ -28,6 +30,10 @@ export const faqs: FaqItem[] = [
   {
     q: "Do you build websites?",
     a: "Yes. I can build a new site or improve the one you have so it explains what you do clearly, works well on phones and makes the next step easy for customers.",
+  },
+  {
+    q: "Can you build a bio page instead of Linktree?",
+    a: `Yes. A custom bio page sits behind your Instagram and LinkedIn bio, on your brand and your own domain, with save to contacts, one-tap booking, a lead form and analytics. The founding rate is ${BIO_PAGE_PRICE} flat. See the Bio pages page for what's included.`,
   },
   {
     q: "How do you handle our business information during a project?",
