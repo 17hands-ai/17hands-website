@@ -67,99 +67,31 @@
     }
     </script>
     <script>
-      /* Opener: decide before first paint so the page never flashes ahead of the intro.
-         Home page only, once per browser session, never with reduced motion. ?intro=1 replays it, ?intro=0 skips it;
-         neither overrides the home-only or reduced-motion rules. */
+      /* Theme: apply a saved light choice before first paint. Dark is the brand default. */
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.dataset.theme = "light";
+          document.querySelector('meta[name="theme-color"]').content = "#FBF9FE";
+        }
+      } catch (e) {}
+    </script>
+    <script>
+      /* Hero intro: decide before first paint whether the logo film plays in the hero (see HeroIntro.tsx).
+         Home pages only, once per browser session, never with reduced motion. ?intro=1 replays it, ?intro=0 skips it;
+         neither overrides the home-only or reduced-motion rules. The page itself is never hidden. */
       (function () {
         try {
           var d = document.documentElement, p = new URLSearchParams(location.search).get("intro");
-          var home = location.pathname.replace(/\/+$/, "") === "" && !location.hash;
+          var home = /^(\/(ru|es))?$/.test(location.pathname.replace(/\/+$/, "")) && !location.hash;
           var seen = sessionStorage.getItem("intro-seen") === "1";
           var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-          var on = home && !still && (p === "1" || (!seen && p !== "0"));
-          if (!on) return;
-          d.classList.add("intro-on");
-          /* Safety net: never leave the page hidden if the opener script fails. */
-          setTimeout(function () { d.classList.remove("intro-on", "intro-reveal"); }, 15000);
+          if (home && !still && (p === "1" || (!seen && p !== "0"))) d.classList.add("intro-on");
         } catch (e) {}
       })();
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <div id="intro">
-      <div id="intro-bg"></div>
-      <div id="intro-stage" role="img" aria-label="17hands AI logo animation">
-        <video id="intro-video" muted playsinline preload="none" disablepictureinpicture
-               poster="/intro/17hands-poster.webp" width="720" height="720">
-          <source src="/intro/17hands-intro.webm" type="video/webm">
-          <source src="/intro/17hands-intro.mp4" type="video/mp4">
-        </video>
-      </div>
-      <button id="intro-skip" type="button">Skip</button>
-    </div>
-    <script>
-      (function () {
-        var d = document.documentElement;
-        if (!d.classList.contains("intro-on")) return;
-        var intro = document.getElementById("intro"),
-            bg = document.getElementById("intro-bg"),
-            stage = document.getElementById("intro-stage"),
-            video = document.getElementById("intro-video"),
-            skip = document.getElementById("intro-skip");
-        var finished = false, started = false;
-
-        function cleanup() {
-          d.classList.remove("intro-on", "intro-reveal");
-          try { sessionStorage.setItem("intro-seen", "1"); } catch (e) {}
-          video.pause();
-        }
-
-        /* Move the logo to the header's logo spot while the page fades in underneath. */
-        function finish(fast) {
-          if (finished) return;
-          finished = true;
-          var tries = 0;
-          (function go() {
-            var target = document.querySelector("[data-intro-target]");
-            if (!target && tries++ < 60) return requestAnimationFrame(go);
-            var ms = fast ? 450 : 1100;
-            var s = stage.getBoundingClientRect();
-            var anim = { duration: ms, easing: "cubic-bezier(.65,0,.25,1)", fill: "forwards" };
-            if (!stage.animate) { cleanup(); return; }
-            d.classList.add("intro-reveal");
-            skip.style.opacity = "0";
-            bg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms * 0.8, easing: "ease", fill: "forwards" });
-            if (target) {
-              var t = target.getBoundingClientRect();
-              var size = Math.max(t.height * 1.7, 64);
-              var dx = t.left + t.width / 2 - (s.left + s.width / 2);
-              var dy = t.top + t.height / 2 - (s.top + s.height / 2);
-              var k = size / s.width;
-              stage.animate([{ transform: "none", opacity: 1 },
-                             { transform: "translate(" + dx + "px," + dy + "px) scale(" + k + ")", opacity: 1, offset: 0.8 },
-                             { transform: "translate(" + dx + "px," + dy + "px) scale(" + k + ")", opacity: 0 }], anim)
-                .onfinish = cleanup;
-            } else {
-              stage.animate([{ opacity: 1 }, { opacity: 0 }], anim).onfinish = cleanup;
-            }
-          })();
-        }
-
-        video.addEventListener("playing", function () { started = true; });
-        video.addEventListener("ended", function () { setTimeout(function () { finish(false); }, 450); });
-        video.addEventListener("error", function () { setTimeout(function () { finish(false); }, 600); });
-        skip.addEventListener("click", function () { finish(true); });
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape") finish(true); });
-
-        /* If playback never starts (autoplay blocked, slow network), show the poster briefly and move on. */
-        setTimeout(function () { if (!started) finish(false); }, 3500);
-
-        video.preload = "auto";
-        var p = video.play();
-        if (p && p.catch) p.catch(function () { setTimeout(function () { finish(false); }, 900); });
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

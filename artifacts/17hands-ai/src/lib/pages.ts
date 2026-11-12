@@ -14,7 +14,7 @@ export const SITE_ORIGIN = "https://17hands.ai";
 
 /** Opening paragraph of /llms.txt. Keep in step with the homepage hero and About copy. */
 export const SITE_SUMMARY =
-  `17hands.ai offers security and practical AI for small businesses, run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. Digital Defenders is the dedicated program for cybersecurity workshops, scam awareness, social media privacy and family digital hygiene at /digital-defenders. Natural is an upcoming community product area at /natural. The consulting work has two equal parts. Protect: customer data check-ups, security workshops for staff, account access routines and safe AI use guidelines. Simplify and grow: workflow automation and custom tools, websites, visibility on Google and in AI assistants, and training on new tools. Individuals and families can book 1-on-1 tech safety sessions. Small businesses can get a custom bio page, a branded alternative to Linktree with save-to-contacts, booking, a lead form and analytics, at a founding rate of ${BIO_PAGE_PRICE} flat (/bio-pages). Every project starts by understanding how the business runs, picks one useful improvement, and measures whether it helped. It is practical review and improvement work, not formal audits, certification or legal advice. Other prices are scoped per project; the first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.`;
+  `17hands.ai offers security and practical AI for small businesses, run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. Digital Defenders is the dedicated program for cybersecurity workshops, scam awareness, social media privacy and family digital hygiene at /digital-defenders. Natural is an upcoming community product area at /natural. The consulting work has two equal parts. Protect: customer data check-ups, security workshops for staff, account access routines and safe AI use guidelines. Simplify and grow: workflow automation and custom tools, websites, visibility on Google and in AI assistants, and training on new tools. Individuals and families can book 1-on-1 tech safety sessions. Small businesses can get a custom bio page, a branded alternative to Linktree with save-to-contacts, booking, a lead form and analytics, at a founding rate of ${BIO_PAGE_PRICE} flat (/bio-pages). Every project starts by understanding how the business runs, picks one useful improvement, and measures whether it helped. It is practical review and improvement work, not formal audits, certification or legal advice. Starting prices for websites, data check-ups, workshops, automation, custom tools and monthly care plans are published at /packages; every project gets a written scope and price first. The first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.`;
 
 export interface PageMeta {
   path: string;
@@ -67,6 +67,12 @@ export const pages: PageMeta[] = [
     answers: "What a 1-on-1 tech safety session for an individual or family covers and how a session works.",
   },
   {
+    path: "/packages",
+    title: "Packages and Starting Prices | 17hands.ai",
+    description: "Starting prices for websites, customer data check-ups, security workshops, automation, AI assistants, custom tools and monthly care plans for small businesses.",
+    answers: "Every 17hands.ai package with its starting price: websites, Protect, automation and custom tools, agent-monitored care plans, and workshops.",
+  },
+  {
     path: "/bio-pages",
     title: "Custom Bio Pages for Small Businesses | 17hands.ai",
     description: `A branded link-in-bio page that turns followers into clients: save to contacts, one-tap booking, a lead form and analytics you can see. Founding rate ${BIO_PAGE_PRICE} flat.`,
@@ -75,7 +81,7 @@ export const pages: PageMeta[] = [
   {
     path: "/faq",
     title: "FAQ | 17hands.ai",
-    description: "Answers to common questions about security reviews, staff workshops, automation, websites and how projects work.",
+    description: "Answers to common questions about security reviews, staff workshops, automation, websites, prices and how projects work.",
     answers: "Common questions: where to start, whether it is only about AI, customer data, staff workshops, existing tools, websites, measuring results and cost.",
   },
   {

@@ -1,6 +1,7 @@
 import { ArrowRight, Check } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
 import { CircuitTrace } from "@/components/brand/Decor";
+import { BioPhones } from "@/components/visuals/BioPhones";
 import { BIO_PAGE_PRICE, BIO_PAGE_FOUNDING_SPOTS, BOOKING_URL } from "@/lib/site";
 
 const converts = [
@@ -100,7 +101,7 @@ export default function BioPages() {
             {BIO_PAGE_FOUNDING_SPOTS} clients.
           </p>
           <div className="flex flex-wrap gap-4">
-            <BrandButton href={BOOKING_URL} size="lg">
+            <BrandButton href={BOOKING_URL} placement="bio-hero" size="lg">
               Book a 15-minute call <ArrowRight size={18} aria-hidden="true" />
             </BrandButton>
             <BrandButton href="/link-in-bio" variant="secondary" size="lg">
@@ -112,7 +113,8 @@ export default function BioPages() {
 
       <section aria-labelledby="converts-title" className="py-20 md:py-24 border-t border-border">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="reveal max-w-3xl mb-12">
+          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12 items-center mb-14">
+            <div className="reveal">
             <p className="eyebrow mb-4">Why it works</p>
             <h2 id="converts-title" className="display text-3xl md:text-4xl text-[var(--brand-text)] mb-6">
               It doesn't invent traffic. It turns the visitors you already get into contacts.
@@ -121,6 +123,8 @@ export default function BioPages() {
               People already tap the link in your bio, scan your card and look you up. A list of links sends them
               somewhere else. Your page gives them a reason and a way to reach you.
             </p>
+          </div>
+            <BioPhones className="reveal w-full max-w-[340px] mx-auto" />
           </div>
           <ul className="grid sm:grid-cols-2 gap-x-12 gap-y-10">
             {converts.map((c) => (
@@ -294,7 +298,7 @@ export default function BioPages() {
             {BIO_PAGE_PRICE} flat for the first {BIO_PAGE_FOUNDING_SPOTS} clients. Book a short call and we'll see if
             it's a fit.
           </p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="bio-bottom" size="lg">
             Book a 15-minute call <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

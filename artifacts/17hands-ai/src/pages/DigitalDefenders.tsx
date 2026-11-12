@@ -31,7 +31,7 @@ export default function DigitalDefenders() {
             <p className="text-lg text-[var(--brand-text-2)] leading-relaxed max-w-2xl mb-9">Practical cybersecurity workshops for families, communities and small teams. Learn to recognize scams, protect your accounts and build everyday digital habits, in plain English.</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <BrandButton href="#workshops" size="lg">Explore workshops <ArrowRight size={18} aria-hidden="true" /></BrandButton>
-              <BrandButton href={BOOKING_URL} variant="secondary" size="lg">Plan a session</BrandButton>
+              <BrandButton href={BOOKING_URL} placement="defenders-hero" variant="secondary" size="lg">Plan a session</BrandButton>
             </div>
           </div>
           <aside className="bg-[var(--brand-surface)] p-8 md:p-10 rounded-[var(--radius-card)]">
@@ -60,7 +60,7 @@ export default function DigitalDefenders() {
           <h2 className="display text-4xl md:text-5xl mb-12">A session that meets you where you are.</h2>
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
             <div><h3 className="display text-2xl rose-text mb-4">Families & community groups</h3><p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">Make room for questions about suspicious messages, social accounts, shared devices and helping relatives stay safe. No technical background needed.</p><BrandButton href="/for-you" variant="secondary">Explore individual support</BrandButton></div>
-            <div><h3 className="display text-2xl rose-text mb-4">Small businesses & teams</h3><p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">Build shared habits around customer information, account access and suspicious requests. Discuss what is safe to share with AI tools and when to ask for help.</p><BrandButton href={BOOKING_URL} variant="secondary">Discuss a team workshop</BrandButton></div>
+            <div><h3 className="display text-2xl rose-text mb-4">Small businesses & teams</h3><p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">Build shared habits around customer information, account access and suspicious requests. Discuss what is safe to share with AI tools and when to ask for help.</p><BrandButton href={BOOKING_URL} placement="defenders-teams" variant="secondary">Discuss a team workshop</BrandButton></div>
           </div>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default function DigitalDefenders() {
         </div>
       </section>
 
-      <section className="bg-[var(--brand-primary)] py-20 md:py-24"><div className="container mx-auto px-4 sm:px-6 max-w-4xl text-center"><h2 className="display text-4xl md:text-5xl mb-6">Bring Digital Defenders<br />to <span className="rose-text">your people.</span></h2><p className="text-lg text-[var(--brand-text-2)] mb-8">Tell me who you want to help and what concerns them. We will find a useful place to start.</p><BrandButton href={BOOKING_URL} size="lg">Plan your workshop <ArrowRight size={18} aria-hidden="true" /></BrandButton><p className="mt-6 text-sm text-[var(--brand-text-2)]">Led by Anastasia Blodgett, founder of 17hands.ai.</p></div></section>
+      <section className="bg-[var(--brand-primary)] py-20 md:py-24"><div className="container mx-auto px-4 sm:px-6 max-w-4xl text-center"><h2 className="display text-4xl md:text-5xl mb-6">Bring Digital Defenders<br />to <span className="rose-text">your people.</span></h2><p className="text-lg text-[var(--brand-text-2)] mb-8">Tell me who you want to help and what concerns them. We will find a useful place to start.</p><BrandButton href={BOOKING_URL} placement="defenders-bottom" size="lg">Plan your workshop <ArrowRight size={18} aria-hidden="true" /></BrandButton><p className="mt-6 text-sm text-[var(--brand-text-2)]">Led by Anastasia Blodgett, founder of 17hands.ai.</p></div></section>
     </div>
   );
 }

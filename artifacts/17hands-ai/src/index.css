@@ -212,26 +212,115 @@
 }
 
 
-/* ---- Opener (see index.html): logo animation, then the logo moves to the header ---- */
-#intro { display: none; }
-html.intro-on { overflow: hidden; }
-html.intro-on #intro { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; }
-html.intro-on #root { visibility: hidden; }
-html.intro-on.intro-reveal #root { visibility: visible; animation: intro-page-in 0.8s ease 0.4s both; }
-@keyframes intro-page-in { from { opacity: 0; } to { opacity: 1; } }
-html.intro-on header { opacity: 0; }
-html.intro-on.intro-reveal header { opacity: 1; transition: opacity 0.7s ease 0.45s; }
-#intro-bg { position: absolute; inset: 0; background: #0b0617; }
-#intro-stage { position: relative; width: min(88vw, 62vh, 560px); aspect-ratio: 1; will-change: transform, opacity; }
-#intro-video {
-  width: 100%; height: 100%; display: block; object-fit: cover; background: #0b0617;
-  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+/* ---- Hero intro (see index.html and HeroIntro.tsx): the logo film plays in the hero's
+   visual slot, then cross-fades to the diagram. Nothing outside that slot is hidden. ---- */
+.hero-intro { display: none; }
+html.intro-on .hero-intro {
+  display: block; position: absolute; inset: 0; margin: auto; height: 100%; aspect-ratio: 1; max-width: 100%;
+  background: #0b0617 url("/intro/17hands-poster.webp") center / cover;
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+  transition: opacity 0.7s ease;
 }
-#intro-skip {
-  position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom));
-  min-height: 44px; min-width: 64px; padding: 0 16px; border-radius: 999px;
-  border: 1px solid rgb(224 167 134 / 0.5); background: transparent; color: var(--brand-rose);
-  font-family: inherit; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: opacity 0.3s ease, background-color 0.2s ease;
+.hero-intro video { display: block; width: 100%; height: 100%; object-fit: cover; }
+html.intro-on .hero-visual > svg { opacity: 0; transition: opacity 0.7s ease 0.2s; }
+html.intro-on.intro-reveal .hero-intro { opacity: 0; }
+html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
+
+/* ---- Visuals: diagram and meter motion. Transform, opacity and stroke offset only. ---- */
+.flow-pulse { stroke-dasharray: 14 86; stroke-dashoffset: 14; opacity: 0; }
+.flow-check { opacity: 1; }
+.flow-logo, .flow-hub { transform-box: fill-box; transform-origin: center; }
+.meter-fill, .meter-rise { transform-origin: left bottom; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .flow-pulse { animation: flow-travel 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+  .flow-check { animation: flow-check 4.8s ease-out infinite; }
+  .flow-logo { animation: flow-breathe 4.8s ease-in-out infinite; }
+  .flow-hub { animation: flow-glow 4.8s ease-in-out infinite; }
+  .flow-ring { transform-box: fill-box; transform-origin: center; animation: flow-spin 40s linear infinite; }
+
+  @supports (animation-timeline: view()) {
+    .meter-fill { animation: meter-fill linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+    .meter-rise { animation: meter-rise linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+    .stair { animation: reveal-up linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+  }
 }
-#intro-skip:hover { background: rgb(224 167 134 / 0.12); }
+
+@keyframes flow-travel {
+  0% { stroke-dashoffset: 14; opacity: 0; }
+  6% { opacity: 1; }
+  30% { stroke-dashoffset: -86; opacity: 1; }
+  36%, 100% { stroke-dashoffset: -86; opacity: 0; }
+}
+@keyframes flow-check {
+  0%, 8% { opacity: 0.25; }
+  18%, 80% { opacity: 1; }
+  100% { opacity: 0.25; }
+}
+@keyframes flow-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes flow-glow { 0%, 100% { stroke-opacity: 0.45; } 50% { stroke-opacity: 1; } }
+@keyframes flow-spin { to { transform: rotate(360deg); } }
+@keyframes meter-fill { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes meter-rise { from { transform: scaleY(0); } to { transform: none; } }
+
+/* ROI estimator sliders */
+.roi-range { appearance: none; -webkit-appearance: none; height: 28px; background: transparent; cursor: pointer; }
+.roi-range::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: color-mix(in oklab, var(--color-white) 14%, transparent); }
+.roi-range::-moz-range-track { height: 4px; border-radius: 999px; background: color-mix(in oklab, var(--color-white) 14%, transparent); }
+.roi-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9px; border-radius: 50%;
+  background: var(--brand-rose); border: 3px solid var(--brand-canvas); box-shadow: 0 0 0 1px var(--brand-rose);
+}
+.roi-range::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--brand-rose); border: 3px solid var(--brand-canvas); box-shadow: 0 0 0 1px var(--brand-rose);
+}
+
+/* ---- Light theme. Set on <html data-theme="light"> before first paint (index.html). ----
+   Tailwind's white utilities (border-white/10, hover:text-white, ...) read --color-white, so
+   flipping that one token inverts every hairline and hover without touching the markup. */
+:root { color-scheme: dark; }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --brand-canvas: #FBF9FE;
+  --brand-primary: #F4EFFA;
+  --brand-secondary: #E0D3EE;
+  --brand-surface: #ECE4F5;
+  --brand-rose: #9A5632;
+  --brand-slate: #8B7BA3;
+  --brand-text: #13091E;
+  --brand-text-2: #3A2B4C;
+  --color-white: #1B1026;
+
+  --background: 264 56% 99%;
+  --foreground: 269 54% 8%;
+  --border: 268 30% 86%;
+  --card: 270 40% 96%;
+  --card-foreground: 269 54% 8%;
+  --card-border: 268 30% 86%;
+  --popover: 270 40% 96%;
+  --popover-foreground: 269 54% 8%;
+  --popover-border: 268 30% 86%;
+  --secondary: 269 44% 88%;
+  --secondary-foreground: 269 54% 8%;
+  --muted: 270 40% 96%;
+  --muted-foreground: 267 28% 23%;
+  --accent: 21 51% 40%;
+  --accent-foreground: 0 0% 100%;
+  --input: 268 30% 80%;
+  --ring: 21 51% 40%;
+}
+:root[data-theme="light"] .bg-atmosphere { background: linear-gradient(135deg, #F1ECF8 0%, #E3D6F2 100%); }
+
+/* Anything sitting on amethyst keeps light text in both themes. */
+.on-accent {
+  --color-white: #fff;
+  --brand-text: #FAF8FD;
+  --brand-text-2: #EADFF5;
+  --brand-rose: #F3CDB5;
+}
+
+.only-light { display: none; }
+:root[data-theme="light"] .only-light { display: inline; }
+:root[data-theme="light"] .only-dark { display: none; }
