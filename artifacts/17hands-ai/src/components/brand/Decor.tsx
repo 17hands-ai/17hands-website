@@ -17,15 +17,38 @@ export function CircuitTrace({ className = "" }: { className?: string }) {
   );
 }
 
-/** Oversized "17" brand numeral used as a background watermark. */
+/**
+ * Background watermarks: the oversized "17" numeral and the 17hands mark. They sit behind a
+ * section's content, so the brand is in frame wherever a visitor screenshots the page.
+ * The host section needs `relative isolate overflow-hidden`; `isolate` keeps the negative
+ * z-index above the section's own background.
+ */
+const watermark = "pointer-events-none select-none absolute -z-10";
+
 export function BrandNumeral({ className = "" }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={`pointer-events-none select-none display leading-none text-white/[0.035] ${className}`}
+      className={`${watermark} display leading-none text-white/[0.05] ${className}`}
       style={{ fontSize: "clamp(180px, 28vw, 420px)" }}
     >
       17
     </div>
+  );
+}
+
+/** The logo is the same file the header loads, so this costs no extra request. */
+export function BrandMark({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src="/logo-rosegold.png"
+      alt=""
+      aria-hidden="true"
+      width={501}
+      height={339}
+      loading="lazy"
+      decoding="async"
+      className={`${watermark} brand-mark h-auto w-[clamp(240px,34vw,520px)] max-w-none ${className}`}
+    />
   );
 }

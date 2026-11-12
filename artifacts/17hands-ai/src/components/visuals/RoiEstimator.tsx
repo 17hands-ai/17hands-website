@@ -1,3 +1,4 @@
+import { BrandMark } from "@/components/brand/Decor";
 import { useId, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
@@ -66,7 +67,8 @@ export function RoiEstimator() {
   const paybackWeeks = Math.max(1, Math.ceil(QUICK_WIN_PRICE / weeklyValue));
 
   return (
-    <section id="estimate" aria-labelledby="estimate-title" className="py-24 md:py-28 border-t border-border scroll-mt-24">
+    <section id="estimate" aria-labelledby="estimate-title" className="relative isolate overflow-hidden py-24 md:py-28 border-t border-border scroll-mt-24">
+      <BrandMark className="-left-20 -bottom-12" />
       <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
         <div>
           <p className="eyebrow mb-4">{t.eyebrow}</p>

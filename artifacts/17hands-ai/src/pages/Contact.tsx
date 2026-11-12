@@ -1,4 +1,5 @@
 import { ArrowRight, Mail } from "lucide-react";
+import { BrandNumeral } from "@/components/brand/Decor";
 import { BrandButton } from "@/components/brand/BrandButton";
 import { BOOKING_URL, CONTACT_EMAIL } from "@/lib/site";
 import { useContent } from "@/i18n";
@@ -7,7 +8,8 @@ export default function Contact() {
   const content = useContent();
   const t = content.contact;
   return (
-    <div className="pt-36 pb-24 md:pt-44 relative overflow-hidden">
+    <div className="pt-36 pb-24 md:pt-44 relative isolate overflow-hidden">
+      <BrandNumeral className="-right-6 -bottom-10" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_0%,rgba(121,40,202,0.22),transparent_70%)]" aria-hidden="true" />
       <div className="container relative mx-auto px-4 sm:px-6 max-w-3xl">
         <p className="eyebrow mb-6">{t.eyebrow}</p>
