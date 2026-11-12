@@ -31,6 +31,7 @@ export const ru: Content = {
 
   common: {
     book: "Записаться на звонок",
+    bookShort: "Записаться",
     newTab: " (откроется в новой вкладке)",
     skip: "Перейти к содержанию",
   },

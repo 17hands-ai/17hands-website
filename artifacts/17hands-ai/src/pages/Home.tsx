@@ -60,7 +60,7 @@ export default function Home() {
             </h1>
             <p className="text-lg md:text-xl text-[var(--brand-text-2)] leading-relaxed max-w-2xl mb-10">{t.hero.body}</p>
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <BrandButton href={BOOKING_URL} size="lg">
+              <BrandButton href={BOOKING_URL} placement="hero" size="lg">
                 {content.common.book} <ArrowRight size={18} aria-hidden="true" />
               </BrandButton>
               <BrandButton href="/packages" variant="secondary" size="lg">
@@ -197,7 +197,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="delivery" size="lg">
             {t.delivery.cta} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>
@@ -300,7 +300,7 @@ export default function Home() {
             {t.cta.line}<span className="rose-text">{t.cta.accent}</span>
           </h2>
           <p className="reveal text-lg md:text-xl text-[var(--brand-text-2)] mb-10">{t.cta.body}</p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="home-bottom" size="lg">
             {content.common.book} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

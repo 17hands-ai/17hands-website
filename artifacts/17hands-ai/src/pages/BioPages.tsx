@@ -101,7 +101,7 @@ export default function BioPages() {
             {BIO_PAGE_FOUNDING_SPOTS} clients.
           </p>
           <div className="flex flex-wrap gap-4">
-            <BrandButton href={BOOKING_URL} size="lg">
+            <BrandButton href={BOOKING_URL} placement="bio-hero" size="lg">
               Book a 15-minute call <ArrowRight size={18} aria-hidden="true" />
             </BrandButton>
             <BrandButton href="/link-in-bio" variant="secondary" size="lg">
@@ -298,7 +298,7 @@ export default function BioPages() {
             {BIO_PAGE_PRICE} flat for the first {BIO_PAGE_FOUNDING_SPOTS} clients. Book a short call and we'll see if
             it's a fit.
           </p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="bio-bottom" size="lg">
             Book a 15-minute call <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

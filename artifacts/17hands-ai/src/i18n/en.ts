@@ -22,6 +22,7 @@ export const en = {
 
   common: {
     book: "Book a call",
+    bookShort: "Book a call",
     newTab: " (opens in a new tab)",
     skip: "Skip to content",
   },

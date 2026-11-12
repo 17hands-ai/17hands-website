@@ -33,7 +33,7 @@ export default function ForYou() {
             A 1-on-1 session where we sit down together and make your phone, passwords and accounts safer. No jargon and
             no judgment. Great for you, a parent or anyone who'd like a patient guide.
           </p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="for-you-hero" size="lg">
             Book a session <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>
@@ -82,7 +82,7 @@ export default function ForYou() {
             Run a business too? I also run security workshops for staff and help small businesses look after customer
             information. <a href="/#services" className="rose-text underline underline-offset-4 hover:text-white">See business services</a>
           </p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="for-you-bottom" size="lg">
             Book a session <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

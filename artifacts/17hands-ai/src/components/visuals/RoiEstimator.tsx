@@ -129,7 +129,7 @@ export function RoiEstimator() {
             {fmt(t.payback, { price: usd(QUICK_WIN_PRICE) })}
             <strong className="rose-text">{t.weeks(paybackWeeks)}</strong>. {fmt(t.waiting, { monthly: usd(valueBack / 12) })}
           </p>
-          <BrandButton href={BOOKING_URL} size="lg" className="w-full sm:w-auto">
+          <BrandButton href={BOOKING_URL} placement="estimator" size="lg" className="w-full sm:w-auto">
             {t.cta} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
           <p className="mt-6 text-sm text-[var(--brand-text-2)]/90">

@@ -14,7 +14,7 @@ export default function Contact() {
         <h1 className="display text-5xl md:text-6xl text-[var(--brand-text)] mb-8">{t.title}</h1>
         <p className="text-xl text-[var(--brand-text-2)] leading-relaxed mb-12">{t.body}</p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="contact" size="lg">
             {content.common.book} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
           <BrandButton href={`mailto:${CONTACT_EMAIL}`} variant="secondary" size="lg">

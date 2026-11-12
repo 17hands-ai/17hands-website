@@ -15,6 +15,8 @@ interface BrandButtonProps {
   size?: Size;
   className?: string;
   onClick?: () => void;
+  /** Where on the page a booking button sits, reported with the Umami "booking" event so placements can be compared. */
+  placement?: string;
 }
 
 const base =
@@ -33,7 +35,7 @@ const sizes: Record<Size, string> = {
 };
 
 /** Links styled as the design system's kinetic CTAs. External hrefs open in a new tab. */
-export function BrandButton({ href, children, variant = "primary", size = "md", className, onClick }: BrandButtonProps) {
+export function BrandButton({ href, children, variant = "primary", size = "md", className, onClick, placement }: BrandButtonProps) {
   const { locale, content } = useI18n();
   const classes = cn(base, variants[variant], sizes[size], className);
   if (/^(https?:|mailto:)/.test(href)) {
@@ -43,7 +45,7 @@ export function BrandButton({ href, children, variant = "primary", size = "md", 
         href={href}
         className={classes}
         onClick={onClick}
-        data-umami-event={href.startsWith(BOOKING_URL) ? "booking" : undefined}
+        {...(href.startsWith(BOOKING_URL) ? { "data-umami-event": "booking", "data-umami-event-placement": placement } : {})}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {children}

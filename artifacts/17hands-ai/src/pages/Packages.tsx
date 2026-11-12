@@ -195,7 +195,7 @@ export default function Packages() {
           <CircuitTrace className="mx-auto mb-8 w-56" />
           <h2 id="packages-cta" className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-6">{t.cta.title}</h2>
           <p className="text-lg text-[var(--brand-text-2)] mb-10">{t.cta.body}</p>
-          <BrandButton href={BOOKING_URL} size="lg">
+          <BrandButton href={BOOKING_URL} placement="packages-bottom" size="lg">
             {content.common.book} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

@@ -22,7 +22,7 @@ export default function FAQ() {
           ))}
         </div>
         <p className="text-lg text-[var(--brand-text-2)] mb-6">{t.more}</p>
-        <BrandButton href={BOOKING_URL} size="lg">{content.common.book}</BrandButton>
+        <BrandButton href={BOOKING_URL} placement="faq" size="lg">{content.common.book}</BrandButton>
       </div>
     </div>
   );

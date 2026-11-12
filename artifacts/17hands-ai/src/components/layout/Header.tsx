@@ -117,7 +117,7 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3 shrink-0 rounded-md">
           <img src="/logo-rosegold.png" alt="" width={501} height={339} className="h-11 w-auto" />
-          <span className="display text-xl text-[var(--brand-text)]">
+          <span className="display text-xl text-[var(--brand-text)] hidden sm:inline">
             17hands<span className="rose-text">.ai</span>
           </span>
         </Link>
@@ -141,8 +141,10 @@ export function Header() {
         <div className="flex items-center gap-1">
           <LanguageSwitcher className="hidden sm:flex" />
           <ThemeToggle />
-          <BrandButton href={BOOKING_URL} className="ml-2 hidden xl:inline-flex">
-            {content.common.book}
+          {/* Always in view: the header is fixed, so booking is one tap away at any scroll depth. */}
+          <BrandButton href={BOOKING_URL} placement="header" className="ml-1 sm:ml-2 px-4 sm:px-5 whitespace-nowrap">
+            <span className="sm:hidden">{content.common.bookShort}</span>
+            <span className="hidden sm:inline">{content.common.book}</span>
           </BrandButton>
           <button
             type="button"
@@ -172,7 +174,7 @@ export function Header() {
             ))}
           </nav>
           <LanguageSwitcher className="mt-3 sm:hidden" />
-          <BrandButton href={BOOKING_URL} size="lg" className="mt-4 w-full">
+          <BrandButton href={BOOKING_URL} placement="menu" size="lg" className="mt-4 w-full">
             {content.common.book}
           </BrandButton>
         </div>

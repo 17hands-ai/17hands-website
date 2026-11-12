@@ -117,7 +117,7 @@ export function StatBand() {
             <h3 className="display text-3xl text-[var(--brand-text)] mb-3">{t.urgencyTitle}</h3>
             <p className="text-lg text-[var(--brand-text-2)] leading-relaxed">{t.urgencyBody}</p>
           </div>
-          <BrandButton href={BOOKING_URL} size="lg" className="shrink-0">
+          <BrandButton href={BOOKING_URL} placement="urgency" size="lg" className="shrink-0">
             {t.urgencyCta} <ArrowRight size={18} aria-hidden="true" />
           </BrandButton>
         </div>

@@ -31,6 +31,7 @@ export const es: Content = {
 
   common: {
     book: "Agendar una llamada",
+    bookShort: "Agendar",
     newTab: " (se abre en una pestaña nueva)",
     skip: "Saltar al contenido",
   },
