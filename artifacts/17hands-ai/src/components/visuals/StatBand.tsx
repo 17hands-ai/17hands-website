@@ -1,4 +1,3 @@
-import { BrandNumeral } from "@/components/brand/Decor";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { stats, type Stat } from "@/lib/stats";
@@ -83,8 +82,7 @@ export function StatBand() {
   const content = useContent();
   const t = content.home.stats;
   return (
-    <section aria-labelledby="why-now-title" className="relative isolate overflow-hidden py-20 md:py-24 bg-[var(--brand-primary)]">
-      <BrandNumeral className="-right-8 -bottom-12" />
+    <section aria-labelledby="why-now-title" className="py-20 md:py-24 bg-[var(--brand-primary)]">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="reveal max-w-3xl mb-14">
           <p className="eyebrow mb-4">{t.eyebrow}</p>

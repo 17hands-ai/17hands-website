@@ -18,10 +18,19 @@ export function CircuitTrace({ className = "" }: { className?: string }) {
 }
 
 /**
- * Background watermarks: the oversized "17" numeral and the 17hands mark. They sit behind a
- * section's content, so the brand is in frame wherever a visitor screenshots the page.
- * The host section needs `relative isolate overflow-hidden`; `isolate` keeps the negative
- * z-index above the section's own background.
+ * Background watermarks. Two marks, one job each, so they never compete:
+ *
+ * - BrandNumeral, the oversized "17", opens and closes a page: it bleeds off the edge of the
+ *   page hero and of the closing call to action, and appears nowhere in between.
+ * - BrandMark, the logo, sits whole in the empty space to the right of a section heading.
+ *   Put it first inside the section's `container relative` so it lines up with the heading.
+ *   Below `lg` a heading runs the full width, so the mark shrinks and moves up level with
+ *   the eyebrow line, clear of the heading text.
+ *
+ * Placement rules: only on sections with open space (never behind cards, panels, forms or
+ * diagrams), never cropped mid-shape by a section edge, and never in two sections in a row,
+ * so one screen shows at most one mark. The host section needs `relative isolate`; `isolate`
+ * keeps the negative z-index above the section's own background.
  */
 const watermark = "pointer-events-none select-none absolute -z-10";
 
@@ -38,7 +47,7 @@ export function BrandNumeral({ className = "" }: { className?: string }) {
 }
 
 /** The logo is the same file the header loads, so this costs no extra request. */
-export function BrandMark({ className = "" }: { className?: string }) {
+export function BrandMark() {
   return (
     <img
       src="/logo-rosegold.png"
@@ -48,7 +57,7 @@ export function BrandMark({ className = "" }: { className?: string }) {
       height={339}
       loading="lazy"
       decoding="async"
-      className={`${watermark} brand-mark h-auto w-[clamp(240px,34vw,520px)] max-w-none ${className}`}
+      className={`${watermark} brand-mark right-4 sm:right-6 -top-10 w-24 h-auto lg:top-0 lg:w-[clamp(180px,20vw,260px)]`}
     />
   );
 }

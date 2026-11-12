@@ -86,8 +86,7 @@ export default function Home() {
 
       <StatBand />
 
-      <section id="products" className="relative isolate overflow-hidden py-20 md:py-24 border-t border-border scroll-mt-24" aria-labelledby="products-title">
-        <BrandMark className="-right-20 -top-8" />
+      <section id="products" className="py-20 md:py-24 border-t border-border scroll-mt-24" aria-labelledby="products-title">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 id="products-title" className="display text-4xl md:text-5xl mb-12">{t.products.title}</h2>
           <div className="grid md:grid-cols-[1.3fr_1fr] gap-12 lg:gap-20">
@@ -106,9 +105,9 @@ export default function Home() {
       </section>
 
       {/* Recognizable problems */}
-      <section aria-labelledby="familiar-title" className="relative isolate overflow-hidden py-24 md:py-28 border-t border-border">
-        <BrandNumeral className="-left-10 top-10" />
-        <div className="container mx-auto px-4 sm:px-6">
+      <section aria-labelledby="familiar-title" className="relative isolate py-24 md:py-28 border-t border-border">
+        <div className="container relative mx-auto px-4 sm:px-6">
+          <BrandMark />
           <div className="reveal max-w-3xl mb-14">
             <p className="eyebrow mb-4">{t.familiar.eyebrow}</p>
             <h2 id="familiar-title" className="display text-4xl md:text-5xl text-[var(--brand-text)]">{t.familiar.title}</h2>
@@ -180,9 +179,9 @@ export default function Home() {
       </section>
 
       {/* Delivery, not hype */}
-      <section id="delivery" aria-labelledby="delivery-title" className="relative isolate overflow-hidden py-24 md:py-28 bg-[var(--brand-primary)] scroll-mt-24">
-        <BrandMark className="-right-16 -bottom-10" />
-        <div className="container mx-auto px-4 sm:px-6">
+      <section id="delivery" aria-labelledby="delivery-title" className="relative isolate py-24 md:py-28 bg-[var(--brand-primary)] scroll-mt-24">
+        <div className="container relative mx-auto px-4 sm:px-6">
+          <BrandMark />
           <div className="reveal max-w-4xl mb-14">
             <p className="eyebrow mb-4">{t.delivery.eyebrow}</p>
             <h2 id="delivery-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">
@@ -209,9 +208,9 @@ export default function Home() {
       <RoiEstimator />
 
       {/* How it works */}
-      <section id="how-it-works" aria-labelledby="how-title" className="relative isolate overflow-hidden py-24 md:py-28 border-t border-border scroll-mt-24">
-        <BrandNumeral className="-right-8 -top-6" />
-        <div className="container mx-auto px-4 sm:px-6">
+      <section id="how-it-works" aria-labelledby="how-title" className="relative isolate py-24 md:py-28 border-t border-border scroll-mt-24">
+        <div className="container relative mx-auto px-4 sm:px-6">
+          <BrandMark />
           <div className="reveal max-w-3xl mb-16">
             <p className="eyebrow mb-4">{t.how.eyebrow}</p>
             <h2 id="how-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">{t.how.title}</h2>
@@ -231,8 +230,7 @@ export default function Home() {
       </section>
 
       {/* About */}
-      <section id="about" aria-labelledby="about-title" className="relative isolate overflow-hidden py-24 md:py-28 bg-[var(--brand-primary)] scroll-mt-24">
-        <BrandMark className="-left-20 top-12" />
+      <section id="about" aria-labelledby="about-title" className="py-24 md:py-28 bg-[var(--brand-primary)] scroll-mt-24">
         <div className="container mx-auto px-4 sm:px-6 grid md:grid-cols-[minmax(0,360px)_1fr] gap-12 lg:gap-20 items-center">
           <Portrait className="reveal aspect-[3/4] w-full max-w-[360px]" />
           <div className="reveal">

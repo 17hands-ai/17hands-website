@@ -65,7 +65,7 @@ export default function Packages() {
   return (
     <div className="flex flex-col">
       <section aria-labelledby="packages-title" className="relative isolate overflow-hidden pt-36 pb-16 md:pt-44">
-        <BrandNumeral className="-right-6 -bottom-10" />
+        <BrandNumeral className="-right-6 -bottom-10 hidden md:block" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_0%,rgba(224,167,134,0.16),transparent_70%)]" aria-hidden="true" />
         <div className="container relative mx-auto px-4 sm:px-6 max-w-4xl hero-in">
           <p className="eyebrow mb-6">{t.hero.eyebrow}</p>
@@ -94,9 +94,10 @@ export default function Packages() {
             key={ladder.id}
             id={ladder.id}
             aria-labelledby={`${ladder.id}-title`}
-            className={`py-20 md:py-24 scroll-mt-24 ${i % 2 === 0 ? "border-t border-border" : "bg-[var(--brand-primary)]"}`}
+            className={`relative isolate py-20 md:py-24 scroll-mt-24 ${i % 2 === 0 ? "border-t border-border" : "bg-[var(--brand-primary)]"}`}
           >
-            <div className="container mx-auto px-4 sm:px-6">
+            <div className="container relative mx-auto px-4 sm:px-6">
+              {i === 1 && <BrandMark />}
               <div className="max-w-3xl mb-12">
                 <p className="eyebrow mb-4">{copy.eyebrow}</p>
                 <h2 id={`${ladder.id}-title`} className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-5">{copy.title}</h2>
@@ -112,9 +113,9 @@ export default function Packages() {
         );
       })}
 
-      <section id="care" aria-labelledby="care-title" className="relative isolate overflow-hidden py-20 md:py-24 bg-atmosphere scroll-mt-24">
-        <BrandMark className="-left-20 top-10" />
-        <div className="container mx-auto px-4 sm:px-6">
+      <section id="care" aria-labelledby="care-title" className="relative isolate py-20 md:py-24 bg-atmosphere scroll-mt-24">
+        <div className="container relative mx-auto px-4 sm:px-6">
+          <BrandMark />
           <div className="max-w-3xl mb-12">
             <p className="eyebrow mb-4">{t.care.eyebrow}</p>
             <h2 id="care-title" className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-5">
@@ -177,8 +178,7 @@ export default function Packages() {
         </div>
       </section>
 
-      <section aria-labelledby="terms-title" className="relative isolate overflow-hidden py-20 md:py-24 bg-[var(--brand-primary)]">
-        <BrandNumeral className="-right-8 -bottom-14" />
+      <section aria-labelledby="terms-title" className="py-20 md:py-24 bg-[var(--brand-primary)]">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 id="terms-title" className="display text-3xl md:text-4xl text-[var(--brand-text)] mb-12 max-w-2xl">{t.terms.title}</h2>
           <ul className="grid md:grid-cols-3 gap-x-12 gap-y-10">
@@ -193,7 +193,8 @@ export default function Packages() {
         </div>
       </section>
 
-      <section aria-labelledby="packages-cta" className="py-24 text-center">
+      <section aria-labelledby="packages-cta" className="relative isolate overflow-hidden py-24 text-center">
+        <BrandNumeral className="-left-8 -bottom-16" />
         <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
           <CircuitTrace className="mx-auto mb-8 w-56" />
           <h2 id="packages-cta" className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-6">{t.cta.title}</h2>
