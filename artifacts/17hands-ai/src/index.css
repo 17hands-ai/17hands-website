@@ -325,6 +325,6 @@ html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
 :root[data-theme="light"] .only-light { display: inline; }
 :root[data-theme="light"] .only-dark { display: none; }
 
-/* ---- Watermarks (see Decor.tsx): the logo sits behind section content at low opacity ---- */
-.brand-mark { opacity: 0.09; }
-:root[data-theme="light"] .brand-mark { opacity: 0.16; }
+/* ---- Watermarks (see Decor.tsx for the placement rules) ---- */
+.brand-mark { opacity: 0.1; }
+:root[data-theme="light"] .brand-mark { opacity: 0.18; }
