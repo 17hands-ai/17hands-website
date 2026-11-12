@@ -1,3 +1,4 @@
+import { BrandMark } from "@/components/brand/Decor";
 import { BrandButton } from "@/components/brand/BrandButton";
 import { BOOKING_URL } from "@/lib/site";
 import { fillPrices, useContent } from "@/i18n";
@@ -6,7 +7,8 @@ export default function FAQ() {
   const content = useContent();
   const t = content.faqPage;
   return (
-    <div className="pt-36 pb-24 md:pt-44">
+    <div className="relative isolate overflow-hidden pt-36 pb-24 md:pt-44">
+      <BrandMark className="-right-24 top-40" />
       <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
         <p className="eyebrow mb-6">{t.eyebrow}</p>
         <h1 className="display text-5xl md:text-6xl text-[var(--brand-text)] mb-12">{t.title}</h1>

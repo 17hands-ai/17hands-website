@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
-import { CircuitTrace } from "@/components/brand/Decor";
+import { BrandMark, BrandNumeral, CircuitTrace } from "@/components/brand/Decor";
 import { BOOKING_URL } from "@/lib/site";
 import { ladders, carePlans, programs, priceLabel, usd, type PackageDef } from "@/lib/packages";
 import { useContent } from "@/i18n";
@@ -64,7 +64,8 @@ export default function Packages() {
 
   return (
     <div className="flex flex-col">
-      <section aria-labelledby="packages-title" className="relative overflow-hidden pt-36 pb-16 md:pt-44">
+      <section aria-labelledby="packages-title" className="relative isolate overflow-hidden pt-36 pb-16 md:pt-44">
+        <BrandNumeral className="-right-6 -bottom-10" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_0%,rgba(224,167,134,0.16),transparent_70%)]" aria-hidden="true" />
         <div className="container relative mx-auto px-4 sm:px-6 max-w-4xl hero-in">
           <p className="eyebrow mb-6">{t.hero.eyebrow}</p>
@@ -111,7 +112,8 @@ export default function Packages() {
         );
       })}
 
-      <section id="care" aria-labelledby="care-title" className="py-20 md:py-24 bg-atmosphere scroll-mt-24">
+      <section id="care" aria-labelledby="care-title" className="relative isolate overflow-hidden py-20 md:py-24 bg-atmosphere scroll-mt-24">
+        <BrandMark className="-left-20 top-10" />
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-3xl mb-12">
             <p className="eyebrow mb-4">{t.care.eyebrow}</p>
@@ -175,7 +177,8 @@ export default function Packages() {
         </div>
       </section>
 
-      <section aria-labelledby="terms-title" className="py-20 md:py-24 bg-[var(--brand-primary)]">
+      <section aria-labelledby="terms-title" className="relative isolate overflow-hidden py-20 md:py-24 bg-[var(--brand-primary)]">
+        <BrandNumeral className="-right-8 -bottom-14" />
         <div className="container mx-auto px-4 sm:px-6">
           <h2 id="terms-title" className="display text-3xl md:text-4xl text-[var(--brand-text)] mb-12 max-w-2xl">{t.terms.title}</h2>
           <ul className="grid md:grid-cols-3 gap-x-12 gap-y-10">
