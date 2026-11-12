@@ -181,7 +181,7 @@ Two places where video would beat SVG:
 - A short loop of the staff onboarding tool in use, for the case study.
 
 Rules if you add them: below the fold, `preload="none"`, poster image first, under 1.5 MB, WebM
-plus MP4, no autoplay with reduced motion. The intro opener already follows this pattern.
+plus MP4, no autoplay with reduced motion. The hero intro film already follows this pattern.
 
 **Phase 5, text diet on the pages this branch did not rewrite.**
 - Home "Sound familiar?": eight long bullets. Turn into a four-question self-check.

@@ -116,7 +116,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3 shrink-0 rounded-md">
-          <img src="/logo-rosegold.png" alt="" width={501} height={339} className="h-11 w-auto" data-intro-target />
+          <img src="/logo-rosegold.png" alt="" width={501} height={339} className="h-11 w-auto" />
           <span className="display text-xl text-[var(--brand-text)]">
             17hands<span className="rose-text">.ai</span>
           </span>

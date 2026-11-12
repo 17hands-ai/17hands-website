@@ -11,6 +11,7 @@ import { LinkedInLink } from "@/components/brand/LinkedInLink";
 import { packageDef, priceLabel, type PackageId } from "@/lib/packages";
 import { fillPrices, useContent } from "@/i18n";
 import { HeroFlow } from "@/components/visuals/HeroFlow";
+import { HeroIntro } from "@/components/visuals/HeroIntro";
 import { StatBand } from "@/components/visuals/StatBand";
 import { RoiEstimator } from "@/components/visuals/RoiEstimator";
 
@@ -75,7 +76,10 @@ export default function Home() {
           </div>
 
           <div className="hero-in" style={{ animationDelay: "0.15s" }}>
-            <HeroFlow className="w-full max-w-[460px] mx-auto lg:ml-auto lg:mr-0" />
+            <div className="hero-visual relative w-full max-w-[460px] mx-auto lg:ml-auto lg:mr-0">
+              <HeroFlow className="w-full" />
+              <HeroIntro />
+            </div>
           </div>
         </div>
       </section>
