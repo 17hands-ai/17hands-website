@@ -101,17 +101,10 @@ export default function Home() {
       <section id="products" className="py-20 md:py-24 border-t border-border scroll-mt-24" aria-labelledby="products-title">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 id="products-title" data-rail-node className="display text-4xl md:text-5xl mb-12">{t.products.title}</h2>
-          <div data-sc-in data-sc-stagger="160" className="grid md:grid-cols-[1.3fr_1fr] gap-12 lg:gap-20">
-            <div>
-              <h3 className="display text-3xl rose-text mb-4">{t.products.ddTitle}</h3>
-              <p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">{t.products.ddBody}</p>
-              <BrandButton href="/digital-defenders" size="lg">{t.products.ddCta} <ArrowRight size={18} aria-hidden="true" /></BrandButton>
-            </div>
-            <div>
-              <h3 className="display text-3xl rose-text mb-4">{t.products.naturalTitle}</h3>
-              <p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">{t.products.naturalBody}</p>
-              <BrandButton href="/natural" variant="secondary" size="lg">{t.products.naturalCta}</BrandButton>
-            </div>
+          <div data-sc-in className="max-w-3xl">
+            <h3 className="display text-3xl rose-text mb-4">{t.products.ddTitle}</h3>
+            <p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-6">{t.products.ddBody}</p>
+            <BrandButton href="/digital-defenders" size="lg">{t.products.ddCta} <ArrowRight size={18} aria-hidden="true" /></BrandButton>
           </div>
         </div>
       </section>

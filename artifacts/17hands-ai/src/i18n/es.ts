@@ -39,7 +39,6 @@ export const es: Content = {
   nav: {
     label: "Principal",
     digitalDefenders: "Digital Defenders",
-    natural: "Natural",
     services: "Servicios",
     packages: "Paquetes",
     bioPages: "Páginas bio",
@@ -115,9 +114,6 @@ export const es: Content = {
       ddTitle: "Digital Defenders",
       ddBody: "Más seguros en línea, juntos. Talleres de ciberseguridad, detección de estafas y hábitos digitales prácticos para familias, comunidades y equipos pequeños.",
       ddCta: "Conocer Digital Defenders",
-      naturalTitle: "Natural",
-      naturalBody: "Un próximo espacio para comunidad y servicios relacionados. Estamos dando forma a lo que viene.",
-      naturalCta: "Conocer Natural",
     },
     familiar: {
       eyebrow: "¿Te suena?",
