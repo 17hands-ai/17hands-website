@@ -44,6 +44,7 @@ bytes and decides the type from them.
 | `server/intake/` | Handlers, upload checks, SVG allowlist, token signing, Supabase store, tests. |
 | `api/bio-intake/*.ts` | Vercel function entry points. Two lines each. |
 | `supabase/migrations/` | Table, rate limit function and bucket. |
+| `scripts/export-intake.mjs` | Saves one submission as a readable page plus its images. |
 | `scripts/purge-intake-files.mjs` | Deletes files past their retention date. |
 | `vercel.json` | Security headers. The form's CSP is generated at build time in `vite.config.ts`. |
 
@@ -110,6 +111,7 @@ Vercel: **Project > Settings > Environment Variables**. Add each for **Productio
 | `RESEND_API_KEY` | Resend API key | **yes** |
 | `INTAKE_EMAIL_FROM` | Sender on your verified domain | no |
 | `INTAKE_NOTIFY_EMAIL` | Where notices are sent | no |
+| `INTAKE_REPLY_TO` | Optional. Where a client's reply to their confirmation goes. Defaults to `INTAKE_NOTIFY_EMAIL`. | no |
 | `INTAKE_SUBMISSION_URL_TEMPLATE` | The link from step 4 | no |
 | `INTAKE_SIGNING_SECRET` | Output of `openssl rand -base64 48` | **yes** |
 | `INTAKE_ALLOWED_ORIGINS` | `https://17hands.ai` | no |
@@ -123,6 +125,38 @@ If a required variable is missing in production, the API answers 500 and the for
 service is real if its keys are in `.env` and a stand-in if not: submissions held in memory,
 Cloudflare's public test keys, and the email printed to the terminal. The terminal says which
 are in use on the first request.
+
+### Emails
+
+Two emails go out per submission, both through Resend from `INTAKE_EMAIL_FROM`:
+
+- **Notice to you**: the client's name and a link to the row. No answers, no files.
+- **Confirmation to the client**: fixed text saying the details arrived and what happens next.
+  Nothing the client typed is echoed back, so the form cannot be used to send arbitrary text from
+  your domain. Replies go to `INTAKE_REPLY_TO`, or `INTAKE_NOTIFY_EMAIL` if that is unset.
+
+Either one failing is logged and does not fail the submission.
+
+### Reading a submission
+
+The email link opens the row in Supabase. For something easier to read, with the images, save the
+submission to a folder on your machine. This needs `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+in `.env`.
+
+```bash
+pnpm intake:export
+```
+
+```bash
+pnpm intake:export latest
+```
+
+The first lists recent submissions with their ids. The second saves the newest one; pass an id
+instead of `latest` for a specific one. Each lands in `~/Documents/17hands-intake/<date>-<business>-<id>/`
+as `details.html` plus the photo and logo files (set `INTAKE_EXPORT_DIR` to change the location).
+
+These folders are copies of client data outside Supabase. The purge script does not know about
+them, so delete a client's folder when you delete their files.
 
 ### Retention
 
@@ -153,8 +187,8 @@ delete from bio_intake_submissions
 where created_at < now() - interval '24 months' and status in ('delivered', 'cancelled');
 ```
 
-To honour a deletion request, delete the row and the two paths in its `headshot_path` and
-`logo_path` columns from the bucket.
+To honour a deletion request, delete the row, the two paths in its `headshot_path` and
+`logo_path` columns from the bucket, and any exported folder for that client.
 
 ### Before going live
 

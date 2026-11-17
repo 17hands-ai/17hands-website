@@ -9,6 +9,7 @@
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
+    "intake:export": "node --env-file=.env scripts/export-intake.mjs",
     "intake:purge": "node --env-file=.env scripts/purge-intake-files.mjs"
   },
   "devDependencies": {
