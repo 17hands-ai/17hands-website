@@ -21,7 +21,7 @@ const turnstileVerifier = (secret: string) => async (token: string, ip: string) 
 };
 
 /**
- * The email says a submission arrived, names the client and links to the row. Answers, contact
+ * The owner's notice says a submission arrived, names the client and links to the row. Answers, contact
  * details and files stay in Supabase, behind the owner's own login.
  */
 const resendNotifier =
@@ -35,6 +35,44 @@ const resendNotifier =
         to: [options.to],
         subject: "New bio page intake",
         text: `${fullName} sent their bio page details.\n\nOpen the submission:\n${options.urlTemplate.replaceAll("{id}", id)}\n`,
+      }),
+    });
+    if (!response.ok) throw new Error(`resend responded ${response.status}`);
+  };
+
+/**
+ * The client's receipt. The text is fixed: nothing typed into the form is echoed back, so the
+ * form cannot be used to send someone else's words from this domain.
+ */
+const CONFIRMATION_TEXT = `Thank you. Your bio page details reached 17hands.
+
+What happens next:
+1. I review what you sent and email you if anything is missing.
+2. You get a private preview link to your page.
+3. You tell me what to change. One round of revisions is included.
+
+Your page is delivered within 5 business days, including the round of revisions.
+
+Questions or changes? Reply to this email.
+
+If you did not fill in a form at 17hands.ai, reply to let us know and we will delete the details.
+
+17hands
+https://17hands.ai
+`;
+
+const resendConfirmer =
+  (options: { apiKey: string; from: string; replyTo: string }) =>
+  async ({ email }: { email: string }) => {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { authorization: `Bearer ${options.apiKey}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        from: options.from,
+        to: [email],
+        reply_to: options.replyTo,
+        subject: "We received your bio page details",
+        text: CONFIRMATION_TEXT,
       }),
     });
     if (!response.ok) throw new Error(`resend responded ${response.status}`);
@@ -77,6 +115,11 @@ export function productionDeps(env: Env = process.env): IntakeDeps {
       to: env.INTAKE_NOTIFY_EMAIL!,
       urlTemplate: env.INTAKE_SUBMISSION_URL_TEMPLATE!,
     }),
+    confirm: resendConfirmer({
+      apiKey: env.RESEND_API_KEY!,
+      from: env.INTAKE_EMAIL_FROM!,
+      replyTo: env.INTAKE_REPLY_TO || env.INTAKE_NOTIFY_EMAIL!,
+    }),
     signingSecret: env.INTAKE_SIGNING_SECRET!,
     allowedOrigins: [...list(env.INTAKE_ALLOWED_ORIGINS || "https://17hands.ai"), ...deploymentOrigins],
   };
@@ -100,6 +143,11 @@ export function devDeps(env: Env, origins: string[], memory: MemoryStore): Intak
       ? resendNotifier({ apiKey: env.RESEND_API_KEY!, from: env.INTAKE_EMAIL_FROM!, to: env.INTAKE_NOTIFY_EMAIL!, urlTemplate })
       : async ({ id, fullName }) => {
           console.log(`[bio-intake dev] email not sent (no Resend keys). Would say: ${fullName} sent their bio page details. Submission ${id}.`);
+        },
+    confirm: hasResend
+      ? resendConfirmer({ apiKey: env.RESEND_API_KEY!, from: env.INTAKE_EMAIL_FROM!, replyTo: env.INTAKE_REPLY_TO || env.INTAKE_NOTIFY_EMAIL! })
+      : async () => {
+          console.log("[bio-intake dev] confirmation email to the client not sent (no Resend keys).");
         },
     signingSecret: env.INTAKE_SIGNING_SECRET || "dev-only-signing-secret-not-for-production",
     allowedOrigins: origins,

@@ -419,7 +419,8 @@ export default function BioPagesStart() {
             Thank you. <span className="rose-text">Here's what happens next.</span>
           </h1>
           <p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-10">
-            Your page is delivered within 5 business days, including one round of revisions.
+            Your page is delivered within 5 business days, including one round of revisions. A confirmation email is
+            on its way to you. If it does not arrive, check your spam folder.
           </p>
           <ol className="space-y-8">
             {[

@@ -115,7 +115,7 @@ export default function Privacy() {
       <ul>
         <li>Website hosting (Vercel), which also runs the intake form and receives what you submit in order to pass it on.</li>
         <li>Database and file storage (Supabase), where intake form answers and uploaded photos and logos are kept. Uploaded files are stored privately and are not reachable by a public link.</li>
-        <li>Email delivery (Resend), which sends us a notice that a form was submitted. The notice contains the client's name and no other form answers or files.</li>
+        <li>Email delivery (Resend), which sends us a notice that a form was submitted and sends the client a confirmation at the email address they entered. The notice contains the client's name and no other form answers or files. The confirmation contains none of the form answers.</li>
         <li>Spam protection (Cloudflare Turnstile).</li>
         <li>For bio page clients, the services needed to publish your page, such as web hosting and, if you ask us to arrange one, a domain registrar.</li>
         <li>Chat assistant provider (Chatbase) and the AI model providers it uses to generate replies.</li>

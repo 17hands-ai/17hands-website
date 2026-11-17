@@ -29,6 +29,8 @@ export interface IntakeDeps {
   verifyTurnstile(token: string, ip: string): Promise<boolean>;
   /** Tell the owner a submission arrived. Throwing is logged and does not fail the request. */
   notify(submission: { id: string; fullName: string }): Promise<void>;
+  /** Tell the client their details arrived. Throwing is logged and does not fail the request. */
+  confirm(submission: { email: string }): Promise<void>;
   signingSecret: string;
   /** Exact origins allowed to call the API, e.g. "https://17hands.ai". */
   allowedOrigins: string[];
@@ -169,6 +171,11 @@ export async function handleSubmit(request: Request, deps: IntakeDeps): Promise<
   } catch (error) {
     // The submission is safely stored; a failed email must not make the client resubmit.
     console.error(`bio-intake: notification failed for ${row.id}:`, error instanceof Error ? error.message : error);
+  }
+  try {
+    await deps.confirm({ email: row.email });
+  } catch (error) {
+    console.error(`bio-intake: confirmation failed for ${row.id}:`, error instanceof Error ? error.message : error);
   }
   return json(200, { ok: true });
 }

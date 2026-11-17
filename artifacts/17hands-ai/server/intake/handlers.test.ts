@@ -9,14 +9,17 @@ const SECRET = "test-signing-secret-of-sufficient-length";
 let store: MemoryStore;
 let deps: IntakeDeps;
 let notify: ReturnType<typeof vi.fn>;
+let confirm: ReturnType<typeof vi.fn>;
 
 beforeEach(() => {
   store = new MemoryStore();
   notify = vi.fn(async () => {});
+  confirm = vi.fn(async () => {});
   deps = {
     store,
     verifyTurnstile: async (token) => token === "good-token",
     notify: notify as unknown as IntakeDeps["notify"],
+    confirm: confirm as unknown as IntakeDeps["confirm"],
     signingSecret: SECRET,
     allowedOrigins: [ORIGIN],
   };
@@ -125,6 +128,7 @@ describe("POST /api/bio-intake/submit", () => {
     expect(row.headshot_path).toMatch(/^submissions\/[0-9a-f-]{36}\/headshot-[0-9a-f]{32}\.jpg$/);
     expect([...store.files.keys()].sort()).toEqual([row.headshot_path, row.logo_path].sort());
     expect(notify).toHaveBeenCalledWith({ id: row.id, fullName: "Dana Reyes" });
+    expect(confirm).toHaveBeenCalledWith({ email: "dana@example.com" });
   });
 
   it("rejects a file whose bytes are not what was declared, and deletes the uploads", async () => {
@@ -135,6 +139,7 @@ describe("POST /api/bio-intake/submit", () => {
     expect(store.files.size).toBe(0);
     expect(store.submissions).toHaveLength(0);
     expect(notify).not.toHaveBeenCalled();
+    expect(confirm).not.toHaveBeenCalled();
   });
 
   it("rejects an allowed type uploaded under a different extension", async () => {
@@ -179,6 +184,17 @@ describe("POST /api/bio-intake/submit", () => {
     const uploadToken = await startAndUpload({ headshot: JPEG });
     expect((await handleSubmit(post("submit", { ...validFields(), uploadToken }), deps)).status).toBe(200);
     expect(store.submissions[0].notified_at).toBeUndefined();
+    expect(errors.mock.calls.flat().join(" ")).not.toContain("dana@example.com");
+    expect(confirm).toHaveBeenCalledTimes(1);
+    errors.mockRestore();
+  });
+
+  it("still succeeds when the client's confirmation email fails, without logging their address", async () => {
+    confirm.mockRejectedValueOnce(new Error("resend responded 422"));
+    const errors = vi.spyOn(console, "error").mockImplementation(() => {});
+    const uploadToken = await startAndUpload({ headshot: JPEG });
+    expect((await handleSubmit(post("submit", { ...validFields(), uploadToken }), deps)).status).toBe(200);
+    expect(store.submissions).toHaveLength(1);
     expect(errors.mock.calls.flat().join(" ")).not.toContain("dana@example.com");
     errors.mockRestore();
   });
