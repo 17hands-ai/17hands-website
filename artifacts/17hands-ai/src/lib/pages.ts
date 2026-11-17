@@ -26,6 +26,12 @@ export interface PageMeta {
   standalone?: boolean;
   /** Canonical path when it differs from `path`. */
   canonical?: string;
+  /**
+   * Ship a Content-Security-Policy with this route's HTML (see contentSecurityPolicy in vite.config.ts).
+   * For pages that collect personal data. Reach them with a native <a>, not a client-side <Link>,
+   * so the browser loads the document that carries the policy.
+   */
+  strictCsp?: boolean;
   /** One line for /llms.txt: what this page answers. Required for indexed pages. */
   answers?: string;
 }
@@ -73,6 +79,14 @@ export const pages: PageMeta[] = [
     answers: `What a custom bio page includes, how it compares with Linktree and Later, the founding ${BIO_PAGE_PRICE} price, add-ons and how results are measured.`,
   },
   {
+    path: "/bio-pages/start",
+    title: "Send Your Bio Page Details | 17hands.ai",
+    description: "The intake form for 17hands.ai bio page clients: your photo, logo, links and domain choice.",
+    // A form for clients who already booked; nothing here for search engines or assistants.
+    noindex: true,
+    strictCsp: true,
+  },
+  {
     path: "/faq",
     title: "FAQ | 17hands.ai",
     description: "Answers to common questions about security reviews, staff workshops, automation, websites, prices and how projects work.",
@@ -88,7 +102,7 @@ export const pages: PageMeta[] = [
     path: "/privacy",
     title: "Privacy Policy | 17hands.ai",
     description: "How 17hands.ai and the services used on this website handle personal information.",
-    answers: "What personal information the site, chat assistant and booking collect, who receives it and how to request access or deletion.",
+    answers: "What personal information the site, chat assistant, booking and the bio page intake form collect, who receives it, how long it is kept and how to request access or deletion.",
   },
   {
     path: "/terms",

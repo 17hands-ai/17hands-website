@@ -63,6 +63,7 @@
   --brand-silver: #CFD3DE;
   --brand-text: #FAF8FD;
   --brand-text-2: #D4CAE0;
+  --brand-error: #FFA69E;
 
   --radius-badge: 8px 2.5px 8px 2.5px;
   --radius-button: 14px 4px 14px 4px;
@@ -291,6 +292,7 @@ html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
   --brand-slate: #8B7BA3;
   --brand-text: #13091E;
   --brand-text-2: #3A2B4C;
+  --brand-error: #B3261E;
   --color-white: #1B1026;
 
   --background: 264 56% 99%;

@@ -282,6 +282,11 @@ export default function BioPages() {
                 <p className="font-mono text-sm rose-text mb-3">0{i + 1}</p>
                 <h3 className="display text-xl text-[var(--brand-text)] mb-2">{name}</h3>
                 <p className="text-[var(--brand-text-2)] leading-relaxed">{body}</p>
+                {i === 1 && (
+                  <a href="/bio-pages/start" className="mt-3 inline-block rose-text underline underline-offset-4">
+                    Already booked? Send your details
+                  </a>
+                )}
               </li>
             ))}
           </ol>

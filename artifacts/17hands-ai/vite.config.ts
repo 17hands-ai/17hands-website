@@ -1,8 +1,9 @@
-import { createServer, defineConfig } from "vite";
+import { createServer, defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import fs from "fs";
+import { createHash } from "crypto";
 import type { Plugin } from "vite";
 import { pages, notFoundTitle, SITE_ORIGIN, SITE_SUMMARY, type PageMeta } from "./src/lib/pages";
 import { UMAMI_WEBSITE_ID } from "./src/lib/site";
@@ -62,6 +63,107 @@ const ANALYTICS_TAG = UMAMI_WEBSITE_ID
  */
 const fillPlaceholders = (html: string) =>
   html.replaceAll("%SITE_ORIGIN%", SITE_ORIGIN).replaceAll("<!-- %ANALYTICS% -->", ANALYTICS_TAG);
+
+/**
+ * Content-Security-Policy for routes marked `strictCsp` in pages.ts, written into the route's
+ * HTML as a <meta> tag. Inline scripts are admitted by hash, computed here from the final HTML,
+ * so editing one in index.html can never leave a stale allowance behind. (frame-ancestors is
+ * not honoured in a <meta> policy; vercel.json sends it as a header.)
+ */
+function contentSecurityPolicy(html: string) {
+  const inline = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)];
+  const hashes = inline.map(([, body]) => `'sha256-${createHash("sha256").update(body).digest("base64")}'`);
+  const analytics = UMAMI_WEBSITE_ID ? " https://cloud.umami.is" : "";
+  const policy = [
+    "default-src 'self'",
+    `script-src 'self' ${hashes.join(" ")} https://challenges.cloudflare.com${analytics}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: blob:",
+    // Uploads go from the browser straight to Supabase Storage.
+    `connect-src 'self' https://*.supabase.co${analytics}${analytics && " https://api-gateway.umami.dev"}`,
+    "frame-src https://challenges.cloudflare.com",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join("; ");
+  const charset = '<meta charset="UTF-8" />';
+  if (!html.includes(charset)) throw new Error("static-routes: charset meta not found, cannot place the CSP");
+  // First in <head>, so it governs every script that follows.
+  return html.replace(charset, `${charset}\n    <meta http-equiv="Content-Security-Policy" content="${policy}" />`);
+}
+
+/**
+ * Serves /api/bio-intake/* from the Vite dev server with the same handlers Vercel runs
+ * (api/bio-intake/*.ts), so the form works under `pnpm dev`. Services without keys in .env fall
+ * back to stand-ins; see devDeps in server/intake/config.ts.
+ */
+function intakeDevApi(): Plugin {
+  return {
+    name: "intake-dev-api",
+    apply: "serve",
+    configureServer(server) {
+      const env = { ...process.env, ...loadEnv(server.config.mode, server.config.root, "") };
+      type Memory = import("./server/intake/memory-store").MemoryStore;
+      let memory: Memory | undefined;
+      let announced = false;
+      const MAX_UPLOAD = 5 * 1024 * 1024;
+
+      server.middlewares.use(async (req, res, next) => {
+        const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
+        if (!url.pathname.startsWith("/api/bio-intake/")) return next();
+        const send = (status: number, body: string, type = "application/json") => {
+          res.statusCode = status;
+          res.setHeader("content-type", type);
+          res.end(body);
+        };
+        try {
+          const config = (await server.ssrLoadModule("/server/intake/config.ts")) as typeof import("./server/intake/config");
+          const handlers = (await server.ssrLoadModule("/server/intake/handlers.ts")) as typeof import("./server/intake/handlers");
+          const { MemoryStore } = (await server.ssrLoadModule("/server/intake/memory-store.ts")) as typeof import("./server/intake/memory-store");
+          memory ??= new MemoryStore((p) => `/api/bio-intake/dev-upload?path=${encodeURIComponent(p)}`);
+          if (!announced) {
+            announced = true;
+            console.log("[bio-intake dev]", config.devServices(env));
+          }
+
+          const chunks: Buffer[] = [];
+          let size = 0;
+          for await (const chunk of req) {
+            size += chunk.length;
+            if (size > MAX_UPLOAD + 1024) return send(413, "{}");
+            chunks.push(chunk as Buffer);
+          }
+          const body = Buffer.concat(chunks);
+
+          // Stand-in for the Supabase signed upload URL, only reachable with memory storage.
+          if (url.pathname === "/api/bio-intake/dev-upload" && req.method === "PUT") {
+            memory.files.set(url.searchParams.get("path") ?? "", new Uint8Array(body));
+            return send(200, "{}");
+          }
+          const handler = { "/api/bio-intake/start": handlers.handleStart, "/api/bio-intake/submit": handlers.handleSubmit }[url.pathname];
+          if (!handler) return send(404, "{}");
+
+          const headers = new Headers();
+          for (const [name, value] of Object.entries(req.headers)) if (typeof value === "string") headers.set(name, value);
+          const request = new Request(url, { method: req.method, headers, body: req.method === "POST" ? body : undefined });
+          const response = await handlers.guarded(handler, () => config.devDeps(env, [url.origin], memory!))(request);
+          if (url.pathname.endsWith("/submit") && response.ok && memory.submissions.length) {
+            const { id, full_name, headshot_path, logo_path } = memory.submissions[memory.submissions.length - 1];
+            console.log("[bio-intake dev] stored in memory:", { id, full_name, headshot_path, logo_path });
+          }
+          response.headers.forEach((value, name) => res.setHeader(name, value));
+          res.statusCode = response.status;
+          res.end(await response.text());
+        } catch (error) {
+          server.ssrFixStacktrace(error as Error);
+          console.error(error);
+          send(500, JSON.stringify({ ok: false, message: "Dev API error. See the terminal." }));
+        }
+      });
+    },
+  };
+}
 
 const EMPTY_ROOT = '<div id="root"></div>';
 
@@ -137,6 +239,7 @@ function staticRoutes(): Plugin {
               jsonLd: translated ? structuredData(page.path, locale, content, SITE_ORIGIN) : undefined,
             });
             if (!page.noindex && !page.standalone) html = withBody(html, route, locale);
+            if (page.strictCsp) html = contentSecurityPolicy(html);
             if (/%(SITE_ORIGIN|ANALYTICS)%/.test(html)) throw new Error(`static-routes: unreplaced placeholder in ${file}`);
             fs.mkdirSync(path.dirname(path.join(outDir, file)), { recursive: true });
             fs.writeFileSync(path.join(outDir, file), html);
@@ -184,7 +287,7 @@ function staticRoutes(): Plugin {
 
 export default defineConfig({
   base: process.env.BASE_PATH || "/",
-  plugins: [react(), tailwindcss(), staticRoutes()],
+  plugins: [react(), tailwindcss(), staticRoutes(), intakeDevApi()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),
