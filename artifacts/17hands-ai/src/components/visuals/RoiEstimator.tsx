@@ -69,8 +69,7 @@ export function RoiEstimator() {
     <section id="estimate" aria-labelledby="estimate-title" className="py-24 md:py-28 border-t border-border scroll-mt-24">
       <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
         <div>
-          <p className="eyebrow mb-4">{t.eyebrow}</p>
-          <h2 id="estimate-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">
+          <h2 id="estimate-title" data-rail-node className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">
             {t.title}<span className="rose-text">{t.accent}</span>
           </h2>
           <p className="text-lg text-[var(--brand-text-2)] leading-relaxed mb-10 max-w-xl">

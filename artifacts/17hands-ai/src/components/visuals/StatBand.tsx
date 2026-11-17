@@ -85,8 +85,7 @@ export function StatBand() {
     <section aria-labelledby="why-now-title" className="py-20 md:py-24 bg-[var(--brand-primary)]">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="reveal max-w-3xl mb-14">
-          <p className="eyebrow mb-4">{t.eyebrow}</p>
-          <h2 id="why-now-title" className="display text-4xl md:text-5xl text-[var(--brand-text)]">
+          <h2 id="why-now-title" data-rail-node className="display text-4xl md:text-5xl text-[var(--brand-text)]">
             {t.title}<span className="rose-text">{t.accent}</span>
           </h2>
         </div>
