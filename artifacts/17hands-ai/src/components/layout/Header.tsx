@@ -81,7 +81,6 @@ export function Header() {
 
   const navLinks = [
     { name: t.digitalDefenders, href: "/digital-defenders" },
-    { name: t.natural, href: "/natural" },
     { name: t.services, href: "/#services" },
     { name: t.packages, href: "/packages" },
     { name: t.bioPages, href: "/bio-pages" },

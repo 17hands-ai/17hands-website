@@ -39,7 +39,6 @@ export const ru: Content = {
   nav: {
     label: "Основное меню",
     digitalDefenders: "Digital Defenders",
-    natural: "Natural",
     services: "Услуги",
     packages: "Пакеты",
     bioPages: "Био-страницы",
@@ -115,9 +114,6 @@ export const ru: Content = {
       ddTitle: "Digital Defenders",
       ddBody: "Безопаснее в сети, вместе. Тренинги по кибербезопасности, распознавание мошенников и полезные цифровые привычки для семей, сообществ и небольших команд.",
       ddCta: "Подробнее о Digital Defenders",
-      naturalTitle: "Natural",
-      naturalBody: "Будущее пространство для сообщества и связанных с ним услуг. Мы продумываем следующий шаг.",
-      naturalCta: "Познакомиться с Natural",
     },
     familiar: {
       eyebrow: "Знакомо?",
