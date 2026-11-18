@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [{ "path": "/api/bio-intake/purge", "schedule": "0 10 * * *" }],
   "headers": [
     {
       "source": "/(.*)",

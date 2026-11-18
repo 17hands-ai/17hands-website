@@ -45,5 +45,27 @@ export function supabaseStore(options: { url: string; serviceKey: string; bucket
     async markNotified(id, at) {
       must("mark notified", await client.from(SUBMISSIONS_TABLE).update({ notified_at: at }).eq("id", id));
     },
+    async listFilesDue(today) {
+      const { data } = must(
+        "list files due",
+        await client.from(SUBMISSIONS_TABLE).select("id, headshot_path, logo_path").is("files_deleted_at", null).lt("delete_files_after", today).limit(200),
+      );
+      const rows = (data ?? []) as { id: string; headshot_path: string; logo_path: string | null }[];
+      return rows.map((row) => ({ id: row.id, paths: [row.headshot_path, row.logo_path].filter((path): path is string => Boolean(path)) }));
+    },
+    async markFilesDeleted(id, at) {
+      must("mark files deleted", await client.from(SUBMISSIONS_TABLE).update({ files_deleted_at: at }).eq("id", id));
+    },
+    async listPending() {
+      type Entry = { name: string; created_at: string | null };
+      const { data: folders } = must("list pending", await bucket().list("pending", { limit: 1000 }));
+      const pending: { path: string; createdAt: string }[] = [];
+      for (const folder of (folders ?? []) as Entry[]) {
+        const { data: files } = must("list pending folder", await bucket().list(`pending/${folder.name}`));
+        // An entry without a creation time is a folder placeholder, not an upload.
+        for (const file of (files ?? []) as Entry[]) if (file.created_at) pending.push({ path: `pending/${folder.name}/${file.name}`, createdAt: file.created_at });
+      }
+      return pending;
+    },
   };
 }
