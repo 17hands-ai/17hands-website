@@ -16,6 +16,7 @@ import DigitalDefenders from "@/pages/DigitalDefenders";
 import ForYou from "@/pages/ForYou";
 import Packages from "@/pages/Packages";
 import BioPages from "@/pages/BioPages";
+import BioPagesStart from "@/pages/BioPagesStart";
 import FAQ from "@/pages/FAQ";
 import Contact from "@/pages/Contact";
 import Privacy from "@/pages/Privacy";
@@ -66,6 +67,7 @@ function Router() {
       <Route path="/for-you" component={ForYou} />
       <Route path="/packages" component={Packages} />
       <Route path="/bio-pages" component={BioPages} />
+      <Route path="/bio-pages/start" component={BioPagesStart} />
       <Route path="/faq" component={FAQ} />
       <Route path="/contact" component={Contact} />
       <Route path="/privacy" component={Privacy} />

@@ -7,7 +7,10 @@
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
     "build": "vite build --config vite.config.ts",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "intake:export": "node --env-file=.env scripts/export-intake.mjs",
+    "intake:purge": "node --env-file=.env scripts/purge-intake-files.mjs"
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -68,10 +71,13 @@
     "tw-animate-css": "^1.4.0",
     "vaul": "^1.1.2",
     "vite": "catalog:",
-    "wouter": "^3.3.5",
-    "zod": "catalog:"
+    "vitest": "^5.1.0",
+    "wouter": "^3.3.5"
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1"
+    "@supabase/supabase-js": "^2.119.0",
+    "@vercel/analytics": "^2.0.1",
+    "saxes": "^6.0.0",
+    "zod": "catalog:"
   }
 }
