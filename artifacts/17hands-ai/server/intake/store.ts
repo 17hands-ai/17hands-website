@@ -21,7 +21,7 @@ export interface SubmissionRow {
   consent_founding_at: string;
   consent_assets_at: string;
   privacy_policy_version: string;
-  /** Date (YYYY-MM-DD) after which the uploaded files should be deleted. Move it once the page is delivered. */
+  /** Date (YYYY-MM-DD) after which the uploaded files are deleted by the daily purge. */
   delete_files_after: string;
 }
 
@@ -36,4 +36,9 @@ export interface IntakeStore {
   remove(paths: string[]): Promise<void>;
   insertSubmission(row: SubmissionRow): Promise<void>;
   markNotified(id: string, at: string): Promise<void>;
+  /** Submissions whose files are still stored and whose `delete_files_after` is before `today` (YYYY-MM-DD). */
+  listFilesDue(today: string): Promise<{ id: string; paths: string[] }[]>;
+  markFilesDeleted(id: string, at: string): Promise<void>;
+  /** Every upload still under pending/, i.e. started and not yet submitted. */
+  listPending(): Promise<{ path: string; createdAt: string }[]>;
 }

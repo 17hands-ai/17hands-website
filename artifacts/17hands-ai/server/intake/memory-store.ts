@@ -6,7 +6,9 @@ import type { IntakeStore, SubmissionRow } from "./store.js";
 
 export class MemoryStore implements IntakeStore {
   readonly files = new Map<string, Uint8Array>();
-  readonly submissions: (SubmissionRow & { notified_at?: string })[] = [];
+  readonly submissions: (SubmissionRow & { notified_at?: string; files_deleted_at?: string })[] = [];
+  /** When a file arrived, for the tests that age an upload. Files without an entry count as new. */
+  readonly uploadedAt = new Map<string, string>();
   private readonly hits = new Map<string, number>();
 
   constructor(private readonly uploadUrl: (path: string) => string = (path) => `memory://${path}`) {}
@@ -44,5 +46,22 @@ export class MemoryStore implements IntakeStore {
   async markNotified(id: string, at: string) {
     const row = this.submissions.find((s) => s.id === id);
     if (row) row.notified_at = at;
+  }
+
+  async listFilesDue(today: string) {
+    return this.submissions
+      .filter((s) => !s.files_deleted_at && s.delete_files_after < today)
+      .map((s) => ({ id: s.id, paths: [s.headshot_path, s.logo_path].filter((p): p is string => Boolean(p)) }));
+  }
+
+  async markFilesDeleted(id: string, at: string) {
+    const row = this.submissions.find((s) => s.id === id);
+    if (row) row.files_deleted_at = at;
+  }
+
+  async listPending() {
+    return [...this.files.keys()]
+      .filter((path) => path.startsWith("pending/"))
+      .map((path) => ({ path, createdAt: this.uploadedAt.get(path) ?? new Date().toISOString() }));
   }
 }

@@ -6,6 +6,7 @@
 import { CONTACT_EMAIL } from "../../src/lib/site.js";
 import { confirmationEmail, noticeEmail } from "./emails.js";
 import type { IntakeDeps } from "./handlers.js";
+import type { PurgeDeps } from "./purge.js";
 import { MemoryStore } from "./memory-store.js";
 import { supabaseStore, SUBMISSIONS_TABLE } from "./supabase-store.js";
 
@@ -88,6 +89,20 @@ export function productionDeps(env: Env = process.env): IntakeDeps {
     allowedOrigins: [...list(env.INTAKE_ALLOWED_ORIGINS || "https://17hands.ai"), ...deploymentOrigins],
   };
   return cached;
+}
+
+/** The daily purge needs storage and its own secret, and none of the form's other services. */
+export function purgeDeps(env: Env = process.env): PurgeDeps {
+  required(env, ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "CRON_SECRET"]);
+  if (env.CRON_SECRET!.length < 16) throw new Error("CRON_SECRET must be at least 16 characters.");
+  return {
+    store: supabaseStore({
+      url: env.SUPABASE_URL!,
+      serviceKey: env.SUPABASE_SERVICE_ROLE_KEY!,
+      bucket: env.SUPABASE_INTAKE_BUCKET || "bio-intake",
+    }),
+    cronSecret: env.CRON_SECRET!,
+  };
 }
 
 /**

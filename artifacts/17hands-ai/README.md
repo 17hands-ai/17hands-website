@@ -45,7 +45,8 @@ bytes and decides the type from them.
 | `api/bio-intake/*.ts` | Vercel function entry points. Two lines each. |
 | `supabase/migrations/` | Table, rate limit function and bucket. |
 | `scripts/export-intake.mjs` | Saves one submission as a readable page plus its images. |
-| `scripts/purge-intake-files.mjs` | Deletes files past their retention date. |
+| `server/intake/purge.ts`, `api/bio-intake/purge.ts` | The daily cleanup that Vercel Cron calls. |
+| `scripts/purge-intake-files.mjs` | The same cleanup by hand, with a dry run. |
 | `vercel.json` | Security headers. The form's CSP is generated at build time in `vite.config.ts`. |
 
 Decisions worth knowing:
@@ -115,9 +116,24 @@ Vercel: **Project > Settings > Environment Variables**. Add each for **Productio
 | `INTAKE_SUBMISSION_URL_TEMPLATE` | The link from step 4 | no |
 | `INTAKE_SIGNING_SECRET` | Output of `openssl rand -base64 48` | **yes** |
 | `INTAKE_ALLOWED_ORIGINS` | `https://17hands.ai` | no |
+| `CRON_SECRET` | Output of `openssl rand -base64 32`. Production only is enough. | **yes** |
 
 If a required variable is missing in production, the API answers 500 and the form shows an
 "email us" message. It never falls back to a stand-in.
+
+### Checks
+
+```bash
+pnpm test
+```
+
+```bash
+pnpm check:functions
+```
+
+The second repeats the compile step Vercel runs on `api/`, which is stricter than `pnpm typecheck`
+and fails the deploy with "Emit skipped" when it finds an error. Run it after touching `api/`,
+`server/` or `tsconfig.json`.
 
 ### Running locally
 
@@ -170,7 +186,16 @@ Each row has `delete_files_after` (a date) and `files_deleted_at`. New submissio
 months out, which is the period the privacy policy promises. Nothing needs to be set per client.
 To delete one client's files early, set that row's `delete_files_after` to today.
 
-Every month or two, run:
+Cleanup is automatic. `vercel.json` schedules `GET /api/bio-intake/purge` once a day (10:00 UTC,
+production only). It deletes files past `delete_files_after`, sets `files_deleted_at` on the row,
+and removes uploads that were started and never submitted. It answers only to Vercel's cron
+request, which carries `CRON_SECRET`; without that variable the endpoint returns 500 and deletes
+nothing. Each run and its counts appear in Vercel under **Settings > Cron Jobs** and in the
+function logs.
+
+Rows are not deleted automatically, only files.
+
+To see what is due, or to run the same cleanup by hand:
 
 ```bash
 pnpm intake:purge
