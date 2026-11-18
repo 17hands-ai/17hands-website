@@ -5,7 +5,7 @@
  *
  *   pnpm intake:export            list recent submissions, save nothing
  *   pnpm intake:export latest     save the newest one
- *   pnpm intake:export <id>       save that one (the id from the notice email link)
+ *   pnpm intake:export <ref>      save that one (the reference from either email, or the full id)
  *
  * Reads SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY and SUPABASE_INTAKE_BUCKET from .env.
  * Folders go to ~/Documents/17hands-intake, or INTAKE_EXPORT_DIR if set. Keep them out of the
@@ -37,12 +37,25 @@ const target = process.argv[2];
 if (!target) {
   const rows = must("list submissions", await table().select("id, created_at, status, full_name, business_name").order("created_at", { ascending: false }).limit(20));
   if (!rows.length) console.log("No submissions yet.");
-  for (const row of rows) console.log(`${localDay(row.created_at)}  ${row.status.padEnd(11)}  ${row.id}  ${row.business_name} (${row.full_name})`);
-  if (rows.length) console.log("\nSave one with: pnpm intake:export latest   or   pnpm intake:export <id>");
+  for (const row of rows) console.log(`${localDay(row.created_at)}  ${row.status.padEnd(11)}  ${row.id.slice(0, 8).toUpperCase()}  ${row.business_name} (${row.full_name})`);
+  if (rows.length) console.log("\nSave one with: pnpm intake:export latest   or   pnpm intake:export <reference>");
   process.exit(0);
 }
 
-const query = target === "latest" ? table().select("*").order("created_at", { ascending: false }).limit(1) : table().select("*").eq("id", target);
+// A reference is the start of an id. A uuid column cannot be searched by prefix, so match it here.
+async function idFor(ref) {
+  if (/^[0-9a-f-]{36}$/i.test(ref)) return ref.toLowerCase();
+  const ids = must("list ids", await table().select("id").order("created_at", { ascending: false }).limit(1000));
+  const matches = ids.filter((r) => r.id.startsWith(ref.toLowerCase()));
+  if (matches.length > 1) {
+    console.error(`${matches.length} submissions start with ${ref}. Use the full id from: pnpm intake:export`);
+    process.exit(1);
+  }
+  return matches[0]?.id;
+}
+
+const id = target === "latest" ? null : await idFor(target);
+const query = target === "latest" ? table().select("*").order("created_at", { ascending: false }).limit(1) : table().select("*").eq("id", id ?? "00000000-0000-0000-0000-000000000000");
 const [row] = must("load submission", await query);
 if (!row) {
   console.error(target === "latest" ? "No submissions yet." : `No submission with id ${target}.`);
@@ -101,7 +114,7 @@ const html = `<!doctype html>
   @media (max-width: 34rem) { dl { grid-template-columns: 1fr; gap: 0.1rem; } dd { margin-bottom: 0.7rem; } }
 </style>
 <h1>${esc(row.business_name)}</h1>
-<p class="meta">Sent ${esc(date(row.created_at))} &middot; status: ${esc(row.status)} &middot; id ${esc(row.id)}</p>
+<p class="meta">Reference ${esc(row.id.slice(0, 8).toUpperCase())} &middot; sent ${esc(date(row.created_at))} &middot; status: ${esc(row.status)} &middot; id ${esc(row.id)}</p>
 
 <h2>Photo and logo</h2>
 <div class="images">${image("headshot", "Photo")}${image("logo", "Logo")}</div>

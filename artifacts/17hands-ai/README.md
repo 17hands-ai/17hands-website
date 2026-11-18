@@ -111,7 +111,7 @@ Vercel: **Project > Settings > Environment Variables**. Add each for **Productio
 | `RESEND_API_KEY` | Resend API key | **yes** |
 | `INTAKE_EMAIL_FROM` | Sender on your verified domain | no |
 | `INTAKE_NOTIFY_EMAIL` | Where notices are sent | no |
-| `INTAKE_REPLY_TO` | Optional. Where a client's reply to their confirmation goes. Defaults to `INTAKE_NOTIFY_EMAIL`. | no |
+| `INTAKE_REPLY_TO` | Optional. Where a client's reply to their confirmation goes. Defaults to `info@17hands.ai`. | no |
 | `INTAKE_SUBMISSION_URL_TEMPLATE` | The link from step 4 | no |
 | `INTAKE_SIGNING_SECRET` | Output of `openssl rand -base64 48` | **yes** |
 | `INTAKE_ALLOWED_ORIGINS` | `https://17hands.ai` | no |
@@ -130,10 +130,16 @@ are in use on the first request.
 
 Two emails go out per submission, both through Resend from `INTAKE_EMAIL_FROM`:
 
-- **Notice to you**: the client's name and a link to the row. No answers, no files.
-- **Confirmation to the client**: fixed text saying the details arrived and what happens next.
-  Nothing the client typed is echoed back, so the form cannot be used to send arbitrary text from
-  your domain. Replies go to `INTAKE_REPLY_TO`, or `INTAKE_NOTIFY_EMAIL` if that is unset.
+- **Notice to you**: the client's name, the reference and a link to the row. No answers, no files.
+- **Confirmation to the client**: a branded HTML email (with a plain text copy) saying the details
+  arrived, the reference, when it was received, and what happens next. Nothing the client typed
+  is echoed back, so the form cannot be used to send arbitrary text from your domain. Replies go
+  to `INTAKE_REPLY_TO`, or `info@17hands.ai` if that is unset.
+
+The reference is the first eight characters of the submission id, in capitals. Both emails carry
+it, and `pnpm intake:export <reference>` finds the submission by it. The wording and layout live
+in `server/intake/emails.ts`. The name clients see in their inbox is the display name in
+`INTAKE_EMAIL_FROM`, e.g. `17hands <intake@17hands.ai>`.
 
 Either one failing is logged and does not fail the submission.
 

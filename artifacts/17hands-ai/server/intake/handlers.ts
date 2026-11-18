@@ -30,7 +30,7 @@ export interface IntakeDeps {
   /** Tell the owner a submission arrived. Throwing is logged and does not fail the request. */
   notify(submission: { id: string; fullName: string }): Promise<void>;
   /** Tell the client their details arrived. Throwing is logged and does not fail the request. */
-  confirm(submission: { email: string }): Promise<void>;
+  confirm(submission: { email: string; id: string; at: Date }): Promise<void>;
   signingSecret: string;
   /** Exact origins allowed to call the API, e.g. "https://17hands.ai". */
   allowedOrigins: string[];
@@ -173,7 +173,7 @@ export async function handleSubmit(request: Request, deps: IntakeDeps): Promise<
     console.error(`bio-intake: notification failed for ${row.id}:`, error instanceof Error ? error.message : error);
   }
   try {
-    await deps.confirm({ email: row.email });
+    await deps.confirm({ email: row.email, id: row.id, at: now });
   } catch (error) {
     console.error(`bio-intake: confirmation failed for ${row.id}:`, error instanceof Error ? error.message : error);
   }
