@@ -29,12 +29,15 @@ const must = (what, { data, error }) => {
   return data;
 };
 
+// Supabase stores UTC. Show the day as it was on this machine, so an evening submission is not dated tomorrow.
+const localDay = (value) => new Date(value).toLocaleDateString("en-CA");
+
 const target = process.argv[2];
 
 if (!target) {
   const rows = must("list submissions", await table().select("id, created_at, status, full_name, business_name").order("created_at", { ascending: false }).limit(20));
   if (!rows.length) console.log("No submissions yet.");
-  for (const row of rows) console.log(`${row.created_at.slice(0, 10)}  ${row.status.padEnd(11)}  ${row.id}  ${row.business_name} (${row.full_name})`);
+  for (const row of rows) console.log(`${localDay(row.created_at)}  ${row.status.padEnd(11)}  ${row.id}  ${row.business_name} (${row.full_name})`);
   if (rows.length) console.log("\nSave one with: pnpm intake:export latest   or   pnpm intake:export <id>");
   process.exit(0);
 }
@@ -49,7 +52,7 @@ if (!row) {
 // Everything in a row was typed by a stranger. Escape it before it goes into HTML or a folder name.
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 const slug = row.business_name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "client";
-const folder = path.join(INTAKE_EXPORT_DIR || path.join(homedir(), "Documents", "17hands-intake"), `${row.created_at.slice(0, 10)}-${slug}-${row.id.slice(0, 8)}`);
+const folder = path.join(INTAKE_EXPORT_DIR || path.join(homedir(), "Documents", "17hands-intake"), `${localDay(row.created_at)}-${slug}-${row.id.slice(0, 8)}`);
 await mkdir(folder, { recursive: true });
 
 const images = {};
