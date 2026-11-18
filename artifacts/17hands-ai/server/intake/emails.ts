@@ -65,7 +65,7 @@ ${SITE}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F1EBF8;">
 <tr><td align="center" style="padding:32px 16px;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px; background:#FBF9FE; border-radius:12px; overflow:hidden;">
-    <tr><td align="center" style="background:#0D0C13; padding:28px 24px 24px;">
+    <tr><td align="center" bgcolor="#24133D" style="background:#24133D; padding:28px 24px 24px;">
       <a href="${SITE}" style="text-decoration:none;"><img src="${SITE}/logo-rosegold.png" width="118" height="80" alt="17hands" style="display:block; border:0; color:#E0A786; font:600 22px ${font};"></a>
     </td></tr>
     <tr><td style="padding:36px 32px 8px; font:16px/1.6 ${font}; color:#13091E;">
