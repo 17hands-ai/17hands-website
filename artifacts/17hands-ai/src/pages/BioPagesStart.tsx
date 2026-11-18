@@ -424,10 +424,10 @@ export default function BioPagesStart() {
           </p>
           <ol className="space-y-8">
             {[
-              ["I build your page", "I review what you sent and email you if anything is missing."],
+              ["We build your page", "We review what you sent and email you if anything is missing."],
               ["You get a preview link", "A private link to your page, so you can try it on your own phone before anyone else sees it."],
-              ["One round of revisions", "Tell me what to change. One round of revisions is included."],
-              ["Go live", "I connect your domain, and after 30 days you get your numbers."],
+              ["One round of revisions", "Tell us what to change. One round of revisions is included."],
+              ["Go live", "We connect your domain, and after 30 days you get your numbers."],
             ].map(([name, body], i) => (
               <li key={name} className="border-t border-[var(--brand-rose)]/40 pt-5">
                 <p className="font-mono text-sm rose-text mb-2" aria-hidden="true">0{i + 1}</p>
@@ -686,17 +686,36 @@ export default function BioPagesStart() {
               </Field>
             </Section>
 
-            <Section number="04" title="Your domain" intro="The address people will see when they open your page.">
+            <Section
+              number="04"
+              title="Your domain"
+              intro="A domain is your page's address on the internet, like a street address for a house. It is what people type or tap to open your page. Pick the one that fits you."
+            >
               <fieldset aria-describedby={errors.domainChoice ? `${fieldId("domainChoice")}-error` : undefined}>
                 <legend className="sr-only">Domain choice</legend>
                 <div id={fieldId("domainChoice")} tabIndex={-1} className="space-y-3 focus:outline-none">
                   {(
                     [
-                      ["own", "I own a domain", "I'll send simple instructions to point it at your page."],
-                      ["buy", "I want to buy one", "About $12 a year, paid to the registrar and registered in your name."],
-                      ["subdomain", "Use a free subdomain", "A free address that I set up for you."],
+                      [
+                        "own",
+                        "I already have a domain",
+                        "You already bought an address for your business. We send you short instructions to connect it to your new page.",
+                        "mariasbakery.com",
+                      ],
+                      [
+                        "buy",
+                        "I want my own domain",
+                        "A new address with only your name in it. It costs about $12 a year, paid to the company that sells domains, and it is registered in your name, so it belongs to you. We help you pick one and set it up.",
+                        "mariasbakery.com",
+                      ],
+                      [
+                        "subdomain",
+                        "Give me a free address",
+                        "We give you an address that ends in 17hands.ai. Nothing to buy and nothing to renew. We set it up for you.",
+                        "mariasbakery.17hands.ai",
+                      ],
                     ] as const
-                  ).map(([value, name, body]) => (
+                  ).map(([value, name, body, example]) => (
                     <label
                       key={value}
                       className="flex cursor-pointer gap-4 rounded-[var(--radius-button)] border border-white/20 p-4 transition-colors hover:border-white/35 has-[:checked]:border-[var(--brand-rose)] has-[:checked]:bg-white/5"
@@ -712,6 +731,9 @@ export default function BioPagesStart() {
                       <span>
                         <span className="block font-semibold text-[var(--brand-text)]">{name}</span>
                         <span className="block text-sm leading-relaxed text-[var(--brand-text-2)]">{body}</span>
+                        <span className="mt-2 block text-sm text-[var(--brand-text-2)]">
+                          Example: <span className="font-mono text-[var(--brand-text)]">{example}</span>
+                        </span>
                       </span>
                     </label>
                   ))}
@@ -719,8 +741,8 @@ export default function BioPagesStart() {
                 <FieldError id={`${fieldId("domainChoice")}-error`} message={errors.domainChoice} />
               </fieldset>
               {form.domainChoice === "own" && (
-                <Field name="ownDomain" label="Your domain" hint="Just the domain, like example.com." error={errors.ownDomain}>
-                  {(p) => <input {...p} {...text("ownDomain")} type="text" inputMode="url" autoCapitalize="none" autoComplete="off" required maxLength={253} placeholder="example.com" className={control} />}
+                <Field name="ownDomain" label="Your domain" hint="Type the address you own, like mariasbakery.com." error={errors.ownDomain}>
+                  {(p) => <input {...p} {...text("ownDomain")} type="text" inputMode="url" autoCapitalize="none" autoComplete="off" required maxLength={253} placeholder="mariasbakery.com" className={control} />}
                 </Field>
               )}
             </Section>

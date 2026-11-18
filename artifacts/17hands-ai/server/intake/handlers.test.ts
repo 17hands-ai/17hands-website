@@ -128,7 +128,7 @@ describe("POST /api/bio-intake/submit", () => {
     expect(row.headshot_path).toMatch(/^submissions\/[0-9a-f-]{36}\/headshot-[0-9a-f]{32}\.jpg$/);
     expect([...store.files.keys()].sort()).toEqual([row.headshot_path, row.logo_path].sort());
     expect(notify).toHaveBeenCalledWith({ id: row.id, fullName: "Dana Reyes" });
-    expect(confirm).toHaveBeenCalledWith({ email: "dana@example.com" });
+    expect(confirm).toHaveBeenCalledWith({ email: "dana@example.com", id: row.id, at: new Date("2026-11-16T18:00:00.000Z") });
   });
 
   it("rejects a file whose bytes are not what was declared, and deletes the uploads", async () => {
