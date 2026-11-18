@@ -36,3 +36,12 @@ describe("noticeEmail", () => {
     expect(notice.text).toBe(`Dana Reyes sent their bio page details.\n\nReference: 844019A2\n\nOpen the submission:\nhttps://db.example/rows?id=${id}\n`);
   });
 });
+
+describe("replyAddress", () => {
+  it("uses the public contact address unless a real address is set", async () => {
+    const { replyAddress } = await import("./config.js");
+    expect(replyAddress({})).toBe("info@17hands.ai");
+    expect(replyAddress({ INTAKE_REPLY_TO: "info at 17hands.ai" })).toBe("info@17hands.ai");
+    expect(replyAddress({ INTAKE_REPLY_TO: " hello@17hands.ai " })).toBe("hello@17hands.ai");
+  });
+});

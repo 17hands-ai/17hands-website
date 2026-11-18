@@ -43,6 +43,12 @@ const resendConfirmer =
   ({ email, id, at }: { email: string; id: string; at: Date }) =>
     sendWithResend(options.apiKey, { from: options.from, to: [email], reply_to: options.replyTo, ...confirmationEmail({ id, at }) });
 
+/** Where client replies go. A setting that is not a plain email address is ignored, so replies never go nowhere. */
+export function replyAddress(env: Env): string {
+  const value = env.INTAKE_REPLY_TO?.trim();
+  return value && /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value) ? value : CONTACT_EMAIL;
+}
+
 function required(env: Env, names: string[]) {
   const missing = names.filter((name) => !env[name]);
   if (missing.length) throw new Error(`bio-intake is not configured. Missing: ${missing.join(", ")}`);
@@ -83,7 +89,7 @@ export function productionDeps(env: Env = process.env): IntakeDeps {
     confirm: resendConfirmer({
       apiKey: env.RESEND_API_KEY!,
       from: env.INTAKE_EMAIL_FROM!,
-      replyTo: env.INTAKE_REPLY_TO || CONTACT_EMAIL,
+      replyTo: replyAddress(env),
     }),
     signingSecret: env.INTAKE_SIGNING_SECRET!,
     allowedOrigins: [...list(env.INTAKE_ALLOWED_ORIGINS || "https://17hands.ai"), ...deploymentOrigins],
@@ -124,7 +130,7 @@ export function devDeps(env: Env, origins: string[], memory: MemoryStore): Intak
           console.log(`[bio-intake dev] email not sent (no Resend keys). Would say: ${fullName} sent their bio page details. Submission ${id}.`);
         },
     confirm: hasResend
-      ? resendConfirmer({ apiKey: env.RESEND_API_KEY!, from: env.INTAKE_EMAIL_FROM!, replyTo: env.INTAKE_REPLY_TO || CONTACT_EMAIL })
+      ? resendConfirmer({ apiKey: env.RESEND_API_KEY!, from: env.INTAKE_EMAIL_FROM!, replyTo: replyAddress(env) })
       : async () => {
           console.log("[bio-intake dev] confirmation email to the client not sent (no Resend keys).");
         },
