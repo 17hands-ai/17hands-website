@@ -3,8 +3,8 @@ import { BOOKING_URL, CONTACT_EMAIL, UMAMI_WEBSITE_ID } from "@/lib/site";
 import { PRIVACY_POLICY_VERSION } from "@/lib/intake/schema";
 
 /**
- * DRAFT PENDING LEGAL REVIEW (bio page intake sections, added November 2026). Written in plain
- * language with CalOPPA in mind; have a lawyer confirm it before relying on it.
+ * NOT REVIEWED BY A LAWYER. Written in plain language with CalOPPA in mind. Every period and
+ * deadline stated here is a promise: change the text before changing the practice, not after.
  *
  * The effective date comes from PRIVACY_POLICY_VERSION, which is also stored with each intake
  * submission as the version the client agreed to. Change that constant whenever this text changes.
@@ -23,8 +23,8 @@ export default function Privacy() {
     <LegalPage title="Privacy Policy" effective={effective}>
       <p>
         This policy explains what personal information 17hands.ai ("17hands", "I", "we") collects through this website
-        (17hands.ai), how it is used and shared, and the choices you have. 17hands is run by Anastasia, its founder.
-        If you have questions, email {mail}.
+        (17hands.ai), how it is used and shared, and the choices you have. 17hands is run by Anastasia, its founder,
+        and is based in California, United States. If you have questions, email {mail}.
       </p>
 
       <h2>Information we collect</h2>
@@ -47,7 +47,8 @@ export default function Privacy() {
         The form does not ask for payment card details, government ID numbers or passwords, and you should not
         enter them. What you ask us to put on your page (for example your name, photo, logo, links and business
         contact details) becomes public when the page goes live, because that is the purpose of the page. If you
-        agreed to the founding client terms, we may also show your finished page as an example of our work.
+        agreed to the founding client terms, we may also show your finished page as an example of our work, and we
+        will ask you for a short testimonial and for your page's results after its first 30 days.
       </p>
 
       <h3>Chat assistant</h3>
@@ -146,7 +147,7 @@ export default function Privacy() {
       </p>
       <p>For information sent through the bio page intake form:</p>
       <ul>
-        <li><strong>Uploaded photos and logos</strong> are deleted from our storage within 30 days after your page is delivered. If the project does not go ahead, they are deleted within 90 days of your submission. Copies that are part of your live page stay on the page for as long as it is published.</li>
+        <li><strong>Uploaded photos and logos</strong> are deleted from our storage, and from any working copies we made to build your page, within 12 months of your submission. You can ask us to delete them sooner. Copies that are part of your live page stay on the page for as long as it is published.</li>
         <li><strong>Your written answers and the record of your agreements</strong> are kept for up to 24 months after your submission as a business record, then deleted, unless we are still providing services to you.</li>
       </ul>
 
@@ -154,8 +155,8 @@ export default function Privacy() {
       <p>
         You can ask to see, correct or delete the personal information we hold about you by emailing {mail}. This
         includes anything you sent through the bio page intake form and the files you uploaded. Tell us the name and
-        email address you used, and what you would like done. We will confirm the request within 10 business days,
-        complete it within 45 days, and may need to confirm your identity first. We won't treat you differently for
+        email address you used, and what you would like done. We will respond within 45 days and may need to confirm
+        your identity first. We won't treat you differently for
         making a request. If you ask us to delete information that your live bio page depends on, we will take the
         page down or remove that content from it.
       </p>
@@ -164,6 +165,13 @@ export default function Privacy() {
       <p>
         California law lets residents ask for a list of the personal information a business shared with third
         parties for those parties' own direct marketing. We do not share personal information for that purpose.
+      </p>
+
+      <h2>Where information is processed</h2>
+      <p>
+        17hands is based in the United States. The providers listed above store and process information in the
+        United States and in other countries where they operate. If you contact us from outside the United States,
+        your information will be handled there.
       </p>
 
       <h2>Security</h2>

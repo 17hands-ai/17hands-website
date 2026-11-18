@@ -37,7 +37,7 @@ create table if not exists public.bio_intake_submissions (
   privacy_policy_version  text not null,
 
   -- Retention. Files are due for deletion after this date; the purge script acts on it.
-  -- Set to 90 days out on arrival. After delivering a page, set it to delivery date + 30 days.
+  -- Set to 12 months out on arrival, which is what the privacy policy promises.
   delete_files_after      date not null,
   files_deleted_at        timestamptz,
 

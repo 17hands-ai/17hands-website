@@ -160,16 +160,11 @@ them, so delete a client's folder when you delete their files.
 
 ### Retention
 
-Each row has `delete_files_after` (a date) and `files_deleted_at`. New submissions get a date 90
-days out, which covers projects that never go ahead. After you deliver a page:
+Each row has `delete_files_after` (a date) and `files_deleted_at`. New submissions get a date 12
+months out, which is the period the privacy policy promises. Nothing needs to be set per client.
+To delete one client's files early, set that row's `delete_files_after` to today.
 
-```sql
-update bio_intake_submissions
-set status = 'delivered', delete_files_after = current_date + 30
-where id = '<submission id>';
-```
-
-Then, whenever you like (monthly is enough):
+Every month or two, run:
 
 ```bash
 pnpm intake:purge
@@ -190,15 +185,11 @@ where created_at < now() - interval '24 months' and status in ('delivered', 'can
 To honour a deletion request, delete the row, the two paths in its `headshot_path` and
 `logo_path` columns from the bucket, and any exported folder for that client.
 
-### Before going live
+### Open items
 
 - [ ] Have the privacy policy (`src/pages/Privacy.tsx`) reviewed by a lawyer. The intake sections
       are a plain-language draft written with CalOPPA in mind. When the text changes, update
       `PRIVACY_POLICY_VERSION` in `src/lib/intake/schema.ts`; it sets the effective date and is
       stored with each submission.
-- [ ] Deploy to a Vercel preview and send one real submission with a photo and an SVG logo. The
-      browser-to-Supabase upload and the Vercel function build have not been exercised outside
-      local stand-ins.
-- [ ] Confirm the email arrives and its link opens the right row.
-- [ ] Confirm the retention periods in the privacy policy (30 days after delivery, 90 days if the
-      project does not go ahead, 24 months for answers) match what you intend to do.
+- [x] Preview tested on 2026-11-17 with real services: submission, uploads, both emails, export.
+- [x] Retention periods confirmed by the owner on 2026-11-17: files 12 months, answers 24 months.

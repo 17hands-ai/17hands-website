@@ -42,7 +42,7 @@ const RATE_LIMIT = 10;
 const RATE_WINDOW_SECONDS = 3600;
 const UPLOAD_WINDOW_MS = 30 * 60 * 1000;
 /** Files are kept this long when nobody moves the date, i.e. the project never went ahead. */
-const DEFAULT_RETENTION_DAYS = 90;
+const DEFAULT_RETENTION_DAYS = 365;
 
 const json = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), {

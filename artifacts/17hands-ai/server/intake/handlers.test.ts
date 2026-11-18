@@ -121,8 +121,8 @@ describe("POST /api/bio-intake/submit", () => {
       consent_privacy_at: "2026-11-16T18:00:00.000Z",
       consent_founding_at: "2026-11-16T18:00:00.000Z",
       consent_assets_at: "2026-11-16T18:00:00.000Z",
-      privacy_policy_version: "2026-11-16",
-      delete_files_after: "2027-02-14",
+      privacy_policy_version: "2026-11-17",
+      delete_files_after: "2027-11-16",
       notified_at: "2026-11-16T18:00:00.000Z",
     });
     expect(row.headshot_path).toMatch(/^submissions\/[0-9a-f-]{36}\/headshot-[0-9a-f]{32}\.jpg$/);

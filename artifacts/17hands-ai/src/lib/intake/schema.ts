@@ -8,7 +8,7 @@
 import { z } from "zod";
 
 /** Effective date of the privacy policy a client agrees to. Stored with each submission. */
-export const PRIVACY_POLICY_VERSION = "2026-11-16";
+export const PRIVACY_POLICY_VERSION = "2026-11-17";
 
 export const MAX_LINKS = 8;
 export const ABOUT_MAX = 500;
