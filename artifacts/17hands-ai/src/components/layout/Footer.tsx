@@ -35,7 +35,7 @@ export function Footer() {
             <h2 className="eyebrow mb-5">{t.explore}</h2>
             <ul className="space-y-3">
               <li><Link href="/digital-defenders" className={linkClass}>{content.nav.digitalDefenders}</Link></li>
-              <li><a href="/link-in-bio" className={linkClass}>{t.linksBooking}</a></li>
+              <li><a href="/anastasia" className={linkClass}>{t.linksBooking}</a></li>
               <li><a href={`${home}/#services`} className={linkClass}>{content.nav.services}</a></li>
               <li><a href={`${home}/#how-it-works`} className={linkClass}>{t.howItWorks}</a></li>
               <li><Link href="/packages" className={linkClass}>{t.packages}</Link></li>

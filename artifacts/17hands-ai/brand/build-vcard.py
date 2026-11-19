@@ -1,6 +1,6 @@
 """Build the link-in-bio contact card.
 
-Writes public/link-in-bio/assets/anastasia-blodgett.vcf with the contact
+Writes public/anastasia/assets/anastasia-blodgett.vcf with the contact
 photo embedded: the branded portrait cropped square, darkened toward the
 bottom, with the rose-gold 17hands mark set low and centred. Phones show
 contact photos as a circle, so the mark sits inside the inscribed circle.
@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSETS = ROOT / "public" / "link-in-bio" / "assets"
+ASSETS = ROOT / "public" / "anastasia" / "assets"
 PORTRAIT = ASSETS / "anastasia-portrait.jpg"
 LOGO = ASSETS / "1-logo-rosegold.png"
 OUT_VCF = ASSETS / "anastasia-blodgett.vcf"

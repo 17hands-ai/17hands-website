@@ -41,10 +41,10 @@ const DEFAULT_DESCRIPTION =
 
 export const pages: PageMeta[] = [
   {
-    path: "/link-in-bio",
+    path: "/anastasia",
     title: "Anastasia Blodgett | Links & Booking | 17hands.ai",
-    description: "Connect with Anastasia Blodgett and 17hands.ai. Book a call, explore Digital Defenders, and find security and practical AI services. Brand Instagram and YouTube Shorts coming soon.",
-    answers: "Official 17hands.ai links, booking, contact, Digital Defenders workshops, community projects, and upcoming Instagram and YouTube Shorts accounts.",
+    description: "Connect with Anastasia Blodgett and 17hands.ai. Book a call, get a free website audit, and find security and practical AI services.",
+    answers: "Anastasia Blodgett's links: save her contact, book a call, request a free SEO and AEO website audit, custom websites and link-in-bio pages, AI automation, Digital Defenders workshops and community projects.",
     standalone: true,
   },
   {
