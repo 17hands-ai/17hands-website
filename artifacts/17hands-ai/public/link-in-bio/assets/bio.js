@@ -34,7 +34,6 @@ btnDark.addEventListener("click", () => setTheme("dark"));
 
 const I18N = {
   en: {
-    coming_soon: "Coming soon",
     skip: "Skip to content",
     privacy: "Privacy",
     terms: "Terms",
@@ -46,6 +45,24 @@ const I18N = {
       '“AI systems with a <span class="highlight-rosegold">human touch</span>.”',
     msoc_contact: "Email 17hands",
     msoc_save: "Save contact to phone",
+    offers_eyebrow: "FOR YOUR BUSINESS",
+    offers_title: "Get found. Get booked.",
+    offer_audit_eyebrow: "FREE · RESULTS NEXT BUSINESS DAY",
+    offer_audit_title: "Get a free SEO, AEO & speed audit",
+    offer_audit_desc:
+      "Email me your website link. You get a plain-English audit of how Google and AI assistants see your site, and what slows it down.",
+    offer_site_eyebrow: "CUSTOM WEBSITE · SEO · AEO · FAST",
+    offer_site_title: "A custom branded website that ranks",
+    offer_site_desc:
+      "Built for search and AI assistants, with top performance scores. No templates.",
+    offer_bio_eyebrow: "NOT A LINKTREE · YOUR BRAND",
+    offer_bio_title: "Want a link-in-bio page like this one?",
+    offer_bio_desc:
+      "Your own design, your own domain, and a page that turns followers into clients.",
+    offer_ai_eyebrow: "AI AUTOMATION · CONSULTATION",
+    offer_ai_title: "Happy with your website, but buried in busywork?",
+    offer_ai_desc:
+      "Book a call and we'll find where AI automation can take repetitive work off your plate and speed up your business.",
     links_eyebrow: "LINKS & BOOKING",
     links_title: "Work & Connect",
     link1_eyebrow: "CAL.COM/17HANDS · FREE INTRO CALL",
@@ -66,7 +83,6 @@ const I18N = {
       'Branding by <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · a <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a> project',
   },
   ru: {
-    coming_soon: "Скоро",
     skip: "Перейти к содержимому",
     privacy: "Конфиденциальность",
     terms: "Условия",
@@ -78,6 +94,24 @@ const I18N = {
       '«AI-системы с <span class="highlight-rosegold">человеческим теплом</span>».',
     msoc_contact: "Написать в 17hands",
     msoc_save: "Сохранить контакт",
+    offers_eyebrow: "ДЛЯ ВАШЕГО БИЗНЕСА",
+    offers_title: "Вас находят. Вам пишут.",
+    offer_audit_eyebrow: "БЕСПЛАТНО · ОТВЕТ НА СЛЕДУЮЩИЙ РАБОЧИЙ ДЕНЬ",
+    offer_audit_title: "Бесплатный аудит SEO, AEO и скорости",
+    offer_audit_desc:
+      "Пришлите ссылку на ваш сайт. Вы получите понятный разбор: как ваш сайт видят Google и AI-ассистенты и что его замедляет.",
+    offer_site_eyebrow: "САЙТ ПОД КЛЮЧ · SEO · AEO · СКОРОСТЬ",
+    offer_site_title: "Фирменный сайт, который находят",
+    offer_site_desc:
+      "Создан для поиска и AI-ассистентов, с высокой скоростью загрузки. Без шаблонов.",
+    offer_bio_eyebrow: "НЕ LINKTREE · ВАШ БРЕНД",
+    offer_bio_title: "Хотите такую же страницу для ссылок?",
+    offer_bio_desc:
+      "Ваш дизайн, ваш домен и страница, которая превращает подписчиков в клиентов.",
+    offer_ai_eyebrow: "AI-АВТОМАТИЗАЦИЯ · КОНСУЛЬТАЦИЯ",
+    offer_ai_title: "Сайт устраивает, но рутина отнимает время?",
+    offer_ai_desc:
+      "Запишитесь на звонок: найдём, где AI-автоматизация снимет с вас рутину и ускорит работу бизнеса.",
     links_eyebrow: "ССЫЛКИ И ЗАПИСЬ",
     links_title: "Связаться и начать работу",
     link1_eyebrow: "CAL.COM/17HANDS · БЕСПЛАТНЫЙ ЗВОНОК",
@@ -135,6 +169,7 @@ setLanguage(preferredLanguage === "ru" ? "ru" : "en");
  * page loads (Umami or Plausible); with none loaded this is a no-op.
  */
 function leadEvent(href) {
+  if (href.startsWith("mailto:") && /audit/i.test(href)) return "audit-request";
   if (href.startsWith("mailto:")) return "email";
   if (href.startsWith("tel:")) return "call";
   if (href.startsWith("sms:")) return "text";
