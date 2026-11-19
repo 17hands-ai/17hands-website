@@ -104,7 +104,7 @@ export default function BioPages() {
             <BrandButton href={BOOKING_URL} placement="bio-hero" size="lg">
               Book a 15-minute call <ArrowRight size={18} aria-hidden="true" />
             </BrandButton>
-            <BrandButton href="/link-in-bio" variant="secondary" size="lg">
+            <BrandButton href="/anastasia" variant="secondary" size="lg">
               See a live example
             </BrandButton>
           </div>

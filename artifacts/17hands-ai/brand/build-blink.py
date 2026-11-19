@@ -1,6 +1,6 @@
 """Build the closed-eye overlay for the link-in-bio portrait.
 
-Writes public/link-in-bio/assets/portrait-blink.png: a transparent canvas the
+Writes public/anastasia/assets/portrait-blink.png: a transparent canvas the
 same size as anastasia-portrait.jpg with only a closed eyelid painted over her
 left eye (the right one as you look at the photo). The page stacks it on the
 photo with identical object-fit/object-position, so it lines up at every size,
@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSETS = ROOT / "public" / "link-in-bio" / "assets"
+ASSETS = ROOT / "public" / "anastasia" / "assets"
 PORTRAIT = ASSETS / "anastasia-portrait.jpg"
 OUT = ASSETS / "portrait-blink.png"
 
