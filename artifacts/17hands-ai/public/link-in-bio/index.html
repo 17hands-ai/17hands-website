@@ -128,23 +128,42 @@
       <!-- 1. HERO SECTION: Asymmetric Portrait + Concise Bio + Even 3-Column Modular Socials -->
       <section class="hero-card">
         <div class="hero-top-grid">
-          <div class="portrait-stage">
+          <!-- Photo, name and the highlighted button all save the contact card. -->
+          <a
+            class="portrait-stage save-contact"
+            href="/link-in-bio/assets/anastasia-blodgett.vcf"
+            download="anastasia-blodgett.vcf"
+            aria-label="Save Anastasia Blodgett's contact to your phone"
+            title="Save contact to phone"
+          >
             <div class="portrait-offset-frame" aria-hidden="true"></div>
             <div class="portrait-photo-wrap">
               <img
                 src="/link-in-bio/assets/anastasia-portrait.jpg"
                 alt="Anastasia Blodgett, founder of 17hands.ai"
               />
+              <img
+                class="portrait-blink"
+                src="/link-in-bio/assets/portrait-blink.png"
+                alt=""
+                aria-hidden="true"
+              />
             </div>
-          </div>
+          </a>
 
           <div class="hero-identity">
             <div class="eyebrow-badge">
               <span class="eyebrow-dot"></span>
               <span data-i18n="hero_eyebrow">FOUNDER · 17HANDS.AI</span>
             </div>
-            <h1 class="founder-name" data-i18n="founder_name">
-              Anastasia Blodgett
+            <h1 class="founder-name">
+              <a
+                class="save-contact"
+                href="/link-in-bio/assets/anastasia-blodgett.vcf"
+                download="anastasia-blodgett.vcf"
+                title="Save contact to phone"
+                ><span data-i18n="founder_name">Anastasia Blodgett</span></a
+              >
             </h1>
             <p class="founder-role" data-i18n="founder_role">
               <strong>UC Berkeley CS</strong> ·
@@ -160,49 +179,8 @@
             >.”
           </h2>
 
-          <!-- Even 3-Column Modular Social Media Buttons (Zero duplication with the booking/site cards below) -->
+          <!-- Contact buttons. Only live channels are listed; add Instagram/YouTube here once they have content. -->
           <div class="modular-socials-row" aria-label="Social Profiles">
-            <div
-              class="social-mod-btn social-pending"
-              role="group"
-              aria-label="17hands Instagram, coming soon"
-            >
-              <span class="social-pending-label"
-                ><svg
-                  viewBox="0 0 24 24"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                </svg>
-                <span>Instagram · 17hands</span></span
-              ><span class="pending-note" data-i18n="coming_soon"
-                >Coming soon</span
-              >
-            </div>
-
-            <div
-              class="social-mod-btn social-pending"
-              role="group"
-              aria-label="17hands YouTube Shorts, coming soon"
-            >
-              <span class="social-pending-label"
-                ><svg
-                  viewBox="0 0 24 24"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <rect x="2" y="5" width="20" height="14" rx="4" />
-                  <path d="m10 9 5 3-5 3z" />
-                </svg>
-                <span>YouTube Shorts · 17hands</span></span
-              ><span class="pending-note" data-i18n="coming_soon"
-                >Coming soon</span
-              >
-            </div>
             <a
               href="https://www.linkedin.com/in/anastasia-blodgett"
               target="_blank"
@@ -236,7 +214,7 @@
             <a
               href="/link-in-bio/assets/anastasia-blodgett.vcf"
               download="anastasia-blodgett.vcf"
-              class="social-mod-btn social-mod-wide"
+              class="social-mod-btn social-mod-wide social-mod-primary"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -255,7 +233,128 @@
         </div>
       </section>
 
-      <!-- 2. PRIMARY LINK-IN-BIO STACK (3 Distinct Destination Cards - Header Only, No Descriptions) -->
+      <!-- 2. OFFERS, in priority order. The free audit is a prefilled email: the visitor only adds their site link. -->
+      <section class="section-card offers-card" aria-labelledby="offers-title">
+        <div class="section-header">
+          <span class="section-eyebrow" data-i18n="offers_eyebrow"
+            >FOR YOUR BUSINESS</span
+          >
+          <h2 class="section-title" id="offers-title" data-i18n="offers_title">
+            Get found. Get booked.
+          </h2>
+        </div>
+
+        <div class="links-stack">
+          <a href="/bio-pages" class="offer-card offer-featured">
+            <div class="dest-left">
+              <div class="dest-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="6" y="2" width="12" height="20" rx="2.5"></rect>
+                  <path d="M9.5 7h5M9.5 11h5M9.5 15h5"></path>
+                </svg>
+              </div>
+              <div class="dest-text">
+                <span class="dest-eyebrow" data-i18n="offer_bio_eyebrow"
+                  >NOT A LINKTREE · YOUR BRAND</span
+                >
+                <span class="dest-title" data-i18n="offer_bio_title"
+                  >Want a link-in-bio page like this one?</span
+                >
+                <span class="dest-desc" data-i18n="offer_bio_desc"
+                  >Your own design, your own domain, and a page that turns
+                  followers into clients.</span
+                >
+              </div>
+            </div>
+            <div class="dest-arrow" aria-hidden="true">↗</div>
+          </a>
+
+          <a href="/packages#websites" class="offer-card">
+            <div class="dest-left">
+              <div class="dest-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path
+                    d="M2 9h20M6 6.5h.01M9 6.5h.01M7 14l2 2-2 2M12 18h5"
+                  ></path>
+                </svg>
+              </div>
+              <div class="dest-text">
+                <span class="dest-eyebrow" data-i18n="offer_site_eyebrow"
+                  >CUSTOM WEBSITE · SEO · AEO · FAST</span
+                >
+                <span class="dest-title" data-i18n="offer_site_title"
+                  >A custom branded website that ranks</span
+                >
+                <span class="dest-desc" data-i18n="offer_site_desc"
+                  >Built for search and AI assistants, with top performance
+                  scores. No templates.</span
+                >
+              </div>
+            </div>
+            <div class="dest-arrow" aria-hidden="true">↗</div>
+          </a>
+
+          <a
+            href="mailto:info@17hands.ai?subject=Free%20SEO%20%2F%20AEO%20audit%20request&amp;body=Hi%20Anastasia%2C%0D%0A%0D%0AI%27d%20like%20a%20free%20SEO%2C%20AEO%20and%20performance%20audit%20of%20my%20website.%0D%0A%0D%0AMy%20website%20link%3A%20%0D%0ABusiness%20name%3A%20%0D%0AWhat%20I%27d%20most%20like%20to%20improve%20(optional)%3A%20%0D%0A%0D%0AThank%20you!"
+            class="offer-card"
+          >
+            <div class="dest-left">
+              <div class="dest-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="m20 20-3.5-3.5M8 11l2 2 4-4"></path>
+                </svg>
+              </div>
+              <div class="dest-text">
+                <span class="dest-eyebrow" data-i18n="offer_audit_eyebrow"
+                  >FREE · RESULTS NEXT BUSINESS DAY</span
+                >
+                <span class="dest-title" data-i18n="offer_audit_title"
+                  >Get a free SEO, AEO &amp; speed audit</span
+                >
+                <span class="dest-desc" data-i18n="offer_audit_desc"
+                  >Email me your website link. You get a plain-English audit of
+                  how Google and AI assistants see your site, and what slows it
+                  down.</span
+                >
+              </div>
+            </div>
+            <div class="dest-arrow" aria-hidden="true">→</div>
+          </a>
+
+          <a
+            href="https://cal.com/17hands"
+            target="_blank"
+            rel="noopener"
+            class="offer-card"
+          >
+            <div class="dest-left">
+              <div class="dest-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"></path>
+                </svg>
+              </div>
+              <div class="dest-text">
+                <span class="dest-eyebrow" data-i18n="offer_ai_eyebrow"
+                  >AI AUTOMATION · CONSULTATION</span
+                >
+                <span class="dest-title" data-i18n="offer_ai_title"
+                  >Happy with your website, but buried in busywork?</span
+                >
+                <span class="dest-desc" data-i18n="offer_ai_desc"
+                  >Book a call and we'll find where AI automation can take
+                  repetitive work off your plate and speed up your
+                  business.</span
+                >
+              </div>
+            </div>
+            <div class="dest-arrow" aria-hidden="true">→</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 3. PRIMARY LINK-IN-BIO STACK (3 Distinct Destination Cards - Header Only, No Descriptions) -->
       <section class="section-card">
         <div class="section-header">
           <span class="section-eyebrow" data-i18n="links_eyebrow"
@@ -339,7 +438,7 @@
         </div>
       </section>
 
-      <!-- 3. COMPACT 3-TILE COMMUNITY & INITIATIVES STRIP (Header Only, No Descriptions) -->
+      <!-- 4. COMPACT 3-TILE COMMUNITY & INITIATIVES STRIP (Header Only, No Descriptions) -->
       <section class="section-card">
         <div class="section-header">
           <span class="section-eyebrow" data-i18n="family_eyebrow"

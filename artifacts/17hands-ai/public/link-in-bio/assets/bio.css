@@ -346,6 +346,48 @@ a {
   transition: transform 0.25s ease;
 }
 
+/* A point of light orbits the photo's edge. The conic gradient is masked to a
+   2px ring, so only the bright arc shows; --orbit is registered so it animates. */
+@property --orbit {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.portrait-stage::after {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 24px 6px 24px 6px;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--orbit),
+    transparent 0deg 270deg,
+    rgba(236, 192, 166, 0.45) 315deg,
+    #fff4ec 345deg,
+    var(--accent-rosegold-strong) 352deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  filter: drop-shadow(0 0 4px var(--accent-rosegold))
+    drop-shadow(0 0 8px var(--accent-rosegold-strong));
+  animation: frame-orbit 4.8s linear infinite;
+}
+
+@keyframes frame-orbit {
+  to {
+    --orbit: 360deg;
+  }
+}
+
 .portrait-stage:hover .portrait-offset-frame {
   transform: translate(3px, 3px);
 }
@@ -368,6 +410,33 @@ a {
   object-fit: cover;
   object-position: center 18%;
   display: block;
+}
+
+/* Closed-eyelid layer (built by brand/build-blink.py). Same fit and position
+   as the photo so it lines up at every size. */
+.portrait-photo-wrap img.portrait-blink {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  /* The blink sits at ~96% of the cycle; the negative delay starts partway
+     in, so the first blink comes ~1.5s after load instead of ~6s. */
+  animation: portrait-blink 6.5s -4.7s infinite;
+}
+
+@keyframes portrait-blink {
+  0%,
+  95.4% {
+    opacity: 0;
+  }
+  96%,
+  97.2% {
+    opacity: 1;
+  }
+  97.8%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .hero-identity {
@@ -606,6 +675,89 @@ a {
 }
 
 /* ==========================================================================
+       OFFERS - the highlighted block under the hero
+       ========================================================================== */
+.offers-card {
+  position: relative;
+  border-color: var(--accent-rosegold-border);
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      var(--action-amethyst-soft),
+      transparent 60%
+    ),
+    var(--bg-surface);
+}
+
+.offer-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px 4px 12px 4px;
+  padding: 14px 16px;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.offer-card:hover {
+  border-color: var(--accent-rosegold);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.offer-card .dest-desc {
+  margin-top: 3px;
+}
+
+.offer-card.offer-featured {
+  background: linear-gradient(135deg, var(--action-amethyst) 0%, #5b1d9e 100%);
+  border-color: var(--accent-rosegold);
+  box-shadow: var(--shadow-cta);
+}
+
+.offer-featured .dest-eyebrow {
+  color: #f6d9c7;
+}
+
+.offer-featured .dest-title {
+  color: #ffffff;
+  font-size: 1.12rem;
+}
+
+.offer-featured .dest-desc {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.offer-featured .dest-icon,
+.offer-featured .dest-arrow {
+  background: rgba(19, 9, 30, 0.35);
+  border-color: rgba(246, 217, 199, 0.5);
+  color: #f6d9c7;
+}
+
+.offer-card:hover .dest-arrow {
+  transform: translateX(3px);
+  background: var(--action-amethyst);
+  color: var(--on-action);
+  border-color: var(--action-amethyst);
+}
+
+.offer-featured:hover {
+  background: linear-gradient(135deg, #8a3ae0 0%, #6419b2 100%);
+}
+
+.offer-featured:hover .dest-arrow {
+  background: #ffffff;
+  color: var(--action-amethyst);
+  border-color: #ffffff;
+}
+
+/* ==========================================================================
        ENDORSED COMMUNITY & BRAND FAMILY (Original Rose-Gold Logos)
        ========================================================================== */
 .family-grid {
@@ -731,6 +883,37 @@ a {
   grid-column: 1 / -1;
 }
 
+/* Save contact is the one highlighted action in the hero. */
+.social-mod-btn.social-mod-primary {
+  background: linear-gradient(135deg, var(--action-amethyst) 0%, #5b1d9e 100%);
+  border-color: var(--accent-rosegold);
+  color: #ffffff;
+  font-size: 0.86rem;
+  padding: 12px 14px;
+  box-shadow: var(--shadow-cta);
+}
+
+.social-mod-btn.social-mod-primary svg {
+  stroke: #f6d9c7;
+}
+
+.social-mod-btn.social-mod-primary:hover {
+  background: linear-gradient(135deg, #8a3ae0 0%, #6419b2 100%);
+  border-color: #f6d9c7;
+}
+
+.save-contact {
+  cursor: pointer;
+}
+
+.founder-name .save-contact {
+  transition: color 0.18s ease;
+}
+
+.founder-name .save-contact:hover {
+  color: var(--accent-rosegold);
+}
+
 .social-mod-btn svg {
   width: 15px;
   height: 15px;
@@ -782,6 +965,9 @@ a {
   .modular-socials-row {
     grid-template-columns: 1fr;
   }
+  .offer-card .dest-icon {
+    display: none;
+  }
   .family-grid {
     grid-template-columns: 1fr;
   }
@@ -797,28 +983,6 @@ a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--accent-rosegold-strong);
   outline-offset: 4px;
-}
-.social-pending {
-  flex-direction: column;
-  gap: 2px;
-  cursor: default;
-  white-space: normal;
-  text-align: center;
-}
-.social-pending:hover {
-  transform: none;
-  border-color: var(--border-card);
-  background: var(--bg-surface);
-}
-.social-pending-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-.pending-note {
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--text-secondary);
 }
 .footer-legal {
   display: flex;
