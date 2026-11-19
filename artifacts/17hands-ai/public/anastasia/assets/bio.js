@@ -193,12 +193,17 @@ document.addEventListener("click", (event) => {
 });
 
 /**
- * Save contact. In Safari and Chrome the .vcf link (served inline as a vCard)
- * opens the phone's own Add Contact flow. Instagram, Facebook, TikTok and
- * similar in-app browsers silently ignore it, so there we hand the card to the
- * system browser: x-safari-https on iOS, a Chrome intent on Android. If the
- * page is still in front a moment later, the hand-off failed and we show how
- * to open the page in the real browser instead.
+ * Save contact. In Safari and Chrome a tap on the .vcf link (served as
+ * text/vcard, inline, with no filename so Safari does not treat it as a
+ * download) opens the phone's own Add Contact sheet.
+ *
+ * Instagram, Facebook, TikTok and similar in-app browsers either ignore the
+ * card or offer it as a file download. There we reopen this page, not the
+ * card, in the system browser (x-safari-https on iOS, a Chrome intent on
+ * Android) with #save-contact. The page then opens the card from inside the
+ * real browser, which is the same path as a normal tap and shows the sheet.
+ * If the page is still in front a moment later, the hand-off failed and we
+ * show how to open the page in the real browser instead.
  */
 const UA = navigator.userAgent;
 const IN_APP_BROWSER =
@@ -209,6 +214,7 @@ const IS_IOS =
   /iPhone|iPad|iPod/.test(UA) ||
   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const IS_ANDROID = /Android/i.test(UA);
+const SAVE_HASH = "#save-contact";
 
 function showSaveHint() {
   const hint = document.getElementById("save-contact-hint");
@@ -238,9 +244,19 @@ function openInSystemBrowser(url) {
 
 if (IN_APP_BROWSER) {
   document.addEventListener("click", (event) => {
-    const link = event.target.closest('a[href$=".vcf"]');
-    if (!link) return;
+    if (!event.target.closest('a[href$=".vcf"]')) return;
     event.preventDefault();
-    openInSystemBrowser(link.href);
+    const page = new URL(window.location.href);
+    page.hash = SAVE_HASH;
+    openInSystemBrowser(page.href);
   });
+} else if (window.location.hash === SAVE_HASH) {
+  // Arrived from an in-app browser hand-off: open the card here.
+  history.replaceState(
+    null,
+    "",
+    window.location.pathname + window.location.search,
+  );
+  const card = document.querySelector('a[href$=".vcf"]');
+  if (card) window.location.assign(card.href);
 }
