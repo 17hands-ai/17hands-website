@@ -128,11 +128,12 @@
       <!-- 1. HERO SECTION: Asymmetric Portrait + Concise Bio + Even 3-Column Modular Socials -->
       <section class="hero-card">
         <div class="hero-top-grid">
-          <!-- Photo, name and the highlighted button all save the contact card. -->
+          <!-- Photo, name and the highlighted button all open the phone's Add Contact sheet.
+               No download attribute: that forces a file download instead. In-app
+               browsers (Instagram etc.) are handled in bio.js. -->
           <a
             class="portrait-stage save-contact"
             href="/link-in-bio/assets/anastasia-blodgett.vcf"
-            download="anastasia-blodgett.vcf"
             aria-label="Save Anastasia Blodgett's contact to your phone"
             title="Save contact to phone"
           >
@@ -160,7 +161,6 @@
               <a
                 class="save-contact"
                 href="/link-in-bio/assets/anastasia-blodgett.vcf"
-                download="anastasia-blodgett.vcf"
                 title="Save contact to phone"
                 ><span data-i18n="founder_name">Anastasia Blodgett</span></a
               >
@@ -200,7 +200,10 @@
               </svg>
               <span>LinkedIn</span>
             </a>
-            <a href="mailto:info@17hands.ai" class="social-mod-btn">
+            <a
+              href="mailto:anastasia@17hands.ai?subject=Nice%20connecting&amp;body=Hi%20Anastasia%2C%0D%0A%0D%0AIt%20was%20nice%20connecting%20with%20you%20at%20%5Bevent%5D.%20"
+              class="social-mod-btn"
+            >
               <svg
                 viewBox="0 0 24 24"
                 stroke-linecap="round"
@@ -209,12 +212,12 @@
                 <rect width="20" height="16" x="2" y="4" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
-              <span data-i18n="msoc_contact">Email 17hands</span>
+              <span data-i18n="msoc_contact">Email Anastasia</span>
             </a>
             <a
               href="/link-in-bio/assets/anastasia-blodgett.vcf"
-              download="anastasia-blodgett.vcf"
               class="social-mod-btn social-mod-wide social-mod-primary"
+              aria-describedby="save-contact-hint"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -229,6 +232,16 @@
               </svg>
               <span data-i18n="msoc_save">Save contact to phone</span>
             </a>
+            <p
+              class="save-contact-hint"
+              id="save-contact-hint"
+              data-i18n="save_hint"
+              hidden
+            >
+              This app's browser can't save contacts. Tap
+              <strong>···</strong> at the top, choose
+              <strong>Open in browser</strong>, then tap Save contact again.
+            </p>
           </div>
         </div>
       </section>

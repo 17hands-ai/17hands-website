@@ -43,7 +43,9 @@ const I18N = {
       "<strong>UC Berkeley CS</strong> · <strong>Cybersecurity &amp; Practical AI</strong>",
     hero_tagline:
       '“AI systems with a <span class="highlight-rosegold">human touch</span>.”',
-    msoc_contact: "Email 17hands",
+    msoc_contact: "Email Anastasia",
+    save_hint:
+      "This app's browser can't save contacts. Tap <strong>···</strong> at the top, choose <strong>Open in browser</strong>, then tap Save contact again.",
     msoc_save: "Save contact to phone",
     offers_eyebrow: "FOR YOUR BUSINESS",
     offers_title: "Get found. Get booked.",
@@ -92,7 +94,9 @@ const I18N = {
       "<strong>UC Berkeley CS</strong> · <strong>Кибербезопасность и Практичный ИИ</strong>",
     hero_tagline:
       '«AI-системы с <span class="highlight-rosegold">человеческим теплом</span>».',
-    msoc_contact: "Написать в 17hands",
+    msoc_contact: "Написать Анастасии",
+    save_hint:
+      "Браузер этого приложения не умеет сохранять контакты. Нажмите <strong>···</strong> вверху, выберите <strong>Открыть в браузере</strong> и снова нажмите «Сохранить контакт».",
     msoc_save: "Сохранить контакт",
     offers_eyebrow: "ДЛЯ ВАШЕГО БИЗНЕСА",
     offers_title: "Вас находят. Вам пишут.",
@@ -187,3 +191,56 @@ document.addEventListener("click", (event) => {
   if (window.umami) window.umami.track(name, data);
   else if (window.plausible) window.plausible(name, { props: data });
 });
+
+/**
+ * Save contact. In Safari and Chrome the .vcf link (served inline as a vCard)
+ * opens the phone's own Add Contact flow. Instagram, Facebook, TikTok and
+ * similar in-app browsers silently ignore it, so there we hand the card to the
+ * system browser: x-safari-https on iOS, a Chrome intent on Android. If the
+ * page is still in front a moment later, the hand-off failed and we show how
+ * to open the page in the real browser instead.
+ */
+const UA = navigator.userAgent;
+const IN_APP_BROWSER =
+  /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Messenger|TikTok|musical_ly|BytedanceWebview|Snapchat|LinkedInApp|Threads|Line\//i.test(
+    UA,
+  );
+const IS_IOS =
+  /iPhone|iPad|iPod/.test(UA) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const IS_ANDROID = /Android/i.test(UA);
+
+function showSaveHint() {
+  const hint = document.getElementById("save-contact-hint");
+  if (!hint) return;
+  hint.hidden = false;
+  hint.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+function openInSystemBrowser(url) {
+  if (IS_IOS) {
+    window.location.href = url.replace(/^https?:/, "x-safari-https:");
+  } else if (IS_ANDROID) {
+    window.location.href =
+      "intent://" +
+      url.replace(/^https?:\/\//, "") +
+      "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" +
+      encodeURIComponent(url) +
+      ";end";
+  } else {
+    showSaveHint();
+    return;
+  }
+  setTimeout(() => {
+    if (document.visibilityState === "visible") showSaveHint();
+  }, 1600);
+}
+
+if (IN_APP_BROWSER) {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href$=".vcf"]');
+    if (!link) return;
+    event.preventDefault();
+    openInSystemBrowser(link.href);
+  });
+}
