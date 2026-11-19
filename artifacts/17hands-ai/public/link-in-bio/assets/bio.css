@@ -902,6 +902,23 @@ a {
   border-color: #f6d9c7;
 }
 
+.save-contact-hint {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px 3px 10px 3px;
+  border: 1px solid var(--accent-rosegold-border);
+  background: var(--accent-rosegold-soft);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.save-contact-hint[hidden] {
+  display: none;
+}
+
 .save-contact {
   cursor: pointer;
 }

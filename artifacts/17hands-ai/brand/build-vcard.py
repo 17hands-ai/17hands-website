@@ -33,7 +33,7 @@ FIELDS = [
     "ORG:17hands.ai",
     "TITLE:Founder",
     "TEL;TYPE=CELL,VOICE:+1-415-996-9743",
-    "EMAIL;TYPE=WORK:info@17hands.ai",
+    "EMAIL;TYPE=WORK:anastasia@17hands.ai",
     "URL:https://17hands.ai/",
     "URL;TYPE=booking:https://cal.com/17hands",
     "X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/anastasia-blodgett",
