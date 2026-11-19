@@ -37,7 +37,10 @@ FIELDS = [
     "URL:https://17hands.ai/",
     "URL;TYPE=booking:https://cal.com/17hands",
     "X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/anastasia-blodgett",
-    "NOTE:Security and practical AI for small businesses. Book a call: https://cal.com/17hands",
+    # Commas and semicolons in text values must be escaped as \, and \;
+    "NOTE:Your local tech lady. I build custom link-in-bio pages\\, websites "
+    "made to be found on Google and in AI answers (SEO + AEO)\\, and AI automations "
+    "that take busywork off your plate. Book a call: https://cal.com/17hands",
 ]
 
 
