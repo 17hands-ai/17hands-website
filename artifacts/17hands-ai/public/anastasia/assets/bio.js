@@ -79,7 +79,7 @@ const I18N = {
     fam1_name: "Digital Defenders",
     fam2_badge: "COMMUNITY · COMING SOON",
     fam2_name: "Tea & Storytelling",
-    fam3_badge: "CREATIVE NIGHTS · COMING SOON",
+    fam3_badge: "CREATIVE NIGHTS",
     fam3_name: "Karaoke & Music",
     footer_credit:
       'Branding by <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · a <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a> project',
@@ -130,7 +130,7 @@ const I18N = {
     fam1_name: "Digital Defenders",
     fam2_badge: "СООБЩЕСТВО · СКОРО",
     fam2_name: "Чай и Истории",
-    fam3_badge: "ТВОРЧЕСТВО · СКОРО",
+    fam3_badge: "ТВОРЧЕСКИЕ ВЕЧЕРА",
     fam3_name: "Караоке и Музыка",
     footer_credit:
       'Брендинг: <a href="https://bulachak.com/portfolio/i4i" target="_blank" rel="noopener noreferrer">I4I</a> · проект <a href="https://bulachak.com" target="_blank" rel="noopener noreferrer">Bulachak</a>',
