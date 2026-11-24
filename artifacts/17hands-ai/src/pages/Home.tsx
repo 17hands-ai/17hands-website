@@ -9,6 +9,9 @@ import { CompanyLogos } from "@/components/brand/CompanyLogos";
 import { BrowserFrame, PhoneFrame, Shot } from "@/components/visuals/Devices";
 import { ScamText } from "@/components/visuals/ScamText";
 import { LiveWork } from "@/components/visuals/LiveWork";
+import { FoundCard } from "@/components/visuals/FoundCard";
+import { HeroFlow } from "@/components/visuals/HeroFlow";
+import { TypeSwap } from "@/components/visuals/TypeSwap";
 import { HeroIntro } from "@/components/visuals/HeroIntro";
 import { BOOKING_URL, HOME_FAQ_COUNT, LINKEDIN_PROFILE_URL } from "@/lib/site";
 import { packageDef, priceLabel, type PackageId } from "@/lib/packages";
@@ -17,26 +20,15 @@ import { testimonials } from "@/lib/testimonials";
 import { fillPrices, useContent, useI18n } from "@/i18n";
 import { useScrollCraft } from "@/hooks/use-scrollcraft";
 
-/** Per offer, in the order of `home.offers.items`: where it leads and which wipe reveals its visual. */
-const offerMeta = [
-  { href: "/websites", reveal: "up" },
-  { href: "/bio-pages", reveal: "left" },
-  { href: "/workshops", reveal: "iris" },
-] as const;
+/** Per offer, in the order of `home.offers.items`: where it leads. */
+const offerMeta = ["/websites", "/bio-pages", "/ai-automation", "/workshops"] as const;
 
 /** Starting prices, in the order of `home.start.items`. */
 const startPrices: PackageId[] = ["bio-page", "starter-site", "team-workshop"];
 
 function OfferVisual({ index }: { index: number }) {
   const content = useContent();
-  if (index === 0) {
-    const w = workById("teaspoon");
-    return (
-      <BrowserFrame url="teaspoonedh.com" className="w-full max-w-[560px]">
-        <Shot src={w.desktop!} alt={`${content.home.work.items.teaspoon.name}: ${content.home.work.items.teaspoon.kind}`} />
-      </BrowserFrame>
-    );
-  }
+  if (index === 0) return <FoundCard />;
   if (index === 1) {
     const w = workById("anastasia");
     return (
@@ -45,6 +37,7 @@ function OfferVisual({ index }: { index: number }) {
       </PhoneFrame>
     );
   }
+  if (index === 2) return <HeroFlow className="w-full max-w-[460px]" />;
   return <ScamText size="lg" className="w-full max-w-[440px]" />;
 }
 
@@ -72,13 +65,12 @@ export default function Home() {
           <div data-sc-parallax="-0.35">
             <div className="hero-in">
               <p className="eyebrow mb-6">{t.hero.eyebrow}</p>
-              <h1 id="hero-title" className="display text-[2.7rem] leading-[1.02] sm:text-6xl lg:text-7xl text-[var(--brand-text)] mb-8">
-                {t.hero.lines.map((line, i) => (
-                  <span key={line} className={`hero-line block ${i === 1 ? "rose-text" : ""}`} style={{ animationDelay: `${0.1 + i * 0.14}s` }}>
-                    {line}
-                  </span>
-                ))}
+              <h1 id="hero-title" className="display text-[2.6rem] leading-[1.04] sm:text-6xl lg:text-[4.25rem] text-[var(--brand-text)] mb-5">
+                {t.hero.headline}
               </h1>
+              <p className="display text-[2rem] leading-tight sm:text-5xl rose-text mb-8">
+                <TypeSwap phrases={t.hero.rotate} />
+              </p>
               <p className="text-lg md:text-xl text-[var(--brand-text-2)] leading-relaxed max-w-xl mb-10">{t.hero.body}</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <BrandButton href={BOOKING_URL} placement="hero" size="lg">
@@ -122,10 +114,10 @@ export default function Home() {
       <section id="services" aria-labelledby="offers-title" data-sc-act="flow" className="relative border-t border-border scroll-mt-20">
         <h2 id="offers-title" className="sr-only">{t.offers.title}</h2>
         {t.offers.items.map((offer, i) => {
-          const meta = offerMeta[i];
+          const href = offerMeta[i];
           const flip = i % 2 === 1;
           return (
-            <article key={meta.href} className={`relative isolate py-20 md:py-28 ${i === 1 ? "bg-[var(--brand-primary)]" : ""}`}>
+            <article key={href} className={`relative isolate py-20 md:py-28 ${flip ? "bg-[var(--brand-primary)]" : ""}`}>
               <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <div className={flip ? "lg:order-2" : ""} data-sc-in>
                   <p className="font-mono text-xs uppercase tracking-[0.16em] rose-text mb-4">{offer.kicker}</p>
@@ -139,11 +131,11 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <Link href={meta.href} className="inline-flex items-center gap-2 font-semibold rose-text underline underline-offset-4 hover:text-[var(--brand-text)]">
+                  <Link href={href} className="inline-flex items-center gap-2 font-semibold rose-text underline underline-offset-4 hover:text-[var(--brand-text)]">
                     {offer.link} <ArrowRight size={16} aria-hidden="true" />
                   </Link>
                 </div>
-                <div className={`flex justify-center ${flip ? "lg:order-1 lg:justify-start" : "lg:justify-end"}`} data-sc-reveal={meta.reveal}>
+                <div className={`flex justify-center ${flip ? "lg:order-1 lg:justify-start" : "lg:justify-end"}`} data-sc-in>
                   <OfferVisual index={i} />
                 </div>
               </div>
@@ -259,7 +251,7 @@ export default function Home() {
       <section aria-labelledby="cta-title" className="relative isolate overflow-hidden py-24 md:py-32 bg-atmosphere">
         <BrandNumeral className="-right-8 -bottom-16" />
         <div className="container relative mx-auto px-4 sm:px-6 text-center max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--brand-text-2)] mb-6">{t.hero.lines.join("  ")}</p>
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--brand-text-2)] mb-6">{t.hero.rotate.join("  ")}</p>
           <div className="mx-auto mb-8 w-56"><CircuitTrace className="cta-trace w-full" /></div>
           <h2 id="cta-title" className="display text-4xl md:text-6xl text-[var(--brand-text)] mb-6">
             {t.cta.line}<span className="rose-text">{t.cta.accent}</span>

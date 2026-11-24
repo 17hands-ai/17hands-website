@@ -83,6 +83,7 @@ export function Header() {
     { name: t.websites, href: "/websites" },
     { name: t.bioPages, href: "/bio-pages" },
     { name: t.workshops, href: "/workshops" },
+    { name: t.aiAutomation, href: "/ai-automation" },
     { name: t.about, href: "/about" },
   ];
 

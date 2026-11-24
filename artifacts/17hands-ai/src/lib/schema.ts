@@ -74,6 +74,8 @@ export function structuredData(path: string, locale: Locale, content: Content, o
   if (path === "/") return [faqPage(content.faqs.slice(0, HOME_FAQ_COUNT), content, url)];
   if (path === "/websites")
     return [service(url, origin, "Custom websites and apps", "Custom branded websites and web and mobile apps for small businesses, with search engine optimization (SEO) and answer engine optimization (AEO) built in.", "Web design and development")];
+  if (path === "/ai-automation")
+    return [service(url, origin, "AI automation and security", "AI systems with a human touch for small businesses: workflow and lead follow-up automation, AI assistants, custom tools and customer data protection.", "Business process automation")];
   if (path === "/workshops")
     return [service(url, origin, "AI and cybersecurity workshops", "Hands-on workshops on using AI tools safely and spotting scams, for small business teams, families and community groups, in person or online.", "Cybersecurity training")];
   if (path === "/packages") return [offerCatalog(content, url, origin)];

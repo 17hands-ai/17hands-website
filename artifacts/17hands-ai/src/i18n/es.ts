@@ -7,10 +7,15 @@ export const es: Content = {
   languageName: "Español",
 
   meta: {
-    "/": {
-      title: "17hands.ai | Sitios web, páginas bio y talleres de IA segura",
+    "/ai-automation": {
+      title: "Automatización con IA y seguridad para pequeñas empresas | 17hands.ai",
       description:
-        "Sitios web y apps con tu marca que aparecen en Google y en respuestas de IA, páginas bio que se sienten como tú y talleres para usar la IA con seguridad, para equipos y familias.",
+        "Sistemas de IA con un toque humano: automatización de solicitudes y tareas, asistentes de IA, herramientas a medida y protección de datos de clientes para pequeñas empresas.",
+    },
+    "/": {
+      title: "17hands.ai | Automatización con IA, sitios web, páginas bio y talleres",
+      description:
+        "Sistemas de IA con un toque humano: sitios web y apps que aparecen en Google y en respuestas de IA, páginas bio, automatización de clientes potenciales con IA y talleres de IA y ciberseguridad.",
     },
     "/packages": {
       title: "Paquetes y precios iniciales | 17hands.ai",
@@ -41,6 +46,7 @@ export const es: Content = {
     digitalDefenders: "Digital Defenders",
     websites: "Sitios web",
     workshops: "Talleres",
+    aiAutomation: "Automatización con IA",
     packages: "Paquetes",
     bioPages: "Páginas bio",
     about: "Sobre mí",
@@ -71,9 +77,10 @@ export const es: Content = {
 
   home: {
     hero: {
-      eyebrow: "Sitios web · Páginas bio · Talleres de IA segura",
-      lines: ["Que te encuentren.", "Que te recuerden.", "Mantente seguro."],
-      body: "Creo sitios web y apps con tu marca que aparecen en Google y en las respuestas de IA, páginas de link-in-bio que se sienten como tú, y talleres que enseñan a equipos y familias a usar la IA con seguridad.",
+      eyebrow: "Sitios web · Páginas bio · Automatización con IA · Talleres",
+      headline: "Sistemas de IA con un toque humano.",
+      rotate: ["Que te encuentren.", "Que te recuerden.", "Ningún cliente potencial perdido.", "Protege los datos de tus clientes."],
+      body: "Creo sitios web y apps con tu marca que aparecen en Google y en las respuestas de IA, páginas bio que se sienten como tú, automatización con IA que da seguimiento a cada cliente potencial, y talleres que protegen a tu equipo y los datos de tus clientes.",
       work: "Ver el trabajo",
       visualLabel: "Ejemplos del trabajo de 17hands.ai: un sitio web, una página bio y un mensaje fraudulento de un taller.",
       scamFrom: "Mensaje de USPS",
@@ -81,6 +88,7 @@ export const es: Content = {
       scamFlag: "Detecta la estafa",
     },
     offers: {
+      found: { search: "Cómo lo muestra Google", ai: "Lo que leen los asistentes de IA" },
       title: "Qué hace 17hands.ai",
       items: [
         {
@@ -98,8 +106,15 @@ export const es: Content = {
           link: "Páginas bio",
         },
         {
-          kicker: "Talleres de IA y seguridad",
-          title: "Mantente seguro.",
+          kicker: "Automatización con IA",
+          title: "Ningún cliente potencial perdido.",
+          body: "Sistemas de IA con un toque humano: cada solicitud respondida, cada seguimiento enviado y una persona revisando lo importante. Con las herramientas que ya usas.",
+          points: ["Solicitudes del sitio, correos y llamadas perdidas respondidas y con seguimiento", "Asistentes de IA que responden solo con contenido que apruebas", "Automatizaciones y herramientas que conectan tus apps", "Datos de clientes protegidos, con acceso por función"],
+          link: "Automatización con IA y seguridad",
+        },
+        {
+          kicker: "Talleres de IA y ciberseguridad",
+          title: "Protege los datos de tus clientes.",
           body: "Sesiones prácticas para usar la IA con buenos hábitos de seguridad, para equipos de pequeñas empresas y para familias.",
           points: ["Usar IA en el trabajo sin filtrar datos de clientes", "Detectar mensajes, llamadas y correos falsos", "Contraseñas, códigos de acceso y niños en internet", "En persona en la zona o en vivo en línea"],
           link: "Talleres",
@@ -190,6 +205,113 @@ export const es: Content = {
       waiting: "Cada mes que esperas cuesta cerca de {monthly} de ese tiempo.",
       cta: "Encontrar mi primera automatización",
       disclaimer: "Aritmética simple con tus propios datos, sobre {weeks} semanas laborales. No es una promesa: en cada proyecto medimos el antes y el después reales. Nada de lo que escribes aquí sale de tu navegador.",
+    },
+  },
+
+  /** AI automation and security page (/ai-automation): the original home page copy. */
+  ai: {
+    servicesTitle: "Servicios",
+    hero: {
+      eyebrow: "Seguridad e IA práctica para pequeñas empresas",
+      line1: "Tu negocio, ",
+      accent1: "seguro.",
+      line2: "Tu trabajo diario, ",
+      accent2: "más fácil.",
+      body: "Ayudo a pequeñas empresas a proteger la información que sus clientes les confían, capacitar a sus equipos y ahorrar tiempo con herramientas prácticas e IA. En lenguaje claro, partiendo de cómo funciona tu negocio en la realidad.",
+      packages: "Ver paquetes y precios",
+      individuals: "¿Buscas ayuda solo para ti o tu familia?",
+      individualsLink: "Sesiones individuales",
+    },
+    flow: {
+      aria: "Cómo funciona: consultas, correos y llamadas perdidas entran, se ordenan y una persona los revisa, y salen como citas agendadas, respuestas y seguimientos. Los datos de clientes quedan protegidos, con acceso según el rol.",
+      comesIn: "ENTRA",
+      getsDone: "RESUELTO",
+      inputs: ["Consulta web", "Pregunta por email", "Llamada perdida"],
+      outputs: ["Cita agendada", "Respondido", "Seguimiento"],
+      humanCheck: "REVISIÓN HUMANA",
+      records: "Datos de clientes",
+      recordsNote: "Con respaldo. Acceso según el rol.",
+      access: [
+        { who: "Dueño", what: "acceso total" },
+        { who: "Equipo", what: "lo que el trabajo requiere" },
+        { who: "Exempleados", what: "sin acceso" },
+      ],
+    },
+    familiar: {
+      eyebrow: "¿Te suena?",
+      title: "La mayoría de las pequeñas empresas comparten dos preocupaciones.",
+      protectTitle: "Mantener la información segura",
+      protect: [
+        "Guardas nombres, correos, datos de pago o registros de clientes, y no sabes bien quién puede verlos.",
+        "Alguien que dejó la empresa quizá todavía puede entrar a una cuenta.",
+        "Tu equipo usa herramientas de IA y nadie ha acordado qué se puede pegar en ellas.",
+        "Un correo o mensaje falso convincente está a un clic de tu bandeja de entrada.",
+      ],
+      simplifyTitle: "Sacar el trabajo adelante",
+      simplify: [
+        "Respondes las mismas preguntas o explicas los mismos pasos una y otra vez.",
+        "La información se copia a mano de una herramienta a otra.",
+        "Consultas y seguimientos se pierden porque todo depende de la memoria.",
+        "Tu sitio web se ve bien pero trae pocas consultas.",
+      ],
+      closing: "No necesitas tener la respuesta antes de que hablemos. Empezamos por el problema, tus metas y lo que ya funciona.",
+    },
+    pillars: [
+      {
+        eyebrow: "Proteger",
+        title: "Cuida tu negocio y la información de tus clientes",
+        intro: "Tus clientes te confían sus datos. Te ayudo a entender dónde vive esa información, cerrar las brechas evidentes y darle a tu equipo hábitos sencillos que perduren.",
+        services: [
+          { name: "Revisión de datos de clientes", body: "Recorremos dónde se guarda la información de clientes y del negocio, quién puede acceder y qué ajustes importan. Recibes una lista breve y priorizada de mejoras en lenguaje claro, y ayuda para aplicarlas." },
+          { name: "Talleres de seguridad para tu equipo", body: "Una sesión práctica para el personal: detectar correos, mensajes y llamadas fraudulentas, usar un gestor de contraseñas y códigos de acceso, y qué es seguro compartir con herramientas de IA." },
+          { name: "Cuentas y accesos", body: "Una rutina simple para dar a las personas nuevas el acceso que necesitan y retirarlo cuando alguien se va." },
+          { name: "Guía de uso seguro de IA", body: "Reglas claras y breves que tu equipo puede seguir al usar ChatGPT y herramientas similares con información del negocio." },
+        ],
+        note: "Es un trabajo práctico de revisión y mejora. No es una auditoría formal, una certificación, una prueba de penetración ni asesoría legal.",
+        link: "Ver paquetes de protección y precios",
+      },
+      {
+        eyebrow: "Simplificar y crecer",
+        title: "Menos tiempo en tareas repetitivas, y que tus clientes te encuentren",
+        intro: "Una vez que sabemos cómo funciona tu negocio, elegimos una mejora útil, la configuramos bien y nos aseguramos de que tu equipo se sienta cómodo usándola.",
+        services: [
+          { name: "Automatización y herramientas a medida", body: "Automatizamos tareas administrativas repetitivas, conectamos herramientas que no se hablan entre sí o creamos una herramienta simple a medida, como una guía de incorporación para personal nuevo, cuando el software estándar no encaja." },
+          { name: "Sitios web que invitan a actuar", body: "Un sitio nuevo o la mejora del que ya tienes: un mensaje más claro, buen funcionamiento en el teléfono y un siguiente paso fácil para quien te visita." },
+          { name: "Aparecer en Google y en respuestas de IA", body: "Que los buscadores y asistentes como ChatGPT tengan información clara y correcta sobre lo que haces y a quién ayudas." },
+          { name: "Capacitación en herramientas nuevas", body: "Sesiones cortas y prácticas para que tu equipo de verdad use lo que configuramos, con guías sencillas por escrito para consultar después." },
+        ],
+        note: "",
+        link: "Ver paquetes de automatización y sitios web",
+      },
+    ],
+    delivery: {
+      eyebrow: "Resultados, no humo",
+      title: "Mucha gente habla de IA. ",
+      accent: "Yo la construyo y me aseguro de que funcione.",
+      body: "Pasé más de 12 años lanzando software del que dependen millones de personas, en salud, donde un error con los datos de alguien tiene consecuencias. Recibes esa misma disciplina, a la medida de una pequeña empresa.",
+      points: [
+        { name: "Algo funcionando, no una presentación", body: "Cada proyecto termina con un resultado en marcha dentro de tu negocio y un equipo que sabe usarlo." },
+        { name: "Alcance y precio por escrito, primero", body: "Sabes qué vas a recibir y cuánto cuesta antes de que empiece el trabajo." },
+        { name: "Medido, y dicho con franqueza", body: "Acordamos qué contar antes de empezar. Si no ayudó, te lo digo yo primero." },
+        { name: "Ninguna herramienta porque sí", body: "Si un cambio de configuración lo resuelve, eso es lo que voy a recomendar, aunque el proyecto sea más pequeño." },
+      ],
+      cta: "Hablar con quien lo construye",
+    },
+    how: {
+      eyebrow: "Cómo funciona",
+      title: "Una mejora útil a la vez.",
+      body: "A veces la mejor respuesta es un cambio de configuración o un proceso más simple, no un software nuevo ni IA. Hagamos lo que hagamos, acordamos de antemano cómo sabremos que ayudó.",
+      steps: [
+        { name: "Entender", body: "Hablamos de cómo funciona tu negocio, las herramientas que usas, a dónde se va el tiempo y qué información manejas." },
+        { name: "Priorizar", body: "Elegimos la mejora que más vale la pena hacer primero, considerando valor, esfuerzo, costo y riesgo." },
+        { name: "Implementar", body: "Configuro las herramientas adecuadas o construyo lo que falta, y luego ayudo a tu equipo a usarlo con confianza." },
+        { name: "Medir", body: "Comparamos con el punto de partida y decidimos qué merece atención después." },
+      ],
+    },
+    cta: {
+      line: "Encontremos tu mejor ",
+      accent: "primer paso.",
+      body: "Cuéntame cómo funciona tu negocio y qué te preocupa o te frena. Hablaremos de un punto de partida práctico.",
     },
   },
 

@@ -1,17 +1,18 @@
 # Home page redesign (branch `simplify-home`)
 
-The home page now sells three things, in this order, and moves everything else to its own page.
+The home page leads with "AI systems with a human touch." and a typed line that cycles through four promises (TypeSwap.tsx). Each promise has one row and its own page.
 
 | Offer | Promise | Page |
 |---|---|---|
 | Custom websites and apps, SEO and AEO built in | Be found. | `/websites` (new) |
 | Link-in-bio pages | Be remembered. | `/bio-pages` |
-| AI and security workshops, teams and families | Stay safe. | `/workshops` (new), with `/digital-defenders` and `/for-you` linked from it |
+| AI automation and lead follow-up | Automate your leads. | `/ai-automation`: the previous home page, kept whole (diagram, pillars, delivery, ROI, circuit rail), translated |
+| AI and cybersecurity workshops, teams and families | Protect customer data. | `/workshops` (new), with `/digital-defenders` and `/for-you` linked from it |
 
 ## Home page order
 
-1. Hero: three promises, one sentence, Book a call. Visual is three planes of real work (website, bio page, scam text) moving at different scroll rates.
-2. Three offers, one row each, alternating sides, no prices.
+1. Hero: "AI systems with a human touch.", a typed line swapping the four promises, one sentence, Book a call. Visual is three planes of real work (website, bio page, scam text) moving at different scroll rates.
+2. Four offers, one row each, alternating sides, no prices. Websites shows this site's own Google listing and llms.txt; AI automation shows the original flow diagram.
 3. Live work: one phone that slides from client to client as you scroll (pinned scroll-craft act, `LiveWork.tsx`, CSS in `index.css` under "Live work").
 4. Testimonials: hidden until `src/lib/testimonials.ts` has entries.
 5. Ways to start: the three starting prices, after the work.
@@ -19,7 +20,7 @@ The home page now sells three things, in this order, and moves everything else t
 7. Four FAQs (the first four of `faqs`; `HOME_FAQ_COUNT` in `site.ts` keeps the page and the FAQPage schema in step).
 8. Close: one call.
 
-Removed from the home page: the automation diagram, circuit rail, "Sound familiar", the two service pillars, "Delivery, not hype", How it works, the individuals banner. The stats band now lives on `/workshops`, the ROI calculator on `/websites`.
+Moved off the home page to `/ai-automation`: "Sound familiar", the two service pillars, "Delivery, not hype", How it works and the circuit rail. Its copy lives under `ai` in the locale files. The stats band now lives on `/workshops`, the ROI calculator on `/websites`.
 
 ## Adding things later
 

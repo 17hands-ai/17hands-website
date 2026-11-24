@@ -14,7 +14,7 @@ export const SITE_ORIGIN = "https://17hands.ai";
 
 /** Opening paragraph of /llms.txt. Keep in step with the homepage hero and About copy. */
 export const SITE_SUMMARY =
-  `17hands.ai builds custom branded websites and apps, link-in-bio pages, and runs AI and security workshops. It is run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. Websites and apps (/websites): custom design with no templates, built for search (SEO) and for AI assistants such as ChatGPT (AEO), fast on phones, plus custom web and mobile apps, request forms and automation when a site is not enough. Bio pages (/bio-pages): a branded alternative to Linktree on the client's own domain, with save to contacts, one-tap booking, a lead form and analytics, at a founding rate of ${BIO_PAGE_PRICE} flat. Workshops (/workshops): hands-on sessions that teach small business teams to use AI tools without leaking customer data and to spot scams, and Digital Defenders sessions for families, schools and community groups (/digital-defenders); individuals can book 1-on-1 tech safety sessions (/for-you). Live work includes link-in-bio pages for a realtor and a studio owner, a catering request form for Teaspoon El Dorado Hills and the website for The Stuniverse children's books. Work is done remotely across the US; workshops run in person locally or live online. Starting prices for every package are published at /packages, and every project gets a written scope and price first. The first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.`;
+  `17hands.ai builds AI systems with a human touch: custom branded websites and apps, link-in-bio pages and AI automation, and runs AI and cybersecurity workshops. It is run by founder Anastasia Blodgett, a software engineer and engineering leader with 12+ years of experience, including six years on the UnitedHealthcare mobile app where she was a security advocate. Websites and apps (/websites): custom design with no templates, built for search (SEO) and for AI assistants such as ChatGPT (AEO), fast on phones, plus custom web and mobile apps, request forms and automation when a site is not enough. Bio pages (/bio-pages): a branded alternative to Linktree on the client's own domain, with save to contacts, one-tap booking, a lead form and analytics, at a founding rate of ${BIO_PAGE_PRICE} flat. AI automation (/ai-automation): AI systems with a human touch, meaning workflow and lead follow-up automation, AI assistants that answer from approved content, custom tools, and customer data protection, always with a person in the loop. Workshops (/workshops): hands-on sessions that teach small business teams to use AI tools without leaking customer data and to spot scams, and Digital Defenders sessions for families, schools and community groups (/digital-defenders); individuals can book 1-on-1 tech safety sessions (/for-you). Live work includes link-in-bio pages for a realtor and a studio owner, a catering request form for Teaspoon El Dorado Hills and the website for The Stuniverse children's books. Work is done remotely across the US; workshops run in person locally or live online. Starting prices for every package are published at /packages, and every project gets a written scope and price first. The first step is a call, booked at https://cal.com/17hands, or email info@17hands.ai.`;
 
 export interface PageMeta {
   path: string;
@@ -37,7 +37,7 @@ export interface PageMeta {
 }
 
 const DEFAULT_DESCRIPTION =
-  "Custom branded websites and apps that show up on Google and in AI answers, link-in-bio pages that look like you, and AI and security workshops for small businesses and families.";
+  "AI systems with a human touch: custom websites and apps that show up on Google and in AI answers, link-in-bio pages, AI lead automation, and AI and cybersecurity workshops for small businesses and families.";
 
 export const pages: PageMeta[] = [
   {
@@ -55,9 +55,9 @@ export const pages: PageMeta[] = [
   },
   {
     path: "/",
-    title: "17hands.ai | Custom Websites, Bio Pages & AI Safety Workshops",
+    title: "17hands.ai | AI Automation, Websites, Bio Pages & Workshops",
     description: DEFAULT_DESCRIPTION,
-    answers: "What 17hands.ai does: custom websites and apps, link-in-bio pages and AI and security workshops, with live examples, starting prices and who Anastasia is.",
+    answers: "What 17hands.ai does: custom websites and apps, link-in-bio pages, AI automation and AI and cybersecurity workshops, with live examples, starting prices and who Anastasia is.",
   },
   {
     path: "/websites",
@@ -70,6 +70,12 @@ export const pages: PageMeta[] = [
     title: "AI & Cybersecurity Workshops for Teams and Families | 17hands.ai",
     description: "Hands-on workshops on using AI safely and spotting scams, for small business teams, families and community groups. In person locally or live online.",
     answers: "What the AI and security workshops cover for teams and for families, the format, and starting prices for team workshops, AI kickstart, Digital Defenders and 1-on-1 sessions.",
+  },
+  {
+    path: "/ai-automation",
+    title: "AI Automation & Security for Small Businesses | 17hands.ai",
+    description: "AI systems with a human touch: automate repetitive admin and lead follow-up, set up AI assistants and custom tools, and protect customer data. Plain English, one useful step at a time.",
+    answers: "AI automation and security services: customer data check-ups, staff security workshops, access routines, safe AI use rules, workflow and lead automation, AI assistants, custom tools, how projects run and an ROI estimate.",
   },
   {
     path: "/about",

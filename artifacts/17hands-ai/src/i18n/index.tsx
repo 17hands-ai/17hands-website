@@ -7,7 +7,7 @@ export type Locale = (typeof LOCALES)[number];
 export type { Content };
 
 /** Routes with translated body copy. Every other route renders English copy inside translated navigation. */
-export const TRANSLATED_PATHS: readonly string[] = ["/", "/packages", "/faq", "/contact"];
+export const TRANSLATED_PATHS: readonly string[] = ["/", "/ai-automation", "/packages", "/faq", "/contact"];
 
 /** English lives at the root; other locales under /ru and /es. */
 export const localeOf = (pathname: string): Locale => {

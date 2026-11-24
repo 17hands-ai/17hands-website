@@ -37,6 +37,7 @@ export function Footer() {
               <li><Link href="/websites" className={linkClass}>{content.nav.websites}</Link></li>
               <li><Link href="/bio-pages" className={linkClass}>{content.nav.bioPages}</Link></li>
               <li><Link href="/workshops" className={linkClass}>{content.nav.workshops}</Link></li>
+              <li><Link href="/ai-automation" className={linkClass}>{content.nav.aiAutomation}</Link></li>
               <li><Link href="/digital-defenders" className={linkClass}>{content.nav.digitalDefenders}</Link></li>
               <li><Link href="/for-you" className={linkClass}>{t.forIndividuals}</Link></li>
               <li><Link href="/packages" className={linkClass}>{t.packages}</Link></li>

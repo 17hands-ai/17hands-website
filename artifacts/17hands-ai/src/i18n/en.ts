@@ -32,6 +32,7 @@ export const en = {
     digitalDefenders: "Digital Defenders",
     websites: "Websites",
     workshops: "Workshops",
+    aiAutomation: "AI automation",
     packages: "Packages",
     bioPages: "Bio pages",
     about: "About",
@@ -62,9 +63,10 @@ export const en = {
 
   home: {
     hero: {
-      eyebrow: "Websites · Bio pages · AI safety workshops",
-      lines: ["Be found.", "Be remembered.", "Stay safe."],
-      body: "I build branded websites and apps that show up on Google and in AI answers, link-in-bio pages that feel like you, and workshops that teach teams and families to use AI safely.",
+      eyebrow: "Websites · Bio pages · AI automation · Workshops",
+      headline: "AI systems with a human touch.",
+      rotate: ["Be found.", "Be remembered.", "Automate your leads.", "Protect customer data."],
+      body: "I build branded websites and apps that show up on Google and in AI answers, link-in-bio pages that feel like you, AI automation that follows up on every lead, and workshops that keep your team and your customers' data safe.",
       work: "See the work",
       visualLabel: "Examples of 17hands.ai work: a website, a link-in-bio page and a scam text from a workshop.",
       scamFrom: "Text from USPS",
@@ -72,6 +74,7 @@ export const en = {
       scamFlag: "Spot the scam",
     },
     offers: {
+      found: { search: "How Google shows it", ai: "What AI assistants read" },
       title: "What 17hands.ai does",
       items: [
         {
@@ -89,8 +92,15 @@ export const en = {
           link: "Bio pages",
         },
         {
-          kicker: "AI and security workshops",
-          title: "Stay safe.",
+          kicker: "AI automation",
+          title: "Automate your leads.",
+          body: "AI systems with a human touch: every inquiry answered, every follow-up sent, and a person checking anything that matters. Built on the tools you already use.",
+          points: ["Website inquiries, emails and missed calls answered and followed up", "AI assistants that answer only from content you approve", "Automations and custom tools that connect your apps", "Customer data protected, with access set by role"],
+          link: "AI automation and security",
+        },
+        {
+          kicker: "AI and cybersecurity workshops",
+          title: "Protect customer data.",
           body: "Hands-on sessions that teach people to use AI with good security habits, for small business teams and for families.",
           points: ["Use AI at work without leaking customer data", "Spot scam texts, calls and fake emails", "Passwords, sign-in codes and kids online", "In person locally, or live online"],
           link: "Workshops",
@@ -181,6 +191,113 @@ export const en = {
       waiting: "Every month you wait costs about {monthly} of that time.",
       cta: "Find my first automation",
       disclaimer: "Simple arithmetic on your own inputs, based on {weeks} working weeks. Not a promise: we measure the real before and after on every project. Nothing you enter here leaves your browser.",
+    },
+  },
+
+  /** AI automation and security page (/ai-automation): the original home page copy. */
+  ai: {
+    servicesTitle: "Services",
+    hero: {
+      eyebrow: "Security and practical AI for small businesses",
+      line1: "Keep your business ",
+      accent1: "safe.",
+      line2: "Make everyday work ",
+      accent2: "easier.",
+      body: "I help small businesses protect the information their customers trust them with, train their teams and save time with practical tools and AI. In plain English, starting with how your business actually runs.",
+      packages: "See packages and prices",
+      individuals: "Looking for help just for yourself or your family?",
+      individualsLink: "1-on-1 sessions",
+    },
+    flow: {
+      aria: "How it works: inquiries, emails and missed calls come in, are sorted and checked by a person, and leave as booked calls, replies and follow-ups. Customer records stay protected, with access set by role.",
+      comesIn: "COMES IN",
+      getsDone: "GETS DONE",
+      inputs: ["Website inquiry", "Email question", "Missed call"],
+      outputs: ["Call booked", "Reply sent", "Follow-up set"],
+      humanCheck: "HUMAN CHECK",
+      records: "Customer records",
+      recordsNote: "Backed up. Access set by role.",
+      access: [
+        { who: "Owner", what: "full access" },
+        { who: "Staff", what: "what the job needs" },
+        { who: "Former staff", what: "removed" },
+      ],
+    },
+    familiar: {
+      eyebrow: "Sound familiar?",
+      title: "Most small businesses have the same two worries.",
+      protectTitle: "Keeping information safe",
+      protect: [
+        "You keep customer names, emails, payment details or records, and you're not sure who can see them.",
+        "Someone who left the business might still be able to sign in to an account.",
+        "Your team uses AI tools, and nobody has agreed what's okay to paste into them.",
+        "A convincing fake email or text is one click away from your inbox.",
+      ],
+      simplifyTitle: "Getting the work done",
+      simplify: [
+        "You answer the same questions, or explain the same steps, again and again.",
+        "Information gets copied by hand from one tool to another.",
+        "Inquiries and follow-ups slip through because it all depends on memory.",
+        "Your website looks fine but doesn't bring in many inquiries.",
+      ],
+      closing: "You don't need to have the answer figured out before we talk. We start with the problem, your goals and what's already working.",
+    },
+    pillars: [
+      {
+        eyebrow: "Protect",
+        title: "Look after your business and your customers' information",
+        intro: "Customers trust you with their details. I help you understand where that information lives, close the obvious gaps and give your team simple habits that stick.",
+        services: [
+          { name: "Customer data check-up", body: "We walk through where customer and business information is kept, who can reach it and which settings matter. You get a short, prioritized list of fixes in plain English, and help making them." },
+          { name: "Security workshops for your team", body: "A hands-on session for staff: spotting scam emails, texts and calls, using a password manager and sign-in codes, and what's safe to share with AI tools." },
+          { name: "Accounts and access", body: "A simple routine for giving new people the access they need, and removing it when someone leaves." },
+          { name: "Safe AI use guidelines", body: "Clear, short rules your team can follow when using ChatGPT and similar tools with business information." },
+        ],
+        note: "This is practical review and improvement work. It is not a formal audit, certification, penetration test or legal advice.",
+        link: "See Protect packages and prices",
+      },
+      {
+        eyebrow: "Simplify & grow",
+        title: "Spend less time on repetitive work, and help customers find you",
+        intro: "Once we know how your business runs, we pick one useful improvement, set it up properly and make sure your team is comfortable using it.",
+        services: [
+          { name: "Automation and custom tools", body: "Automate repetitive admin, connect tools that don't talk to each other, or build a simple custom tool, such as an onboarding guide for new staff, when off-the-shelf software doesn't fit." },
+          { name: "Websites that help customers act", body: "Build a new site or improve the one you have: a clearer message, a site that works well on phones and an easy next step for visitors." },
+          { name: "Being found on Google and in AI answers", body: "Make sure search engines and AI assistants like ChatGPT have clear, accurate information about what you do and who you help." },
+          { name: "Training on new tools", body: "Short, practical sessions so your team actually uses what we set up, plus simple written guides to come back to." },
+        ],
+        note: "",
+        link: "See automation and website packages",
+      },
+    ],
+    delivery: {
+      eyebrow: "Delivery, not hype",
+      title: "Plenty of people talk about AI. ",
+      accent: "I build the thing and make sure it works.",
+      body: "I spent more than 12 years shipping software that millions of people rely on, in healthcare, where a mistake with someone's data has consequences. You get that same discipline, sized for a small business.",
+      points: [
+        { name: "Something running, not a slide deck", body: "Every project ends with a working result inside your business and a team that knows how to use it." },
+        { name: "Scope and price in writing first", body: "You know what you are getting and what it costs before any work begins." },
+        { name: "Measured, then told straight", body: "We agree what to count before we start. If it didn't help, you hear it from me first." },
+        { name: "No tool for its own sake", body: "If a settings change solves it, that is what I'll recommend, even when it means a smaller project." },
+      ],
+      cta: "Talk to the person who builds it",
+    },
+    how: {
+      eyebrow: "How it works",
+      title: "One useful improvement at a time.",
+      body: "Sometimes the best answer is a settings change or a simpler process, not new software or AI. Whatever we do, we agree up front how we'll know it helped.",
+      steps: [
+        { name: "Understand", body: "We talk about how your business works, the tools you use, where time goes and what information you handle." },
+        { name: "Prioritize", body: "We pick the improvement most worth doing first, weighing value, effort, cost and risk." },
+        { name: "Implement", body: "I set up the right tools or build what's missing, then help your team use it with confidence." },
+        { name: "Measure", body: "We compare against where we started and decide what deserves attention next." },
+      ],
+    },
+    cta: {
+      line: "Let's find your best ",
+      accent: "first step.",
+      body: "Tell me how your business works and what worries you or slows you down. We'll talk about a practical place to start.",
     },
   },
 
