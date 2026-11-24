@@ -138,7 +138,7 @@ export default function Home() {
                     {offer.link} <ArrowRight size={16} aria-hidden="true" />
                   </Link>
                 </div>
-                <div className={`flex justify-center ${flip ? "lg:order-1 lg:justify-start" : "lg:justify-end"}`} data-sc-in>
+                <div className={`flex justify-center ${flip ? "lg:order-1" : ""}`} data-sc-in>
                   <OfferVisual index={i} />
                 </div>
               </div>
