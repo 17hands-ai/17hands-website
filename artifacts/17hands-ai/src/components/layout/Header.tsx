@@ -80,12 +80,12 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: t.digitalDefenders, href: "/digital-defenders" },
-    { name: t.services, href: "/#services" },
-    { name: t.packages, href: "/packages" },
+    { name: t.websites, href: "/websites" },
     { name: t.bioPages, href: "/bio-pages" },
-    { name: t.about, href: "/#about" },
-    { name: t.faq, href: "/faq" },
+    { name: t.workshops, href: "/workshops" },
+    { name: t.aiAutomation, href: "/ai-automation" },
+    { name: t.packages, href: "/packages" },
+    { name: t.about, href: "/about" },
   ];
 
   useEffect(() => {
@@ -121,14 +121,14 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label={t.label} className="hidden xl:flex items-center gap-6">
+        <nav aria-label={t.label} className="hidden xl:flex items-center gap-7">
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
               aria-current={location === link.href ? "page" : undefined}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-[var(--brand-rose)] py-2",
+                "whitespace-nowrap text-sm font-medium transition-colors hover:text-[var(--brand-rose)] py-2",
                 location === link.href ? "text-[var(--brand-rose)]" : "text-[var(--brand-text-2)]",
               )}
             >

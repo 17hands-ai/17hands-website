@@ -12,6 +12,10 @@ import { en } from "@/i18n/en";
 
 // Pages
 import Home from "@/pages/Home";
+import Websites from "@/pages/Websites";
+import Workshops from "@/pages/Workshops";
+import About from "@/pages/About";
+import AiAutomation from "@/pages/AiAutomation";
 import DigitalDefenders from "@/pages/DigitalDefenders";
 import ForYou from "@/pages/ForYou";
 import Packages from "@/pages/Packages";
@@ -63,6 +67,10 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/websites" component={Websites} />
+      <Route path="/workshops" component={Workshops} />
+      <Route path="/about" component={About} />
+      <Route path="/ai-automation" component={AiAutomation} />
       <Route path="/digital-defenders" component={DigitalDefenders} />
       <Route path="/for-you" component={ForYou} />
       <Route path="/packages" component={Packages} />

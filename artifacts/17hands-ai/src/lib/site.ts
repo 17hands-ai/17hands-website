@@ -10,3 +10,6 @@ export const UMAMI_WEBSITE_ID = "";
 export const CONTACT_EMAIL = "info@17hands.ai";
 export const LINKEDIN_PROFILE_URL = "https://www.linkedin.com/in/anastasia-blodgett";
 export const LINKEDIN_COMPANY_URL = "https://www.linkedin.com/company/143977946/";
+export const INSTAGRAM_URL = "https://www.instagram.com/17hands.ai/";
+/** How many questions the home page shows; schema.ts marks up the same slice as FAQPage. */
+export const HOME_FAQ_COUNT = 4;

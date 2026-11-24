@@ -214,7 +214,7 @@
 
 
 /* ---- Hero intro (see index.html and HeroIntro.tsx): the logo film plays in the hero's
-   visual slot, then cross-fades to the diagram. Nothing outside that slot is hidden. ---- */
+   visual slot, then cross-fades to the work collage. Nothing outside that slot is hidden. ---- */
 .hero-intro { display: none; }
 html.intro-on .hero-intro {
   display: block; position: absolute; inset: 0; margin: auto; height: 100%; aspect-ratio: 1; max-width: 100%;
@@ -224,9 +224,9 @@ html.intro-on .hero-intro {
   transition: opacity 0.7s ease;
 }
 .hero-intro video { display: block; width: 100%; height: 100%; object-fit: cover; }
-html.intro-on .hero-visual > svg { opacity: 0; transition: opacity 0.7s ease 0.2s; }
+html.intro-on .hero-visual > .hero-collage { opacity: 0; transition: opacity 0.7s ease 0.2s; }
 html.intro-on.intro-reveal .hero-intro { opacity: 0; }
-html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
+html.intro-on.intro-reveal .hero-visual > .hero-collage { opacity: 1; }
 
 /* ---- Visuals: diagram and meter motion. Transform, opacity and stroke offset only. ---- */
 .flow-pulse { stroke-dasharray: 14 86; stroke-dashoffset: 14; opacity: 0; }
@@ -343,6 +343,7 @@ html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
 .sc-live [data-sc-in].sc-in,
 .sc-live [data-sc-stagger] > .sc-in { opacity: 1; transform: none; }
 [data-sc-parallax] { will-change: transform; }
+.sc-stage { position: sticky; top: 0; overflow: hidden; }
 [data-sc-reveal] { will-change: clip-path; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -372,3 +373,101 @@ html.intro-on.intro-reveal .hero-visual > svg { opacity: 1; }
 }
 @keyframes rail-arrive { from { stroke-dashoffset: 260; } to { stroke-dashoffset: 0; } }
 @keyframes rail-node-in { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: none; } }
+
+/* ---- Closing call to action ---- */
+.cta-book { box-shadow: 0 10px 30px -8px rgba(224, 167, 134, 0.45); }
+
+/* ---- Device frames (Devices.tsx) ---- */
+/* Phone: W wide, bezel b = 3.5% of W on every side, screen exactly 390:844.
+   H = 0.93W * 844/390 + 0.07W = 2.0826W, so the frame is 390:812 and the top/bottom
+   inset is 0.035 / 2.0826 = 1.68% of H. Corners use "x% / y%" pairs so they stay
+   circular at any size: outer 12% of W, screen 9% of the screen's width. */
+.device-phone {
+  aspect-ratio: 390 / 812;
+  border-radius: 12% / 5.76%;
+  background: linear-gradient(150deg, #2b2236, #0d0a12 55%, #221a2c);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 60px -20px rgba(0, 0, 0, 0.7), 0 12px 24px -12px rgba(121, 40, 202, 0.35);
+}
+.device-screen {
+  position: absolute; inset: 1.68% 3.5%;
+  overflow: hidden; background: #000;
+  border-radius: 9% / 4.16%;
+}
+.device-island {
+  position: absolute; left: 50%; top: 2.9%; width: 24%; height: 2.3%;
+  transform: translateX(-50%); border-radius: 999px; background: #000;
+}
+.device-browser {
+  background: #1a1422;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+}
+:root[data-theme="light"] .device-browser { background: #2a2233; }
+
+/* ---- Hero: three planes of real work, slightly turned toward each other ---- */
+.hero-tilt-back { transform: perspective(1400px) rotateY(-9deg) rotateX(3deg); transform-origin: right center; }
+.hero-tilt-front { transform: perspective(1200px) rotateY(8deg) rotate(-2deg); transform-origin: left bottom; }
+.hero-scam { box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.75); }
+/* ---- Typed phrase swap in the hero (TypeSwap.tsx) ---- */
+.type-caret {
+  display: inline-block; width: 0.06em; height: 0.9em; margin-left: 0.06em; vertical-align: -0.08em;
+  background: currentColor; animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .type-caret { display: none; } }
+
+/* ---- "Be found" card (FoundCard.tsx) ---- */
+.found-card {
+  background: color-mix(in oklab, var(--brand-surface) 94%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-white) 12%, transparent);
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+}
+.found-code { background: color-mix(in oklab, var(--brand-primary) 96%, transparent); }
+:root[data-theme="light"] .found-card p.text-\[\#9db8ff\] { color: #1a4fd6; }
+
+/* ---- Scam text sample (ScamText.tsx) ---- */
+.scam-card {
+  background: color-mix(in oklab, var(--brand-surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in oklab, var(--color-white) 12%, transparent);
+}
+.scam-link { color: var(--brand-error); text-decoration: underline wavy; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.scam-flag { color: var(--brand-error); background: color-mix(in oklab, var(--brand-error) 14%, transparent); }
+
+/* ---- Live work (LiveWork.tsx): one phone, every client ----
+   Layer i slides up over layer i-1, like the next app coming forward, while the act's progress s = p * last passes i - 0.5.
+   Each swap uses the middle 30% of its interval, so every page holds still for a moment. */
+.work-phone { height: min(calc(100vh - 7rem), 800px); width: auto; }
+.work-layer:not(:first-child) { transform: translateY(100%); }
+.sc-live .work-stage { height: 100vh; height: 100svh; padding-top: 4.5rem; }
+.sc-live .work-act { --s: calc(var(--sc-p, 0) * var(--last)); }
+.sc-live .work-layer:not(:first-child) {
+  --show: clamp(0, (var(--s) - var(--i) + 0.65) / 0.3, 1);
+  transform: translateY(calc((1 - var(--show)) * 100%));
+  box-shadow: 0 -18px 30px -12px rgba(0, 0, 0, 0.6);
+}
+.work-item { transition: opacity 0.35s ease; }
+.work-detail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.work-item[data-active] .work-detail { grid-template-rows: 1fr; }
+.sc-live .work-item:not([data-active]) { opacity: 0.45; }
+.work-dot { opacity: 0.35; transition: opacity 0.3s ease, transform 0.3s ease; }
+.work-item[data-active] .work-dot { opacity: 1; transform: scale(1.6); }
+/* Before the engine runs there is no pin, so every caption stays open. */
+.work-act:not(.sc-act--pinned) .work-detail { grid-template-rows: 1fr; }
+
+@media (max-width: 1023px) {
+  .sc-live .work-stage .container { grid-template-rows: auto 1fr; align-content: center; gap: 1.25rem; }
+  .sc-live .work-intro { display: none; }
+  .sc-live .work-copy h2 { font-size: 1.9rem; margin-bottom: 0.25rem; }
+  .sc-live .work-copy .eyebrow { margin-bottom: 0.5rem; }
+  .sc-live .work-list { min-height: 9.5rem; }
+  .sc-live .work-item:not([data-active]) { display: none; }
+  .sc-live .work-phone-wrap { order: -1; }
+  .work-phone { height: min(52svh, 520px); }
+  .sc-live .work-list { min-height: 7.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-live .work-layer:not(:first-child) { transform: none; box-shadow: none; opacity: var(--show); }
+  .work-detail { transition: none; }
+}

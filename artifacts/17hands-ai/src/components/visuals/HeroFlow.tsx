@@ -12,7 +12,7 @@ const outPaths = ["M245 101L264 52H282", "M250 122H282", "M245 143L264 192H282"]
 const downPath = "M200 172V236";
 
 export function HeroFlow({ className = "" }: { className?: string }) {
-  const t = useContent().home.flow;
+  const t = useContent().ai.flow;
   return (
     <svg viewBox="0 0 400 372" role="img" aria-label={t.aria} className={className} fontFamily="var(--app-font-sans)">
       <g fontFamily="var(--app-font-mono)" fontSize="10" letterSpacing="1.4" fill="var(--brand-rose)">

@@ -1,14 +1,13 @@
 import { Link } from "wouter";
-import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_COMPANY_URL } from "@/lib/site";
-import { LinkedInLink } from "@/components/brand/LinkedInLink";
-import { prefixOf, useI18n } from "@/i18n";
+import { BOOKING_URL, CONTACT_EMAIL, INSTAGRAM_URL, LINKEDIN_COMPANY_URL } from "@/lib/site";
+import { InstagramLink, LinkedInLink } from "@/components/brand/LinkedInLink";
+import { useI18n } from "@/i18n";
 
 const linkClass = "text-[var(--brand-text-2)] hover:text-[var(--brand-rose)]";
 
 export function Footer() {
-  const { locale, content } = useI18n();
+  const { content } = useI18n();
   const t = content.footer;
-  const home = prefixOf(locale);
 
   return (
     <footer className="bg-[var(--brand-primary)] border-t border-border py-16">
@@ -26,22 +25,26 @@ export function Footer() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-[var(--brand-text)] underline underline-offset-4 decoration-[var(--brand-rose)] hover:text-[var(--brand-rose)]">
               {CONTACT_EMAIL}
             </a>
-            <div className="mt-6">
-              <LinkedInLink href={LINKEDIN_COMPANY_URL} label={t.follow} />
+            <p className="mt-6 text-sm text-[var(--brand-text-2)]">{content.common.tips.eyebrow}: {content.common.tips.title}</p>
+            <div className="mt-3 flex flex-wrap gap-3">
+              <InstagramLink href={INSTAGRAM_URL} label={t.instagram} />
+              <LinkedInLink href={LINKEDIN_COMPANY_URL} label={t.linkedin} />
             </div>
           </div>
 
           <nav aria-label={t.explore}>
             <h2 className="eyebrow mb-5">{t.explore}</h2>
             <ul className="space-y-3">
-              <li><Link href="/digital-defenders" className={linkClass}>{content.nav.digitalDefenders}</Link></li>
-              <li><a href="/anastasia" className={linkClass}>{t.linksBooking}</a></li>
-              <li><a href={`${home}/#services`} className={linkClass}>{content.nav.services}</a></li>
-              <li><a href={`${home}/#how-it-works`} className={linkClass}>{t.howItWorks}</a></li>
-              <li><Link href="/packages" className={linkClass}>{t.packages}</Link></li>
+              <li><Link href="/websites" className={linkClass}>{content.nav.websites}</Link></li>
               <li><Link href="/bio-pages" className={linkClass}>{content.nav.bioPages}</Link></li>
+              <li><Link href="/workshops" className={linkClass}>{content.nav.workshops}</Link></li>
+              <li><Link href="/ai-automation" className={linkClass}>{content.nav.aiAutomation}</Link></li>
+              <li><Link href="/digital-defenders" className={linkClass}>{content.nav.digitalDefenders}</Link></li>
               <li><Link href="/for-you" className={linkClass}>{t.forIndividuals}</Link></li>
+              <li><Link href="/packages" className={linkClass}>{t.packages}</Link></li>
+              <li><Link href="/about" className={linkClass}>{content.nav.about}</Link></li>
               <li><Link href="/faq" className={linkClass}>{content.nav.faq}</Link></li>
+              <li><a href="/anastasia" className={linkClass}>{t.linksBooking}</a></li>
             </ul>
           </nav>
 

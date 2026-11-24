@@ -1,5 +1,6 @@
 import { carePlans, ladders, packageDef, priceLabel, programs } from "./packages";
 import { fillPrices, localizedPath, type Content, type Locale } from "@/i18n";
+import { HOME_FAQ_COUNT } from "./site";
 
 /**
  * Per-route structured data and llms.txt sections, generated at build time from the same
@@ -52,12 +53,31 @@ function offerCatalog(content: Content, url: string, origin: string) {
   };
 }
 
+function service(url: string, origin: string, name: string, description: string, serviceType: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    description,
+    serviceType,
+    url,
+    provider: { "@id": `${origin}/#org` },
+    areaServed: { "@type": "Country", name: "United States" },
+  };
+}
+
 /** JSON-LD blocks for one route in one locale. Empty for routes without their own markup. */
 export function structuredData(path: string, locale: Locale, content: Content, origin: string): object[] {
   const url = origin + localizedPath(locale, path);
   if (path === "/faq") return [faqPage(content.faqs, content, url)];
-  // The home page shows the first five questions, so it marks up exactly those.
-  if (path === "/") return [faqPage(content.faqs.slice(0, 5), content, url)];
+  // The home page shows the first few questions, so it marks up exactly those.
+  if (path === "/") return [faqPage(content.faqs.slice(0, HOME_FAQ_COUNT), content, url)];
+  if (path === "/websites")
+    return [service(url, origin, "Custom websites and apps", "Custom branded websites and web and mobile apps for small businesses, with search engine optimization (SEO) and answer engine optimization (AEO) built in.", "Web design and development")];
+  if (path === "/ai-automation")
+    return [service(url, origin, "AI automation and security", "AI systems with a human touch for small businesses: workflow and lead follow-up automation, AI assistants, custom tools and customer data protection.", "Business process automation")];
+  if (path === "/workshops")
+    return [service(url, origin, "AI and cybersecurity workshops", "Hands-on workshops on using AI tools safely and spotting scams, for small business teams, families and community groups, in person or online.", "Cybersecurity training")];
   if (path === "/packages") return [offerCatalog(content, url, origin)];
   return [];
 }

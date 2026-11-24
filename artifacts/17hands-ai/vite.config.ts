@@ -236,7 +236,7 @@ function staticRoutes(): Plugin {
               lang: page.standalone ? undefined : content.htmlLang,
               ogLocale: page.standalone ? undefined : content.ogLocale,
               alternates: translated ? alternatesFor(page.path) : undefined,
-              jsonLd: translated ? structuredData(page.path, locale, content, SITE_ORIGIN) : undefined,
+              jsonLd: translated || locale === "en" ? structuredData(page.path, locale, content, SITE_ORIGIN) : undefined,
             });
             if (!page.noindex && !page.standalone) html = withBody(html, route, locale);
             if (page.strictCsp) html = contentSecurityPolicy(html);
