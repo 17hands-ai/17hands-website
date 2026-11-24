@@ -378,9 +378,24 @@ html.intro-on.intro-reveal .hero-visual > .hero-collage { opacity: 1; }
 .cta-book { box-shadow: 0 10px 30px -8px rgba(224, 167, 134, 0.45); }
 
 /* ---- Device frames (Devices.tsx) ---- */
+/* Phone: W wide, bezel b = 3.5% of W on every side, screen exactly 390:844.
+   H = 0.93W * 844/390 + 0.07W = 2.0826W, so the frame is 390:812 and the top/bottom
+   inset is 0.035 / 2.0826 = 1.68% of H. Corners use "x% / y%" pairs so they stay
+   circular at any size: outer 12% of W, screen 9% of the screen's width. */
 .device-phone {
+  aspect-ratio: 390 / 812;
+  border-radius: 12% / 5.76%;
   background: linear-gradient(150deg, #2b2236, #0d0a12 55%, #221a2c);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 60px -20px rgba(0, 0, 0, 0.7), 0 12px 24px -12px rgba(121, 40, 202, 0.35);
+}
+.device-screen {
+  position: absolute; inset: 1.68% 3.5%;
+  overflow: hidden; background: #000;
+  border-radius: 9% / 4.16%;
+}
+.device-island {
+  position: absolute; left: 50%; top: 2.9%; width: 24%; height: 2.3%;
+  transform: translateX(-50%); border-radius: 999px; background: #000;
 }
 .device-browser {
   background: #1a1422;

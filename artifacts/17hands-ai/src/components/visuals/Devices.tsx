@@ -1,16 +1,17 @@
 import type { ReactNode } from "react";
 
 /**
- * Plain device frames for real screenshots. The phone frame is 390:812 so that, after its 3.5%
- * padding, the screen inside is exactly 390:844 and a capture fills it without cropping. The
- * browser screen is 16:10, matching the 1440x900 desktop captures.
+ * Plain device frames for real screenshots. The browser screen is 16:10, matching the 1440x900
+ * desktop captures. The phone's bezel and corners are sized from the phone itself (see
+ * .device-phone in index.css), never from padding, because percentage padding resolves against
+ * the parent's width and would thicken the bezel and crop the screen inside a wide parent.
  */
 export function PhoneFrame({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     // Positioned either way, so the notch has a containing block; callers may pass `absolute`.
-    <div className={`device-phone ${/\babsolute\b/.test(className) ? "" : "relative"} aspect-[390/812] rounded-[2.4rem] p-[3.5%] ${className}`}>
-      <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-black">{children}</div>
-      <span aria-hidden="true" className="absolute left-1/2 top-[2.6%] h-[2.4%] w-[26%] -translate-x-1/2 rounded-full bg-black" />
+    <div className={`device-phone ${/\babsolute\b/.test(className) ? "" : "relative"} ${className}`}>
+      <div className="device-screen">{children}</div>
+      <span aria-hidden="true" className="device-island" />
     </div>
   );
 }
