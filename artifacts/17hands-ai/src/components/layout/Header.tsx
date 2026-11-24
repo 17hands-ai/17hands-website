@@ -80,12 +80,10 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: t.digitalDefenders, href: "/digital-defenders" },
-    { name: t.services, href: "/#services" },
-    { name: t.packages, href: "/packages" },
+    { name: t.websites, href: "/websites" },
     { name: t.bioPages, href: "/bio-pages" },
-    { name: t.about, href: "/#about" },
-    { name: t.faq, href: "/faq" },
+    { name: t.workshops, href: "/workshops" },
+    { name: t.about, href: "/about" },
   ];
 
   useEffect(() => {
@@ -121,7 +119,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label={t.label} className="hidden xl:flex items-center gap-6">
+        <nav aria-label={t.label} className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
@@ -147,7 +145,7 @@ export function Header() {
           </BrandButton>
           <button
             type="button"
-            className="xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-text)]"
+            className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-text)]"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav"
             aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
@@ -159,7 +157,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div id="mobile-nav" className="xl:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2">
+        <div id="mobile-nav" className="lg:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2">
           <nav aria-label={t.label} className="flex flex-col">
             {navLinks.map((link) => (
               <NavLink
