@@ -25,7 +25,8 @@ export function Footer() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-[var(--brand-text)] underline underline-offset-4 decoration-[var(--brand-rose)] hover:text-[var(--brand-rose)]">
               {CONTACT_EMAIL}
             </a>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <p className="mt-6 text-sm text-[var(--brand-text-2)]">{content.common.tips.eyebrow}: {content.common.tips.title}</p>
+            <div className="mt-3 flex flex-wrap gap-3">
               <InstagramLink href={INSTAGRAM_URL} label={t.instagram} />
               <LinkedInLink href={LINKEDIN_COMPANY_URL} label={t.linkedin} />
             </div>

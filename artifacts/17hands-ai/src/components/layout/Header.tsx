@@ -84,6 +84,7 @@ export function Header() {
     { name: t.bioPages, href: "/bio-pages" },
     { name: t.workshops, href: "/workshops" },
     { name: t.aiAutomation, href: "/ai-automation" },
+    { name: t.packages, href: "/packages" },
     { name: t.about, href: "/about" },
   ];
 
@@ -120,14 +121,14 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label={t.label} className="hidden lg:flex items-center gap-7">
+        <nav aria-label={t.label} className="hidden xl:flex items-center gap-7">
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
               aria-current={location === link.href ? "page" : undefined}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-[var(--brand-rose)] py-2",
+                "whitespace-nowrap text-sm font-medium transition-colors hover:text-[var(--brand-rose)] py-2",
                 location === link.href ? "text-[var(--brand-rose)]" : "text-[var(--brand-text-2)]",
               )}
             >
@@ -146,7 +147,7 @@ export function Header() {
           </BrandButton>
           <button
             type="button"
-            className="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-text)]"
+            className="xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--brand-text)]"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav"
             aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
@@ -158,7 +159,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div id="mobile-nav" className="lg:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2">
+        <div id="mobile-nav" className="xl:hidden absolute top-full left-0 right-0 bg-[var(--brand-canvas)] border-b border-border px-4 sm:px-6 pb-6 pt-2">
           <nav aria-label={t.label} className="flex flex-col">
             {navLinks.map((link) => (
               <NavLink

@@ -25,6 +25,12 @@ export const en = {
     bookShort: "Book a call",
     newTab: " (opens in a new tab)",
     skip: "Skip to content",
+    tips: {
+      eyebrow: "Free weekly tips",
+      title: "Follow @17hands.ai on Instagram.",
+      body: "One short, practical tip every week on using AI safely, spotting scams and getting found online. Free, no sign-up.",
+      cta: "Follow for weekly tips",
+    },
   },
 
   nav: {

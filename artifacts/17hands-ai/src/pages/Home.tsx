@@ -13,6 +13,7 @@ import { FoundCard } from "@/components/visuals/FoundCard";
 import { HeroFlow } from "@/components/visuals/HeroFlow";
 import { TypeSwap } from "@/components/visuals/TypeSwap";
 import { HeroIntro } from "@/components/visuals/HeroIntro";
+import { InstagramTips } from "@/components/brand/InstagramTips";
 import { BOOKING_URL, HOME_FAQ_COUNT, LINKEDIN_PROFILE_URL } from "@/lib/site";
 import { packageDef, priceLabel, type PackageId } from "@/lib/packages";
 import { workById } from "@/lib/work";
@@ -246,6 +247,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <InstagramTips />
 
       {/* Close: the three promises return as one line, then one action. */}
       <section aria-labelledby="cta-title" className="relative isolate overflow-hidden py-24 md:py-32 bg-atmosphere">

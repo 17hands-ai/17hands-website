@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
 import { BrandButton } from "@/components/brand/BrandButton";
+import { InstagramTips } from "@/components/brand/InstagramTips";
 import { PackageList } from "@/components/brand/PackageList";
 import { ScamText } from "@/components/visuals/ScamText";
 import { StatBand } from "@/components/visuals/StatBand";
@@ -122,6 +123,8 @@ export default function Workshops() {
           </div>
         </div>
       </section>
+
+      <InstagramTips />
 
       <section className="py-20 md:py-28 bg-atmosphere">
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl text-center">

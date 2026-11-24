@@ -39,6 +39,12 @@ export const es: Content = {
     bookShort: "Agendar",
     newTab: " (se abre en una pestaña nueva)",
     skip: "Saltar al contenido",
+    tips: {
+      eyebrow: "Consejos gratis cada semana",
+      title: "Sigue a @17hands.ai en Instagram.",
+      body: "Cada semana, un consejo breve y práctico para usar la IA con seguridad, detectar estafas y que te encuentren en internet. Gratis, sin registro.",
+      cta: "Seguir para recibir consejos",
+    },
   },
 
   nav: {
