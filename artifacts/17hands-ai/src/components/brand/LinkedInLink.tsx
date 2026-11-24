@@ -1,8 +1,9 @@
-import { FaLinkedinIn } from "react-icons/fa";
+import type { IconType } from "react-icons";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 
-/** LinkedIn link with the "in" mark in rose gold on a plum badge, cut with the design system's cupped radius. */
-export function LinkedInLink({ href, label, className }: { href: string; label: string; className?: string }) {
+/** Social link with the network's mark in rose gold on a plum badge, cut with the design system's cupped radius. */
+function SocialLink({ href, label, network, Icon, className }: { href: string; label: string; network: string; Icon: IconType; className?: string }) {
   return (
     <a
       href={href}
@@ -17,10 +18,18 @@ export function LinkedInLink({ href, label, className }: { href: string; label: 
         aria-hidden="true"
         className="grid h-8 w-8 place-items-center rounded-[10px_3px_10px_3px] bg-[var(--brand-secondary)] text-[var(--brand-rose)] ring-1 ring-[var(--brand-rose)]/40 transition-colors group-hover:bg-[var(--brand-rose)] group-hover:text-[var(--brand-primary)]"
       >
-        <FaLinkedinIn size={16} />
+        <Icon size={16} />
       </span>
       {label}
-      <span className="sr-only"> on LinkedIn (opens in a new tab)</span>
+      <span className="sr-only"> on {network} (opens in a new tab)</span>
     </a>
   );
+}
+
+export function LinkedInLink(props: { href: string; label: string; className?: string }) {
+  return <SocialLink {...props} network="LinkedIn" Icon={FaLinkedinIn} />;
+}
+
+export function InstagramLink(props: { href: string; label: string; className?: string }) {
+  return <SocialLink {...props} network="Instagram" Icon={FaInstagram} />;
 }
