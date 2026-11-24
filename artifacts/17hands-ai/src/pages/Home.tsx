@@ -19,6 +19,7 @@ import { packageDef, priceLabel, type PackageId } from "@/lib/packages";
 import { workById } from "@/lib/work";
 import { testimonials } from "@/lib/testimonials";
 import { fillPrices, useContent, useI18n } from "@/i18n";
+import { CircuitRail } from "@/components/visuals/CircuitRail";
 import { useScrollCraft } from "@/hooks/use-scrollcraft";
 
 /** Per offer, in the order of `home.offers.items`: where it leads. */
@@ -53,6 +54,7 @@ export default function Home() {
 
   return (
     <div ref={rootRef} className="relative flex flex-col">
+      <CircuitRail rootRef={rootRef} />
       {/* Hero. Planes far to near: glow, website, bio page, scam text. Positive rates trail the scroll. */}
       <section aria-labelledby="hero-title" data-sc-act="flow" className="relative isolate overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
         <div className="absolute -inset-y-24 inset-x-0 -z-10" data-sc-parallax="1.2" aria-hidden="true">
@@ -62,11 +64,11 @@ export default function Home() {
           <BrandNumeral className="-left-6 bottom-0 hidden md:block" />
         </div>
 
-        <div className="container relative mx-auto px-4 sm:px-6 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-10 items-center">
+        <div data-rail-content className="container relative mx-auto px-4 sm:px-6 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-10 items-center">
           <div data-sc-parallax="-0.35">
             <div className="hero-in">
               <p className="eyebrow mb-6">{t.hero.eyebrow}</p>
-              <h1 id="hero-title" className="display text-[2.6rem] leading-[1.04] sm:text-6xl lg:text-[4.25rem] text-[var(--brand-text)] mb-5">
+              <h1 id="hero-title" data-rail-node className="display text-[2.6rem] leading-[1.04] sm:text-6xl lg:text-[4.25rem] text-[var(--brand-text)] mb-5">
                 {t.hero.headline}
               </h1>
               <p className="display text-[2rem] leading-tight sm:text-5xl rose-text mb-8">
@@ -122,7 +124,7 @@ export default function Home() {
               <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <div className={flip ? "lg:order-2" : ""} data-sc-in>
                   <p className="font-mono text-xs uppercase tracking-[0.16em] rose-text mb-4">{offer.kicker}</p>
-                  <h3 className="display text-5xl md:text-6xl text-[var(--brand-text)] mb-6">{offer.title}</h3>
+                  <h3 data-rail-node className="display text-5xl md:text-6xl text-[var(--brand-text)] mb-6">{offer.title}</h3>
                   <p className="text-lg md:text-xl text-[var(--brand-text-2)] leading-relaxed max-w-xl mb-8">{offer.body}</p>
                   <ul className="space-y-3 mb-9">
                     {offer.points.map((point) => (
@@ -175,7 +177,7 @@ export default function Home() {
       <section id="start" aria-labelledby="start-title" className="py-24 md:py-28 border-t border-border bg-[var(--brand-primary)] scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
           <div data-sc-in>
-            <h2 id="start-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-5">{t.start.title}</h2>
+            <h2 id="start-title" data-rail-node className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-5">{t.start.title}</h2>
             <p className="text-lg text-[var(--brand-text-2)] leading-relaxed max-w-md mb-6">{t.start.body}</p>
             <Link href="/packages" className="inline-flex items-center gap-2 rose-text underline underline-offset-4 hover:text-[var(--brand-text)]">
               {t.start.all} <ArrowRight size={16} aria-hidden="true" />
@@ -201,7 +203,7 @@ export default function Home() {
           <div data-sc-parallax="-0.6"><Portrait className="aspect-[3/4] w-full max-w-[320px]" /></div>
           <div data-sc-in>
             <p className="eyebrow mb-4">{t.about.eyebrow}</p>
-            <h2 id="about-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-3">{t.about.title}</h2>
+            <h2 id="about-title" data-rail-node className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-3">{t.about.title}</h2>
             <p className="rose-text font-medium mb-7">{t.about.role}</p>
             <div className="space-y-5 text-lg text-[var(--brand-text-2)] leading-relaxed max-w-2xl">
               {t.about.paragraphs.map((p) => <p key={p.slice(0, 40)}>{p}</p>)}
@@ -231,7 +233,7 @@ export default function Home() {
       <section aria-labelledby="faq-title" className="py-24 md:py-28 border-t border-border">
         <div className="container mx-auto px-4 sm:px-6 grid lg:grid-cols-[1fr_1.6fr] gap-12">
           <div>
-            <h2 id="faq-title" className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">{t.faq.title}</h2>
+            <h2 id="faq-title" data-rail-node className="display text-4xl md:text-5xl text-[var(--brand-text)] mb-6">{t.faq.title}</h2>
             <Link href="/faq" className="rose-text underline underline-offset-4 hover:text-[var(--brand-text)]">{t.faq.all}</Link>
           </div>
           <div className="divide-y divide-white/10 border-y border-white/10">
@@ -255,7 +257,7 @@ export default function Home() {
         <BrandNumeral className="-right-8 -bottom-16" />
         <div className="container relative mx-auto px-4 sm:px-6 text-center max-w-3xl">
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--brand-text-2)] mb-6">{t.hero.rotate.join("  ")}</p>
-          <div className="mx-auto mb-8 w-56"><CircuitTrace className="cta-trace w-full" /></div>
+          <div className="mx-auto mb-8 w-56" data-rail-end><CircuitTrace className="cta-trace w-full" /></div>
           <h2 id="cta-title" className="display text-4xl md:text-6xl text-[var(--brand-text)] mb-6">
             {t.cta.line}<span className="rose-text">{t.cta.accent}</span>
           </h2>

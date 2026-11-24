@@ -58,7 +58,7 @@ export function LiveWork() {
         <div className="container mx-auto grid h-full items-center gap-6 px-4 py-16 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-0">
           <div className="work-copy">
             <p className="eyebrow mb-4">{t.eyebrow}</p>
-            <h2 id="work-title" className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-4">{t.title}</h2>
+            <h2 id="work-title" data-rail-node className="display text-3xl md:text-5xl text-[var(--brand-text)] mb-4">{t.title}</h2>
             <p className="work-intro text-lg text-[var(--brand-text-2)] mb-8 max-w-md">{t.body}</p>
             <ol className="work-list space-y-1">
               {work.map((w, i) => {

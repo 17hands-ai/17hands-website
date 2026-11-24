@@ -10,10 +10,13 @@ import { useEffect, useRef, useState, type RefObject } from "react";
  * Geometry comes from markers in the page, measured on layout:
  *   data-rail-content  element whose padded left edge is where copy starts (rail sits left of it)
  *   data-rail-node     a chapter heading (first one starts the trace)
- *   data-rail-fork     top of the pillars section
- *   data-rail-branch   "0" | "1": the pillar heading on each branch
- *   data-rail-merge    top of the delivery section
+ *   data-rail-fork     optional: top of a two-branch section
+ *   data-rail-branch   "0" | "1": the heading on each branch
+ *   data-rail-merge    optional: where the branches rejoin (needed with data-rail-fork)
  *   data-rail-end      the closing circuit; the trace ends at its left edge
+ *
+ * A heading inside a pinned scroll-craft stage is measured from where the stage sits at rest
+ * (the top of its act), so the node does not move with the reader's scroll position.
  *
  * Decorative only: hidden from assistive tech, never intercepts the pointer. Reduced motion shows
  * the finished circuit, lit, with no drawing.
@@ -66,7 +69,12 @@ function measure(root: HTMLElement): Geometry | null {
   const r = root.getBoundingClientRect();
   const at = (el: Element) => {
     const b = el.getBoundingClientRect();
-    return { left: b.left - r.left, top: b.top - r.top, width: b.width, height: b.height };
+    let top = b.top - r.top;
+    // A sticky stage moves with the scroll; measure from its resting place at the top of its act.
+    const stage = el.closest("[data-sc-stage]");
+    const act = stage?.parentElement;
+    if (stage && act) top += act.getBoundingClientRect().top - stage.getBoundingClientRect().top;
+    return { left: b.left - r.left, top, width: b.width, height: b.height };
   };
   const q = (sel: string) => root.querySelector(sel);
   const content = q("[data-rail-content]");
@@ -74,7 +82,7 @@ function measure(root: HTMLElement): Geometry | null {
   const merge = q("[data-rail-merge]");
   const end = q("[data-rail-end]");
   const heads = Array.from(root.querySelectorAll("[data-rail-node]"));
-  if (!content || !fork || !merge || !end || heads.length < 2) return null;
+  if (!content || !end || heads.length < 2) return null;
 
   const pad = parseFloat(getComputedStyle(content).paddingLeft) || 16;
   const copyLeft = at(content).left + pad;
@@ -83,15 +91,17 @@ function measure(root: HTMLElement): Geometry | null {
   const midLine = (el: Element) => { const b = at(el); return b.top + Math.min(b.height / 2, 22); };
 
   const startY = midLine(heads[0]);
-  const forkY = at(fork).top + 28;
-  const mergeY = at(merge).top + 28;
   const e = at(end);
   const endY = e.top + e.height / 2;
   const endX = e.left;
   const chamfer = Math.min(24, Math.max(6, (endX - x) / 4));
 
   const main = build([[x, startY], [x, endY - chamfer], [x + chamfer, endY], [endX, endY]]);
-  const branch = build([[x, forkY], [x + gap, forkY + gap], [x + gap, mergeY - gap], [x, mergeY]]);
+  // The fork is optional: a page without one gets an empty branch path.
+  const branch =
+    fork && merge
+      ? build([[x, at(fork).top + 28], [x + gap, at(fork).top + 28 + gap], [x + gap, at(merge).top + 28 - gap], [x, at(merge).top + 28]])
+      : build([]);
 
   const nodes: Node[] = heads.map((h) => ({ x, y: midLine(h), branch: 0 as const }));
   root.querySelectorAll("[data-rail-branch]").forEach((h) => {
@@ -190,9 +200,9 @@ export function CircuitRail({ rootRef }: { rootRef: RefObject<HTMLElement | null
       viewBox={`0 0 ${geo.width} ${geo.height}`}
     >
       <path className="rail-wire" d={geo.main.d} />
-      <path className="rail-wire" d={geo.branch.d} />
+      {geo.branch.total > 0 && <path className="rail-wire" d={geo.branch.d} />}
       <path ref={mainRef} className="rail-lit" d={geo.main.d} strokeDasharray={geo.main.total} strokeDashoffset={geo.main.total} />
-      <path ref={branchRef} className="rail-lit" d={geo.branch.d} strokeDasharray={geo.branch.total} strokeDashoffset={geo.branch.total} />
+      {geo.branch.total > 0 && <path ref={branchRef} className="rail-lit" d={geo.branch.d} strokeDasharray={geo.branch.total} strokeDashoffset={geo.branch.total} />}
       {geo.nodes.map((n, i) => (
         <circle
           key={`${n.branch}-${Math.round(n.y)}`}
